@@ -9,9 +9,9 @@ const StyledContainer = styled.div`
 	position: fixed;
 	top: 35%;
 	left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
+	transform: translate(-50%, -50%);
+	display: flex;
+	align-items: center;
 `;
 
 const StyledHead = styled.div`
@@ -21,8 +21,8 @@ const StyledHead = styled.div`
 	font-family: ${fonts.Montserrat};
 	font-weight: bold;
 	font-size: ${fontSizes.h1};
-  color: ${colors.blue};
-  margin-right: 15px;
+	color: ${colors.blue};
+	margin-right: 15px;
 `;
 
 const StyledName = styled.div`
@@ -32,13 +32,13 @@ const StyledName = styled.div`
 	flex-direction: column;
 	font-family: ${fonts.Montserrat};
 	font-size: ${fontSizes.xxxl};
-  font-weight: 500;
-  color: ${colors.green};
-  padding: 0 0 0 5px;
-  p {
-    margin: 0 0 0 15px;
-    padding: 0;
-  }
+	font-weight: 500;
+	color: ${colors.green};
+	padding: 0 0 0 5px;
+	p {
+		margin: 0 0 0 15px;
+		padding: 0;
+	}
 `;
 
 const Home = () => {
@@ -47,11 +47,11 @@ const Home = () => {
 			<Navbar />
 			<StyledContainer>
 				<StyledHead>WIPRO</StyledHead>
-        <StyledName>
-          <p>INDEPENDENT</p>
-          <p>ASSESSMENT</p>
-          <p>ENGINE</p>
-        </StyledName>
+				<StyledName>
+					<p>INDEPENDENT</p>
+					<p>ASSESSMENT</p>
+					<p>ENGINE</p>
+				</StyledName>
 			</StyledContainer>
 			<Footer />
 		</>

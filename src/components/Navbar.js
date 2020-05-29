@@ -10,11 +10,11 @@ const StyledContainer = styled.section`
 	justify-content: space-between;
 	align-items: center;
 	position: fixed;
-  top: 0;
+	top: 0;
 	padding: 0px 20px;
 	background-color: ${colors.white};
-  width: 100%;
-  height: 100px;
+	width: 100%;
+	height: 100px;
 `;
 
 const StyledNav = styled.nav`
@@ -39,18 +39,18 @@ const StyledLogo = styled.div`
 
 const StyledList = styled.ul`
 	display: flex;
-  justify-content: space-between;
-  align-items: center;
+	justify-content: space-between;
+	align-items: center;
 	list-style: none;
 	margin: 0;
 	padding: 0;
 `;
 
 const StyledLink = styled(Link)`
-  display: flex;
-  align-items: center;
-  margin: 0px 30px;
-  padding: 0;
+	display: flex;
+	align-items: center;
+	margin: 0px 30px;
+	padding: 0;
 	text-decoration: none;
 `;
 
