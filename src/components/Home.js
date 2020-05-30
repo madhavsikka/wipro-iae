@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import styled from "styled-components";
 import theme from "../styles/theme";
+import media from "../styles/media";
 const { colors, fonts, fontSizes } = theme;
 
 const StyledContainer = styled.div`
@@ -12,6 +13,8 @@ const StyledContainer = styled.div`
 	transform: translate(-50%, -50%);
 	display: flex;
 	align-items: center;
+
+	${media.tablet`flex-direction: column; top: 45%;`};
 `;
 
 const StyledHead = styled.div`
@@ -23,6 +26,9 @@ const StyledHead = styled.div`
 	font-size: ${fontSizes.h1};
 	color: ${colors.blue};
 	margin-right: 15px;
+
+  ${media.tablet`font-size: ${fontSizes.h2}`};
+  ${media.phablet`font-size: ${fontSizes.h3}`};
 `;
 
 const StyledName = styled.div`
@@ -31,14 +37,17 @@ const StyledName = styled.div`
 	align-items: flex-start;
 	flex-direction: column;
 	font-family: ${fonts.Montserrat};
-	font-size: ${fontSizes.xxxl};
 	font-weight: 500;
 	color: ${colors.green};
 	padding: 0 0 0 5px;
 	p {
+    font-size: ${fontSizes.xxxl};
+    ${media.phablet`font-size: ${fontSizes.xxl}`};
 		margin: 0 0 0 15px;
 		padding: 0;
 	}
+
+	${media.tablet`border: none; align-items: center; font-size: ${fontSizes.xxl};`};
 `;
 
 const Home = () => {

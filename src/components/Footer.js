@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { ReactComponent as BottomDesign } from "../images/BottomDesign.svg";
+import { ReactComponent as BottomDesignMobile } from "../images/BottomDesignMobile.svg";
+import { useWindowSize } from "react-use";
+import { sizes } from "../styles/media";
 
 const StyledFooter = styled.div`
 	display: flex;
@@ -10,14 +13,15 @@ const StyledFooter = styled.div`
 	flex-shrink: 0;
 	width: 100%;
 	svg {
-    height: 100%;
+		height: 100%;
 	}
 `;
 
 const Footer = () => {
+	const { width } = useWindowSize();
 	return (
 		<StyledFooter>
-			<BottomDesign />
+			{width > sizes.tablet ? <BottomDesign /> : <BottomDesignMobile />}
 		</StyledFooter>
 	);
 };

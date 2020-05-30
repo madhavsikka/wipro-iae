@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { ReactComponent as WiproLogo } from "../images/WiproLogo.svg";
 import { Link } from "react-router-dom";
 import theme from "../styles/theme";
+import media from "../styles/media";
 const { colors, fonts, fontSizes } = theme;
 
 const StyledContainer = styled.section`
@@ -15,6 +16,9 @@ const StyledContainer = styled.section`
 	background-color: ${colors.white};
 	width: 100%;
 	height: 100px;
+
+	${media.desktop`padding: 0 10px;`};
+	${media.tablet`padding: 0 5px;`};
 `;
 
 const StyledNav = styled.nav`
@@ -33,8 +37,9 @@ const StyledLogo = styled.div`
 	a {
 		display: block;
 		width: 100px;
-		height: 100px;
 	}
+	${media.tablet`width: 80px`};
+	${media.phablet`width: 60px`};
 `;
 
 const StyledList = styled.ul`
@@ -52,6 +57,8 @@ const StyledLink = styled(Link)`
 	margin: 0px 30px;
 	padding: 0;
 	text-decoration: none;
+
+	${media.tablet`display: none;`};
 `;
 
 const Navbar = () => {
