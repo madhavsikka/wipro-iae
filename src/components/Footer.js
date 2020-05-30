@@ -10,6 +10,7 @@ const StyledFooter = styled.div`
 	position: fixed;
 	bottom: 0;
 	left: 0;
+	z-index: 0;
 	flex-shrink: 0;
 	width: 100%;
 	svg {

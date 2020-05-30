@@ -13,6 +13,7 @@ const StyledContainer = styled.div`
 	transform: translate(-50%, -50%);
 	display: flex;
 	align-items: center;
+	z-index: 1;
 
 	${media.tablet`flex-direction: column; top: 45%;`};
 `;
@@ -27,8 +28,8 @@ const StyledHead = styled.div`
 	color: ${colors.blue};
 	margin-right: 15px;
 
-  ${media.tablet`font-size: ${fontSizes.h2}`};
-  ${media.phablet`font-size: ${fontSizes.h3}`};
+	${media.tablet`font-size: ${fontSizes.h2}; margin: 0;`};
+	${media.phablet`font-size: ${fontSizes.h3};`};
 `;
 
 const StyledName = styled.div`
@@ -41,10 +42,11 @@ const StyledName = styled.div`
 	color: ${colors.green};
 	padding: 0 0 0 5px;
 	p {
-    font-size: ${fontSizes.xxxl};
-    ${media.phablet`font-size: ${fontSizes.xxl}`};
 		margin: 0 0 0 15px;
 		padding: 0;
+		font-size: ${fontSizes.xxxl};
+		${media.tablet`margin: 0;`};
+		${media.phablet`font-size: ${fontSizes.xxl}`};
 	}
 
 	${media.tablet`border: none; align-items: center; font-size: ${fontSizes.xxl};`};
