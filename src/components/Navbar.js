@@ -59,6 +59,7 @@ const StyledLink = styled(Link)`
 	margin: 0 0 0 50px;
 	padding: 0;
 	text-decoration: none;
+	color: ${colors.blue};
 `;
 
 const Navbar = () => {
