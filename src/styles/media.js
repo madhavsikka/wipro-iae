@@ -17,7 +17,7 @@ export const media = Object.keys(sizes).reduce((accumulator, label) => {
 	accumulator[label] = (...args) =>
 		label === "landscape"
 			? css`
-					@media (max-height: ${emSize}em) {
+					@media screen and (max-height: ${emSize}em) and (orientation: landscape) {
 						${css(...args)};
 					}
 			  `
