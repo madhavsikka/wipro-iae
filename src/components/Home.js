@@ -16,6 +16,7 @@ const StyledContainer = styled.div`
 	z-index: 1;
 
 	${media.tablet`flex-direction: column; top: 45%;`};
+	${media.landscape`top: 50%;`};
 `;
 
 const StyledHead = styled.div`
@@ -30,6 +31,7 @@ const StyledHead = styled.div`
 
 	${media.tablet`font-size: ${fontSizes.h2}; margin: 0;`};
 	${media.phablet`font-size: ${fontSizes.h3};`};
+	${media.landscape`font-size: ${fontSizes.h4};`};
 `;
 
 const StyledName = styled.div`
@@ -47,6 +49,7 @@ const StyledName = styled.div`
 		font-size: ${fontSizes.xxxl};
 		${media.tablet`margin: 0;`};
 		${media.phablet`font-size: ${fontSizes.xxl}`};
+		${media.landscape`font-size: ${fontSizes.xxl};`};
 	}
 
 	${media.tablet`border: none; align-items: center; font-size: ${fontSizes.xxl};`};

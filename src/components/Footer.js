@@ -15,14 +15,21 @@ const StyledFooter = styled.div`
 	width: 100%;
 	svg {
 		height: 100%;
+		width: 100%;
 	}
 `;
 
 const Footer = () => {
-	const { width } = useWindowSize();
+	const { width, height } = useWindowSize();
 	return (
 		<StyledFooter>
-			{width > sizes.tablet ? <BottomDesign /> : <BottomDesignMobile />}
+			{height < sizes.landscape && width > sizes.phablet ? (
+				<BottomDesign />
+			) : width > sizes.tablet ? (
+				<BottomDesign />
+			) : (
+				<BottomDesignMobile />
+			)}
 		</StyledFooter>
 	);
 };

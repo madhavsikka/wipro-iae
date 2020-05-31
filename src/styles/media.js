@@ -9,15 +9,23 @@ export const sizes = {
 	phablet: 480,
 	phone: 376,
 	tiny: 330,
+	landscape: 700,
 };
 
 export const media = Object.keys(sizes).reduce((accumulator, label) => {
 	const emSize = sizes[label] / 16;
-	accumulator[label] = (...args) => css`
-		@media (max-width: ${emSize}em) {
-			${css(...args)};
-		}
-	`;
+	accumulator[label] = (...args) =>
+		label === "landscape"
+			? css`
+					@media (max-height: ${emSize}em) {
+						${css(...args)};
+					}
+			  `
+			: css`
+					@media (max-width: ${emSize}em) {
+						${css(...args)};
+					}
+			  `;
 	return accumulator;
 }, {});
 
