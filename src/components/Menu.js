@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import theme from "../styles/theme";
 import { Link } from "react-router-dom";
-import media from "../styles/media";
 const { colors, fonts, fontSizes } = theme;
 
 const StyledMenu = styled.nav`
@@ -20,13 +19,11 @@ const StyledMenu = styled.nav`
 	transition: transform 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 	transform: translateY(-100%);
 	transform: ${({ open }) => (open ? "translateY(0)" : "translateY(-100%)")};
-	${media.landscape`transform: ${({ open }) =>
-		open ? "translateY(30%)" : "translateY(-100%)"}; 	overflow-y: scroll;`};
 
 	a {
 		font-size: ${fontSizes.xxl};
 		font-family: ${fonts.Nexa};
-		margin: 0 0 4rem 0;
+		margin: 2rem 0;
 		color: ${colors.blue};
 		text-decoration: none;
 	}

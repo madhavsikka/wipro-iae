@@ -14,7 +14,7 @@ const StyledContainer = styled.section`
 	justify-content: space-between;
 	align-items: center;
 	position: fixed;
-	z-index: 100;
+	z-index: 1;
 	top: 0;
 	padding: 0px 20px;
 	background-color: ${colors.white};
@@ -80,16 +80,8 @@ const Navbar = () => {
 		</StyledList>
 	);
 
-	const navContent =
-		width < sizes.tablet || isMenuOpen ? (
-			<Burger clicked={() => menuClickHandler()} open={isMenuOpen} />
-		) : (
-			linkList
-		);
-
 	return (
 		<>
-			<Menu open={isMenuOpen} />
 			<StyledContainer>
 				<StyledNav>
 					<StyledLogo>
@@ -97,9 +89,13 @@ const Navbar = () => {
 							<WiproLogo />
 						</Link>
 					</StyledLogo>
-					{navContent}
+					{width > sizes.tablet ? linkList : null}
 				</StyledNav>
 			</StyledContainer>
+			<Menu open={isMenuOpen} />
+			{width < sizes.tablet || isMenuOpen ? (
+				<Burger clicked={() => menuClickHandler()} open={isMenuOpen} />
+			) : null}
 		</>
 	);
 };
