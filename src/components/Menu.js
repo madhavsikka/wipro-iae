@@ -10,11 +10,13 @@ const StyledMenu = styled.nav`
 	justify-content: center;
 	align-items: center;
 	background: ${colors.white};
-	height: 100%;
+	height: 100vh;
+	min-height: 400px;
 	width: 100%;
 	margin: 0;
 	padding: 2rem;
 	position: absolute;
+	overflow-y: scroll;
 	z-index: 10;
 	transition: transform 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 	transform: translateY(-100%);
