@@ -16,7 +16,6 @@ const StyledMenu = styled.nav`
 	margin: 0;
 	padding: 2rem;
 	position: absolute;
-	overflow-y: scroll;
 	z-index: 10;
 	transition: transform 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 	transform: translateY(-100%);
