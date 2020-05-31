@@ -31,7 +31,7 @@ const StyledHead = styled.div`
 
 	${media.tablet`font-size: ${fontSizes.h2}; margin: 0;`};
 	${media.phablet`font-size: ${fontSizes.h3};`};
-	${media.landscape`font-size: ${fontSizes.h4};`};
+	${media.landscape`font-size: ${fontSizes.h3};`};
 `;
 
 const StyledName = styled.div`
