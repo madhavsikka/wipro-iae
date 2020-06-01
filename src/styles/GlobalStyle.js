@@ -27,11 +27,11 @@ const GlobalStyle = createGlobalStyle`
     font-family: ${fonts.Montserrat};
   }
 
-  .fade-enter {
+  .fade-appear {
     opacity: 0;
   }
 
-  .fade-enter-active {
+  .fade-appear-active {
     opacity: 1;
     transition: opacity 1000ms;
     -webkit-transition: opacity 1000ms;
