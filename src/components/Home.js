@@ -46,12 +46,14 @@ const StyledName = styled.div`
 	flex-direction: column;
 	font-family: ${fonts.Montserrat};
 	font-weight: 500;
+	font-display: optional;
 	color: ${colors.green};
 	padding: 0 0 0 5px;
 	p {
 		margin: 0 0 0 15px;
 		padding: 0;
 		font-size: ${fontSizes.xxxl};
+		font-display: optional;
 		${media.tablet`margin: 0;`};
 		${media.phablet`font-size: ${fontSizes.xxl}`};
 		${media.landscape`font-size: ${fontSizes.xxl};`};
