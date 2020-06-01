@@ -22,6 +22,7 @@ const FontFaces = css`
 			url(${Montserrat_300_WOFF2}) format("woff2");
 		font-weight: 300;
 		font-style: normal;
+		font-display: optional;
 	} */}
 	${'' /* @font-face {
 		font-family: Montserrat;
@@ -29,6 +30,7 @@ const FontFaces = css`
 			url(${Montserrat_300_italic_WOFF2}), format("woff2");
 		font-weight: 300;
 		font-style: italic;
+		font-display: optional;
 	} */}
 	@font-face {
 		font-family: "Montserrat";
@@ -36,6 +38,7 @@ const FontFaces = css`
 			url(${Montserrat_400_WOFF2}) format("woff2");
 		font-weight: 400;
 		font-style: normal;
+		font-display: optional;
 	}
 	${'' /* @font-face {
 		font-family: Montserrat;
@@ -43,6 +46,7 @@ const FontFaces = css`
 			url(${Montserrat_400_italic_WOFF2}), format("woff2");
 		font-weight: 400;
 		font-style: italic;
+		font-display: optional;
 	}
 	@font-face {
 		font-family: "Montserrat";
@@ -50,6 +54,7 @@ const FontFaces = css`
 			url(${Montserrat_500_WOFF2}) format("woff2");
 		font-weight: 500;
 		font-style: normal;
+		font-display: optional;
 	} */}
 	@font-face {
 		font-family: "Montserrat";
@@ -57,6 +62,7 @@ const FontFaces = css`
 			url(${Montserrat_700_WOFF2}) format("woff2");
 		font-weight: 700;
 		font-style: normal;
+		font-display: optional;
 	}
 	@font-face {
 		font-family: "Nexa";
@@ -64,6 +70,7 @@ const FontFaces = css`
 			url(${Nexa_Light_WOFF2}) format("woff2");
 		font-weight: 400;
 		font-style: normal;
+		font-display: optional;
 	}
 `;
 
