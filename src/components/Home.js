@@ -12,6 +12,10 @@ const StyledContainer = styled.div`
 	top: 35%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
 	display: flex;
 	align-items: center;
 	z-index: 1;
@@ -66,19 +70,11 @@ const Home = () => {
 
 	return (
 		<>
-			<CSSTransition
-				in={isMounted}
-				timeout={1000}
-				classNames="fadeup"
-				mountOnEnter>
+			<CSSTransition in={true} timeout={1000} classNames="fadeup" appear>
 				<Navbar />
 			</CSSTransition>
 
-			<CSSTransition
-				in={isMounted}
-				timeout={1000}
-				classNames="fadeup-name"
-				mountOnEnter>
+			<CSSTransition in={true} timeout={1000} classNames="fadeup-name" appear>
 				<StyledContainer>
 					<StyledHead>WIPRO</StyledHead>
 					<StyledName>
@@ -89,11 +85,7 @@ const Home = () => {
 				</StyledContainer>
 			</CSSTransition>
 
-			<CSSTransition
-				in={isMounted}
-				timeout={1000}
-				classNames="fadeup"
-				mountOnEnter>
+			<CSSTransition in={true} timeout={1000} classNames="fadeup" appear>
 				<Footer />
 			</CSSTransition>
 		</>
