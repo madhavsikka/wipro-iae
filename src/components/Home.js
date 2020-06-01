@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import styled from "styled-components";
@@ -61,20 +61,13 @@ const StyledName = styled.div`
 `;
 
 const Home = () => {
-	const [isMounted, setIsMounted] = useState(false);
-
-	useEffect(() => {
-		const timeout = setTimeout(() => setIsMounted(true), 1000);
-		return () => clearTimeout(timeout);
-	}, []);
-
 	return (
 		<>
-			<CSSTransition in={true} timeout={1000} classNames="fadeup" appear>
+			<CSSTransition in timeout={1000} classNames="fade" appear>
 				<Navbar />
 			</CSSTransition>
 
-			<CSSTransition in={true} timeout={1000} classNames="fadeup-name" appear>
+			<CSSTransition in timeout={1000} classNames="fade" appear>
 				<StyledContainer>
 					<StyledHead>WIPRO</StyledHead>
 					<StyledName>
@@ -85,7 +78,7 @@ const Home = () => {
 				</StyledContainer>
 			</CSSTransition>
 
-			<CSSTransition in={true} timeout={1000} classNames="fadeup" appear>
+			<CSSTransition in timeout={1000} classNames="fade" appear>
 				<Footer />
 			</CSSTransition>
 		</>

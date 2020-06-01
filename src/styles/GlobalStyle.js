@@ -27,47 +27,17 @@ const GlobalStyle = createGlobalStyle`
     font-family: ${fonts.Montserrat};
   }
 
-  .fadeup-appear {
+  .fade-appear {
     opacity: 0;
   }
 
-  .fadeup-appear-active {
+  .fade-appear-active {
     opacity: 1;
-
+    transition: opacity 1000ms;
     -webkit-transition: opacity 1000ms;
     -moz-transition: opacity 1000ms;
     -o-transition: opacity 1000ms;
     -ms-transition: opacity 1000ms;
-    transition: opacity 1000ms;
-
-  }
-
-  .fadeup-name-appear {
-    opacity: 0;
-
-    -webkit-transform: translate(-50%, -20%);
-    -moz-transform: translate(-50%, -20%);
-    -o-transform: translate(-50%, -20%);
-    -ms-transform: translate(-50%, -20%);
-    transform: translate(-50%, -20%);
-
-  }
-
-  .fadeup-name-appear-active {
-    opacity: 1;
-
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    
-    -webkit-transition: opacity 1000ms, transform 500ms;
-    -moz-transition: opacity 1000ms, transform 500ms;
-    -o-transition: opacity 1000ms, transform 500ms;
-    -ms-transition: opacity 1000ms, transform 500ms;
-    transition: opacity 1000ms, transform 500ms;
-
   }
 `;
 
