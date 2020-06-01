@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import theme from "../styles/theme";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 const { colors, fonts, fontSizes } = theme;
 
 const StyledMenu = styled.nav`
@@ -25,6 +25,7 @@ const StyledMenu = styled.nav`
 		font-size: ${fontSizes.xxl};
 		font-family: ${fonts.Nexa};
 		margin: 2rem 0;
+		padding: 2px 8px;
 		color: ${colors.blue};
 		text-decoration: none;
 	}
@@ -33,10 +34,10 @@ const StyledMenu = styled.nav`
 const Menu = ({ open }) => {
 	return (
 		<StyledMenu open={open}>
-			<Link to="/login">LOGIN</Link>
-			<Link to="/register">REGISTER</Link>
-			<Link to="/contact">CONTACT</Link>
-			<Link to="/about">ABOUT</Link>
+			<NavLink to="/login" activeClassName="menulink-active">LOGIN</NavLink>
+			<NavLink to="/register" activeClassName="menulink-active">REGISTER</NavLink>
+			<NavLink to="/contact" activeClassName="menulink-active">CONTACT</NavLink>
+			<NavLink to="/about" activeClassName="menulink-active">ABOUT</NavLink>
 		</StyledMenu>
 	);
 };

@@ -39,6 +39,21 @@ const GlobalStyle = createGlobalStyle`
     -o-transition: opacity 1000ms;
     -ms-transition: opacity 1000ms;
   }
+
+  .navlink-active {
+    color: ${colors.white} !important;
+    background: ${colors.blue};
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 2px 8px;
+    transition: background 400ms;
+  }
+
+  .menulink-active {
+    border: 1px solid ${colors.blue};
+    border-radius: 5px;
+    padding: 2px 8px
+  }
 `;
 
 export default GlobalStyle;

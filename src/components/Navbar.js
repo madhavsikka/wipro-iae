@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as WiproLogo } from "../images/WiproLogo.svg";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import theme from "../styles/theme";
 import Burger from "./Burger";
 import Menu from "./Menu";
@@ -53,13 +53,18 @@ const StyledList = styled.ul`
 	padding: 0;
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(NavLink)`
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	margin: 0 0 0 50px;
-	padding: 0;
+	padding: 0 8px;
 	text-decoration: none;
 	color: ${colors.blue};
+
+	&:hover {
+		color: ${colors.green};
+	}
 `;
 
 const Navbar = () => {
@@ -73,10 +78,18 @@ const Navbar = () => {
 
 	const linkList = (
 		<StyledList>
-			<StyledLink to="/login">LOGIN</StyledLink>
-			<StyledLink to="/register">REGISTER</StyledLink>
-			<StyledLink to="/contact">CONTACT</StyledLink>
-			<StyledLink to="/about">ABOUT</StyledLink>
+			<StyledLink to="/login" activeClassName="navlink-active">
+				LOGIN
+			</StyledLink>
+			<StyledLink to="/register" activeClassName="navlink-active">
+				REGISTER
+			</StyledLink>
+			<StyledLink to="/contact" activeClassName="navlink-active">
+				CONTACT
+			</StyledLink>
+			<StyledLink to="/about" activeClassName="navlink-active">
+				ABOUT
+			</StyledLink>
 		</StyledList>
 	);
 
@@ -85,9 +98,9 @@ const Navbar = () => {
 			<StyledContainer>
 				<StyledNav>
 					<StyledLogo>
-						<Link to="/">
+						<NavLink to="/">
 							<WiproLogo />
-						</Link>
+						</NavLink>
 					</StyledLogo>
 					{width > sizes.tablet ? linkList : null}
 				</StyledNav>
