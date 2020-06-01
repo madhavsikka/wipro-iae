@@ -29,6 +29,7 @@ const GlobalStyle = createGlobalStyle`
 
   .fadeup-enter {
     opacity: 0;
+    font-family: ${fonts.Montserrat};
   }
 
   .fadeup-enter-active {
@@ -38,6 +39,7 @@ const GlobalStyle = createGlobalStyle`
 
   .fadeup-name-enter {
     opacity: 0;
+    font-family: ${fonts.Montserrat};
     transform: translate(-50%, -20%);
   }
 
