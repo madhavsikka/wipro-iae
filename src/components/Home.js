@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import styled from "styled-components";
@@ -63,26 +63,35 @@ const StyledName = styled.div`
 `;
 
 const Home = () => {
+	const [isMounted, setIsMounted] = useState(false);
+
+	useEffect(() => {
+		const timer = setTimeout(() => setIsMounted(true), 1000);
+		return () => clearTimeout(timer);
+	}, []);
+
 	return (
 		<>
-			<CSSTransition in timeout={1000} classNames="fade" appear>
-				<Navbar />
-			</CSSTransition>
+			<>
+				<CSSTransition in={isMounted} timeout={1000} classNames="fade" mountOnEnter>
+					<Navbar />
+				</CSSTransition>
 
-			<CSSTransition in timeout={1000} classNames="fade" appear>
-				<StyledContainer>
-					<StyledHead>WIPRO</StyledHead>
-					<StyledName>
-						<p>INDEPENDENT</p>
-						<p>ASSESSMENT</p>
-						<p>ENGINE</p>
-					</StyledName>
-				</StyledContainer>
-			</CSSTransition>
+				<CSSTransition in={isMounted} timeout={1000} classNames="fade" mountOnEnter>
+					<StyledContainer>
+						<StyledHead>WIPRO</StyledHead>
+						<StyledName>
+							<p>INDEPENDENT</p>
+							<p>ASSESSMENT</p>
+							<p>ENGINE</p>
+						</StyledName>
+					</StyledContainer>
+				</CSSTransition>
 
-			<CSSTransition in timeout={1000} classNames="fade" appear>
-				<Footer />
-			</CSSTransition>
+				<CSSTransition in={isMounted} timeout={1000} classNames="fade" mountOnEnter>
+					<Footer />
+				</CSSTransition>
+			</>
 		</>
 	);
 };
