@@ -6,8 +6,8 @@ const theme = {
 	},
 
 	fonts: {
-		Montserrat: "Montserrat, Arial, Open Sans, Sans-Serif, Roboto",
-		Nexa: "Nexa, Arial, Open Sans, Sans-Serif, Roboto",
+		Montserrat: "Montserrat, Open Sans, Arial, Sans-Serif, Roboto",
+		Nexa: "Nexa, Open Sans, Arial, Sans-Serif, Roboto",
 	},
 
 	fontSizes: {

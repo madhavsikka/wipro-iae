@@ -18,52 +18,59 @@ import Nexa_Light_WOFF2 from "../fonts/Nexa/nexa-light-webfont.woff2";
 const FontFaces = css`
 	@font-face {
 		font-family: "Montserrat";
-		src: url(${Montserrat_300_WOFF}) format("woff"),
+		src: local("Montserrat"), url(${Montserrat_300_WOFF}) format("woff"),
 			url(${Montserrat_300_WOFF2}) format("woff2");
 		font-weight: 300;
 		font-style: normal;
+		font-display: block;
 	}
 	${"" /* @font-face {
 		font-family: Montserrat;
-		src: url(${Montserrat_300_italic_WOFF}) format("woff"),
+		src: local("Montserrat"), url(${Montserrat_300_italic_WOFF}) format("woff"),
 			url(${Montserrat_300_italic_WOFF2}), format("woff2");
 		font-weight: 300;
 		font-style: italic;
+		font-display: block;
 	} */}
 	@font-face {
 		font-family: "Montserrat";
-		src: url(${Montserrat_400_WOFF}) format("woff"),
+		src: local("Montserrat"), url(${Montserrat_400_WOFF}) format("woff"),
 			url(${Montserrat_400_WOFF2}) format("woff2");
 		font-weight: 400;
 		font-style: normal;
+		font-display: block;
 	}
 	${"" /* @font-face {
 		font-family: Montserrat;
-		src: url(${Montserrat_400_italic_WOFF}) format("woff"),
+		src: local("Montserrat"), url(${Montserrat_400_italic_WOFF}) format("woff"),
 			url(${Montserrat_400_italic_WOFF2}), format("woff2");
 		font-weight: 400;
 		font-style: italic;
+		font-display: block;
 	} */}
 	@font-face {
 		font-family: "Montserrat";
-		src: url(${Montserrat_500_WOFF}) format("woff"),
+		src: local("Montserrat"), url(${Montserrat_500_WOFF}) format("woff"),
 			url(${Montserrat_500_WOFF2}) format("woff2");
 		font-weight: 500;
 		font-style: normal;
+		font-display: block;
 	}
 	@font-face {
 		font-family: "Montserrat";
-		src: url(${Montserrat_700_WOFF}) format("woff"),
+		src: local("Montserrat"), url(${Montserrat_700_WOFF}) format("woff"),
 			url(${Montserrat_700_WOFF2}) format("woff2");
 		font-weight: 700;
 		font-style: normal;
+		font-display: block;
 	}
 	@font-face {
 		font-family: "Nexa";
-		src: url(${Nexa_Light_WOFF}) format("woff"),
+		src: local("Nexa"), url(${Nexa_Light_WOFF}) format("woff"),
 			url(${Nexa_Light_WOFF2}) format("woff2");
 		font-weight: 400;
 		font-style: normal;
+		font-display: block;
 	}
 `;
 
