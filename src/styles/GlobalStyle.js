@@ -26,6 +26,26 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     font-family: ${fonts.Montserrat};
   }
+
+  .fadeup-enter {
+    opacity: 0;
+  }
+
+  .fadeup-enter-active {
+    opacity: 1;
+    transition: opacity 1000ms;
+  }
+
+  .fadeup-name-enter {
+    opacity: 0;
+    transform: translate(-50%, -20%);
+  }
+
+  .fadeup-name-enter-active {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    transition: opacity 1000ms, transform 500ms;
+  }
 `;
 
 export default GlobalStyle;
