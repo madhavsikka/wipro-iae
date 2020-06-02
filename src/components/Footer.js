@@ -7,10 +7,6 @@ import { sizes } from "../styles/media";
 
 const StyledFooter = styled.div`
 	display: flex;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	z-index: 5;
 	flex-shrink: 0;
 	width: 100%;
 	margin: 0;
@@ -22,16 +18,10 @@ const StyledFooter = styled.div`
 `;
 
 const Footer = () => {
-	const { width, height } = useWindowSize();
+	const { width } = useWindowSize();
 	return (
 		<StyledFooter>
-			{height < sizes.landscape && width > sizes.phablet ? (
-				<BottomDesign />
-			) : width > sizes.tablet ? (
-				<BottomDesign />
-			) : (
-				<BottomDesignMobile />
-			)}
+			{width > sizes.tablet ? <BottomDesign /> : <BottomDesignMobile />}
 		</StyledFooter>
 	);
 };

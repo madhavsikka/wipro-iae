@@ -21,6 +21,7 @@ const theme = {
 		xl: "20px",
 		xxl: "26px",
 		xxxl: "36px",
+		h5: "50px",
 		h4: "70px",
 		h3: "80px",
 		h2: "110px",

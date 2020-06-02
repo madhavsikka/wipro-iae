@@ -13,10 +13,8 @@ const StyledContainer = styled.section`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	position: fixed;
-	z-index: 1;
-	top: 0;
 	padding: 0px 20px;
+	flex-shrink: 0;
 	background-color: ${colors.white};
 	width: 100%;
 	height: 100px;

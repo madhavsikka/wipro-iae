@@ -7,30 +7,27 @@ import Button from "../styles/Button";
 import { ReactComponent as User } from "../images/User.svg";
 import { CSSTransition } from "react-transition-group";
 import theme from "../styles/theme";
+import mixins from "../styles/mixins";
 import { IconContext } from "react-icons";
 import { MdMail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
 const { colors, fonts, fontSizes } = theme;
 
-const StyledContainer = styled.div`
-	position: fixed;
-	top: 45%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	-webkit-transform: translate(-50%, -50%);
-	-moz-transform: translate(-50%, -50%);
-	-o-transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	z-index: 9;
-	border-radius: 5px;
-	padding: 1.5rem 1rem;
-	box-shadow: 0 0 10px lightgray;
+const StyledFlex = styled.div`
+	${mixins.fullFlexCenter};
+`;
 
-	${media.tablet`padding: 1rem 0.2rem;`};
-	${media.landscape`top: 50%;`};
+const StyledContainer = styled.div`
+	${mixins.flexContainerCenter};
+	flex-direction: row;
+	align-items: flex-start;
+	flex-grow: 0;
+	border-radius: 5px;
+	box-shadow: 0 0 10px lightgray;
+	margin-top: 2rem;
+	padding: 2rem;
+	${media.tablet`flex-direction: column ; align-items: center; margin-top: 2rem;`}
+	${media.phablet`box-shadow: none; padding: 0;`}
 `;
 
 const StyledImage = styled.div`
@@ -61,7 +58,7 @@ const StyledInput = styled.input`
 	border-radius: 5px;
 	margin: 0 0.8rem 2rem 0;
 	padding: 6px 7px;
-	width: 20rem;
+	width: auto;
 	text-indent: 18px;
 
 	${media.tablet`width: auto;`};
@@ -85,7 +82,7 @@ const Login = (props) => {
 	};
 
 	return (
-		<>
+		<StyledFlex>
 			<Navbar />
 
 			<CSSTransition in timeout={1000} classNames="fade" appear>
@@ -145,7 +142,7 @@ const Login = (props) => {
 			</CSSTransition>
 
 			<Footer />
-		</>
+		</StyledFlex>
 	);
 };
 
