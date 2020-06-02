@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import media from "../styles/media";
 import Navbar from "../components/Navbar";
@@ -65,10 +65,25 @@ const StyledInput = styled.input`
 	text-indent: 18px;
 
 	${media.tablet`width: auto;`};
-	
 `;
 
 const Login = (props) => {
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+
+	const handleUsernameChange = (event) => {
+		setUsername(event.target.value);
+	};
+
+	const handlePasswordChange = (event) => {
+		setPassword(event.target.value);
+	};
+
+	const handleSubmit = (event) => {
+		alert(`Username: ${username} and Password: ${password}`);
+		event.preventDefault();
+	};
+
 	return (
 		<>
 			<Navbar />
@@ -79,7 +94,7 @@ const Login = (props) => {
 						<User />
 					</StyledImage>
 
-					<form autoComplete="off">
+					<form autoComplete="off" onSubmit={(event) => handleSubmit(event)}>
 						<StyledInputContainer>
 							<IconContext.Provider
 								value={{
@@ -92,7 +107,13 @@ const Login = (props) => {
 								}}>
 								<MdMail />
 							</IconContext.Provider>
-							<StyledInput type="email" name="email" placeholder="Email" />
+							<StyledInput
+								type="email"
+								name="email"
+								placeholder="Email"
+								value={username}
+								onChange={(event) => handleUsernameChange(event)}
+							/>
 						</StyledInputContainer>
 
 						<StyledInputContainer>
@@ -111,10 +132,14 @@ const Login = (props) => {
 								type="password"
 								name="password"
 								placeholder="Password"
+								value={password}
+								onChange={(event) => handlePasswordChange(event)}
 							/>
 						</StyledInputContainer>
 
-						<Button color={colors.buttonGreen}>LOGIN</Button>
+						<Button color={colors.buttonGreen} type="submit">
+							LOGIN
+						</Button>
 					</form>
 				</StyledContainer>
 			</CSSTransition>
