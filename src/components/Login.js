@@ -26,8 +26,8 @@ const StyledContainer = styled.div`
 	box-shadow: 0 0 10px lightgray;
 	margin-top: 2rem;
 	padding: 2rem;
-	${media.tablet`flex-direction: column ; align-items: center; margin-top: 2rem;`}
-	${media.phablet`box-shadow: none; padding: 0;`}
+	${media.tablet`flex-direction: column ; align-items: center; margin-top: 1rem;`}
+	${media.thone`box-shadow: none; padding: 0;`}
 `;
 
 const StyledImage = styled.div`
@@ -37,9 +37,10 @@ const StyledImage = styled.div`
 	margin-bottom: 1rem;
 
 	svg {
-		width: 80%;
+		width: 70%;
 		padding: 0;
 		margin: 0;
+		${media.thone`width: 50%;`}
 	}
 `;
 

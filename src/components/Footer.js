@@ -7,7 +7,7 @@ import { sizes } from "../styles/media";
 
 const StyledFooter = styled.div`
 	display: flex;
-	flex-shrink: 0;
+	flex: 0 0 auto;
 	width: 100%;
 	margin: 0;
 	padding: 0;
