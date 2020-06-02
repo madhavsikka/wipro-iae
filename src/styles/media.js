@@ -9,6 +9,7 @@ export const sizes = {
 	phablet: 480,
 	phone: 376,
 	tiny: 330,
+	micro: 280,
 	landscape: 700,
 };
 
