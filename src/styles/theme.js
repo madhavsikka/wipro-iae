@@ -3,6 +3,8 @@ const theme = {
 		blue: "#0079A1",
 		green: "#66AE9C",
 		white: "#FFFFFF",
+		buttonGreen: "#4BCA81",
+		buttonGreenDark: "#39DB80",
 	},
 
 	fonts: {

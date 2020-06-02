@@ -3,21 +3,22 @@ import theme from "./theme";
 const { colors, fonts, fontSizes } = theme;
 
 const StyledButton = styled.button`
-	color: ${colors.blue};
-	background-color: transparent;
+	color: ${colors.white};
+	background: ${props => props.color};
 	font-family: ${fonts.Nexa};
-	font-weight: normal;
-	font-size: ${fontSizes.xxl};
+	font-weight: bold;
+	font-size: ${fontSizes.xl};
 	text-decoration: none;
 	outline: none;
-	cursor: pointer;
 	border: none;
 	border-radius: 5px;
+	cursor: pointer;
 	padding: 0.25rem 0.75rem;
 
 	&:hover,
 	&:focus {
-		border: 1px solid ${colors.blue};
+		background: ${colors.buttonGreenDark};
+		transition: background 200ms;
 	}
 
 	&:active {
