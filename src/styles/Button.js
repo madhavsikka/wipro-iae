@@ -13,8 +13,7 @@ const StyledButton = styled.button`
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;
-	padding: 0.25rem 0.75rem;
-
+	padding: 0.45rem 0.75rem;
 	&:hover,
 	&:focus {
 		background: ${colors.buttonGreenDark};

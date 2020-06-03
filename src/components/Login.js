@@ -18,36 +18,55 @@ const StyledFlex = styled.div`
 `;
 
 const StyledContainer = styled.div`
-	${mixins.flexContainerCenter};
-	flex-direction: row;
-	align-items: flex-start;
-	flex-grow: 0;
-	border-radius: 5px;
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	grid-template-areas:
+		"image input"
+		"image input"
+		"login login";
+	justify-items: center;
+	align-items: center;
 	box-shadow: 0 0 10px lightgray;
-	margin-top: 2rem;
 	padding: 2rem;
-	${media.tablet`flex-direction: column ; align-items: center; margin-top: 1rem;`}
-	${media.thone`box-shadow: none; padding: 0;`}
+	margin-top: 2rem;
+	${media.tablet`margin-top: 0;`}
+	${media.thone`
+		grid-template-areas:
+			"image"
+			"input"
+			"login";
+		grid-template-columns: auto;
+		padding: 0;
+		margin-top: 0;
+		box-shadow: none;
+	`}
+`;
+
+const StyledForm = styled.form`
+	grid-area: input;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 `;
 
 const StyledImage = styled.div`
 	display: flex;
 	justify-content: center;
-	align-items: center;
-	margin-bottom: 1rem;
+	grid-area: image;
 
 	svg {
-		width: 70%;
-		padding: 0;
+		width: 80%;
 		margin: 0;
-		${media.thone`width: 50%;`}
+		${media.thone`width: 60%;`}
 	}
 `;
 
 const StyledInputContainer = styled.div`
 	display: flex;
 	align-items: center;
+	padding: 1rem;
 	width: 100%;
+	${media.thone`padding: 1rem 0;`}
 `;
 
 const StyledInput = styled.input`
@@ -57,12 +76,9 @@ const StyledInput = styled.input`
 	outline: none;
 	border: 1px solid lightgray;
 	border-radius: 5px;
-	margin: 0 0.8rem 2rem 0;
 	padding: 6px 7px;
-	width: auto;
-	text-indent: 18px;
-
-	${media.tablet`width: auto;`};
+	text-indent: 20px;
+	margin-right: 10px;
 `;
 
 const Login = (props) => {
@@ -92,14 +108,14 @@ const Login = (props) => {
 						<User />
 					</StyledImage>
 
-					<form autoComplete="off" onSubmit={(event) => handleSubmit(event)}>
+					<StyledForm autoComplete="off">
 						<StyledInputContainer>
 							<IconContext.Provider
 								value={{
+									size: "18px",
 									style: {
 										position: "relative",
-										left: "20px",
-										bottom: "15px",
+										left: "22px",
 										color: "#AAAAAA",
 									},
 								}}>
@@ -117,10 +133,10 @@ const Login = (props) => {
 						<StyledInputContainer>
 							<IconContext.Provider
 								value={{
+									size: "18px",
 									style: {
 										position: "relative",
-										left: "20px",
-										bottom: "17px",
+										left: "22px",
 										color: "#AAAAAA",
 									},
 								}}>
@@ -134,11 +150,14 @@ const Login = (props) => {
 								onChange={(event) => handlePasswordChange(event)}
 							/>
 						</StyledInputContainer>
+					</StyledForm>
 
-						<Button color={colors.buttonGreen} type="submit">
-							LOGIN
-						</Button>
-					</form>
+					<Button
+						color={colors.buttonGreen}
+						onClick={(event) => handleSubmit(event)}
+						style={{ gridArea: "login", marginTop: "2rem" }}>
+						LOGIN
+					</Button>
 				</StyledContainer>
 			</CSSTransition>
 
