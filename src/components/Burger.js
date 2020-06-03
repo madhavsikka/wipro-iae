@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import theme from "../styles/theme";
+import media from "../styles/media.js";
 const { colors } = theme;
 
 const StyledBurger = styled.button`
@@ -14,7 +15,8 @@ const StyledBurger = styled.button`
 	cursor: pointer;
 	padding: 0;
 	position: absolute;
-	top: 35px;
+	top: 27px;
+	${media.phablet`top: 23px`};
 	right: 0;
 	right: 20px;
 	z-index: 100;

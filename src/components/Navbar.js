@@ -35,12 +35,12 @@ const StyledNav = styled.nav`
 
 const StyledLogo = styled.div`
 	display: flex;
+	margin-top: 4px;
 	a {
 		display: block;
 		width: 70px;
 	}
-	${media.tablet`width: 80px`};
-	${media.phablet`width: 60px`};
+	${media.phablet`margin-top: 4px; width: 60px`};
 `;
 
 const StyledList = styled.ul`
