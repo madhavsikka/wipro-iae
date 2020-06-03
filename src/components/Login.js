@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import media from "../styles/media";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import Button from "../styles/Button";
 import { ReactComponent as User } from "../images/User.svg";
+import LoginDesign from "../images/LoginDesign.svg";
 import { CSSTransition } from "react-transition-group";
 import theme from "../styles/theme";
 import mixins from "../styles/mixins";
@@ -17,33 +17,38 @@ const StyledFlex = styled.div`
 	${mixins.fullFlexCenter};
 `;
 
-const StyledContainer = styled.div`
-	display: grid;
-	grid-template-columns: 1fr 2fr;
-	grid-template-areas:
-		"image input"
-		"image input"
-		"login login";
-	justify-items: center;
+const StyledInFlex = styled.div`
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	justify-content: center;
 	align-items: center;
+	width: 100%;
+	background: url(${LoginDesign}) no-repeat center center fixed;
+	background-size: cover;
+`;
+
+const StyledContainer = styled.div`
+	flex-grow: 0;
+	background-color: white;
+	display: flex;
+	flex-direction: column;
 	box-shadow: 0 0 10px lightgray;
-	padding: 2rem;
-	margin-top: 2rem;
-	${media.tablet`margin-top: 0;`}
-	${media.thone`
-		grid-template-areas:
-			"image"
-			"input"
-			"login";
-		grid-template-columns: auto;
-		padding: 0;
-		margin-top: 0;
-		box-shadow: none;
-	`}
+	padding: 0rem 2rem 2rem;
+	align-items: center;
+	${media.thone`box-shadow: none; background-color: transparent; padding: 0;`}
+`;
+
+const StyledText = styled.p`
+	font-family: ${fonts.Montserrat};
+	font-size: ${fontSizes.xxl};
+	width: 100%;
+	padding-bottom: 12px;
+	margin-bottom: 0.4rem;
+	border-bottom: 1px solid lightgray;
 `;
 
 const StyledForm = styled.form`
-	grid-area: input;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -52,12 +57,12 @@ const StyledForm = styled.form`
 const StyledImage = styled.div`
 	display: flex;
 	justify-content: center;
-	grid-area: image;
+	margin-bottom: 1rem;
 
 	svg {
 		width: 80%;
 		margin: 0;
-		${media.thone`width: 60%;`}
+		/* ${media.thone`width: 60%;`} */
 	}
 `;
 
@@ -66,7 +71,7 @@ const StyledInputContainer = styled.div`
 	align-items: center;
 	padding: 1rem;
 	width: 100%;
-	${media.thone`padding: 1rem 0;`}
+	/* ${media.thone`padding: 1rem 0;`} */
 `;
 
 const StyledInput = styled.input`
@@ -101,67 +106,67 @@ const Login = (props) => {
 	return (
 		<StyledFlex>
 			<Navbar />
+			<StyledInFlex>
+				<CSSTransition in timeout={1000} classNames="fade" appear>
+					<StyledContainer>
+						<StyledText>LOGIN</StyledText>
+						<StyledImage>
+							<User />
+						</StyledImage>
 
-			<CSSTransition in timeout={1000} classNames="fade" appear>
-				<StyledContainer>
-					<StyledImage>
-						<User />
-					</StyledImage>
+						<StyledForm autoComplete="off">
+							<StyledInputContainer>
+								<IconContext.Provider
+									value={{
+										size: "18px",
+										style: {
+											position: "relative",
+											left: "22px",
+											color: "#AAAAAA",
+										},
+									}}>
+									<MdMail />
+								</IconContext.Provider>
+								<StyledInput
+									type="email"
+									name="email"
+									placeholder="Email"
+									value={username}
+									onChange={(event) => handleUsernameChange(event)}
+								/>
+							</StyledInputContainer>
 
-					<StyledForm autoComplete="off">
-						<StyledInputContainer>
-							<IconContext.Provider
-								value={{
-									size: "18px",
-									style: {
-										position: "relative",
-										left: "22px",
-										color: "#AAAAAA",
-									},
-								}}>
-								<MdMail />
-							</IconContext.Provider>
-							<StyledInput
-								type="email"
-								name="email"
-								placeholder="Email"
-								value={username}
-								onChange={(event) => handleUsernameChange(event)}
-							/>
-						</StyledInputContainer>
+							<StyledInputContainer>
+								<IconContext.Provider
+									value={{
+										size: "18px",
+										style: {
+											position: "relative",
+											left: "22px",
+											color: "#AAAAAA",
+										},
+									}}>
+									<FaLock />
+								</IconContext.Provider>
+								<StyledInput
+									type="password"
+									name="password"
+									placeholder="Password"
+									value={password}
+									onChange={(event) => handlePasswordChange(event)}
+								/>
+							</StyledInputContainer>
+						</StyledForm>
 
-						<StyledInputContainer>
-							<IconContext.Provider
-								value={{
-									size: "18px",
-									style: {
-										position: "relative",
-										left: "22px",
-										color: "#AAAAAA",
-									},
-								}}>
-								<FaLock />
-							</IconContext.Provider>
-							<StyledInput
-								type="password"
-								name="password"
-								placeholder="Password"
-								value={password}
-								onChange={(event) => handlePasswordChange(event)}
-							/>
-						</StyledInputContainer>
-					</StyledForm>
-
-					<Button
-						color={colors.buttonGreen}
-						onClick={(event) => handleSubmit(event)}
-						style={{ gridArea: "login", marginTop: "2rem" }}>
-						LOGIN
-					</Button>
-				</StyledContainer>
-			</CSSTransition>
-
-			<Footer />
+						<Button
+							color={colors.buttonGreen}
+							onClick={(event) => handleSubmit(event)}
+							style={{ marginTop: "2rem" }}>
+							LOGIN
+						</Button>
+					</StyledContainer>
+				</CSSTransition>
+			</StyledInFlex>
 		</StyledFlex>
 	);
 };
