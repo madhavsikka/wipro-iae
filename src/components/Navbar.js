@@ -17,7 +17,7 @@ const StyledContainer = styled.section`
 	flex-shrink: 0;
 	background-color: ${colors.white};
 	width: 100%;
-	height: 100px;
+	box-shadow: 0 8px 6px -7px lightgray;
 `;
 
 const StyledNav = styled.nav`
@@ -27,6 +27,7 @@ const StyledNav = styled.nav`
 	position: relative;
 	width: 100%;
 	padding-top: 0px;
+	margin: 0;
 	color: ${colors.blue};
 	font-family: ${fonts.Nexa};
 	font-size: ${fontSizes.xl};
@@ -36,7 +37,7 @@ const StyledLogo = styled.div`
 	display: flex;
 	a {
 		display: block;
-		width: 90px;
+		width: 70px;
 	}
 	${media.tablet`width: 80px`};
 	${media.phablet`width: 60px`};
