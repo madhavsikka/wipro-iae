@@ -83,18 +83,32 @@ const StyledContainer = styled.div`
 		flex-direction: column;
 		align-items: center;
 		background: white;
-		border-radius: 5px;
+		border-radius: 8px;
 		box-shadow: 0 0 10px lightgray;
-		padding: 0 2rem 2rem;
-		${media.thone`box-shadow: none; padding: 0;`}
+		padding: 0 0 2rem;
+		${media.thone`box-shadow: none;`}
 	}
 	${media.thone`padding: 0;`}
+`;
+
+const StyledText = styled.div`
+	font-size: ${fontSizes.xxl};
+	font-weight: normal;
+	align-self: stretch;
+	background: ${colors.blue};
+	color: white;
+	padding: 0.5rem 0;
+	margin-bottom: 1rem;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	box-shadow: 0 0 10px lightgray;
 `;
 
 const StyledForm = styled.form`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	align-items: stretch;
 `;
 
 const StyledImage = styled.div`
@@ -177,15 +191,9 @@ const Login = (props) => {
 				<CSSTransition in timeout={1000} classNames="fade" appear>
 					<StyledContainer>
 						<div>
-							<p
-								style={{
-									fontSize: fontSizes.xxl,
-									alignSelf: "stretch",
-									borderBottom: "1px solid lightgray",
-									paddingBottom: "1rem",
-								}}>
+							<StyledText>
 								LOGIN
-							</p>
+							</StyledText>
 							<StyledImage>
 								<User />
 							</StyledImage>
