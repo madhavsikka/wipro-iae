@@ -102,6 +102,7 @@ const StyledText = styled.div`
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
 	box-shadow: 0 0 10px lightgray;
+	${media.thone`display: none;`}
 `;
 
 const StyledForm = styled.form`
