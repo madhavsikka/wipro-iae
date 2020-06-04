@@ -87,7 +87,7 @@ const StyledContainer = styled.div`
 		padding: 0 0 2rem;
 		${media.thone`box-shadow: none;`}
 	}
-	${media.thone`padding: 0; margin-top: 4px;`}
+	${media.thone`padding: 0; margin-top: 8px;`}
 `;
 
 const StyledText = styled.div`
