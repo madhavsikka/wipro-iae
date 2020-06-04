@@ -85,9 +85,11 @@ const StyledContainer = styled.div`
 		border-radius: 8px;
 		box-shadow: 0 0 10px lightgray;
 		padding: 0 0 2rem;
+		width: 55%;
+		${media.desktop`width: auto;`}
 		${media.thone`box-shadow: none;`}
 	}
-	${media.thone`padding: 0; margin-top: 8px;`}
+	${media.thone`padding: 0; margin-top: 8px; box-shadow: none;`}
 `;
 
 const StyledText = styled.div`
@@ -191,9 +193,7 @@ const Login = (props) => {
 				<CSSTransition in timeout={1000} classNames="fade" appear>
 					<StyledContainer>
 						<div>
-							<StyledText>
-								LOGIN
-							</StyledText>
+							<StyledText>LOGIN</StyledText>
 							<StyledImage>
 								<User />
 							</StyledImage>
