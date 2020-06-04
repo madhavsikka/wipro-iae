@@ -33,11 +33,11 @@ const GlobalStyle = createGlobalStyle`
 
   .fade-appear-active {
     opacity: 1;
-    transition: opacity 1000ms;
-    -webkit-transition: opacity 1000ms;
-    -moz-transition: opacity 1000ms;
-    -o-transition: opacity 1000ms;
-    -ms-transition: opacity 1000ms;
+    transition: opacity 600ms;
+    -webkit-transition: opacity 600ms;
+    -moz-transition: opacity 600ms;
+    -o-transition: opacity 600ms;
+    -ms-transition: opacity 600ms;
   }
 
   .navlink-active {

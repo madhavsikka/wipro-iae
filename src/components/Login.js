@@ -164,7 +164,7 @@ const Login = (props) => {
 		<StyledFlex>
 			<Navbar />
 			<StyledInFlex>
-				<CSSTransition in timeout={1000} classNames="fade" appear>
+				<CSSTransition in timeout={600} classNames="fade" appear>
 					<StyledBanner>
 						<p>Log in to your account.</p>
 						<p>Wipro</p>
@@ -190,7 +190,7 @@ const Login = (props) => {
 					</StyledBanner>
 				</CSSTransition>
 
-				<CSSTransition in timeout={1000} classNames="fade" appear>
+				<CSSTransition in timeout={600} classNames="fade" appear>
 					<StyledContainer>
 						<div>
 							<StyledText>LOGIN</StyledText>

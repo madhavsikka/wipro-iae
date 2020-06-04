@@ -58,11 +58,11 @@ const StyledName = styled.div`
 const Home = () => {
 	return (
 		<StyledFlex>
-			<CSSTransition in timeout={1000} classNames="fade" appear>
+			<CSSTransition in timeout={600} classNames="fade" appear>
 				<Navbar />
 			</CSSTransition>
 
-			<CSSTransition in timeout={1000} classNames="fade" appear>
+			<CSSTransition in timeout={600} classNames="fade" appear>
 				<StyledContainer>
 					<StyledHead>WIPRO</StyledHead>
 					<StyledName>
@@ -73,7 +73,7 @@ const Home = () => {
 				</StyledContainer>
 			</CSSTransition>
 
-			<CSSTransition in timeout={1000} classNames="fade" appear>
+			<CSSTransition in timeout={600} classNames="fade" appear>
 				<Footer />
 			</CSSTransition>
 		</StyledFlex>
