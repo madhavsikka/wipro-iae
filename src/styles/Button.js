@@ -4,7 +4,7 @@ const { colors, fonts, fontSizes } = theme;
 
 const StyledButton = styled.button`
 	color: ${colors.white};
-	background: ${props => props.color};
+	background: ${(props) => props.color};
 	font-family: ${fonts.Nexa};
 	font-weight: bold;
 	font-size: ${fontSizes.xl};
@@ -14,10 +14,13 @@ const StyledButton = styled.button`
 	border-radius: 5px;
 	cursor: pointer;
 	min-width: 7rem;
-	padding: 0.50rem 0.75rem;
+	padding: 0.5rem 0.75rem;
 	&:hover,
 	&:focus {
-		background: ${colors.buttonGreenDark};
+		background: ${(props) => props.hoverColor};
+		a {
+			color: ${(props) => props.hoverText} !important;
+		}
 		transition: background 200ms;
 	}
 

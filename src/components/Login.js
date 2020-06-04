@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import media from "../styles/media";
 import Navbar from "../components/Navbar";
 import Button from "../styles/Button";
 import { ReactComponent as User } from "../images/User.svg";
-import LoginDesign from "../images/LoginDesign.svg";
 import { CSSTransition } from "react-transition-group";
 import theme from "../styles/theme";
 import mixins from "../styles/mixins";
@@ -19,33 +19,76 @@ const StyledFlex = styled.div`
 
 const StyledInFlex = styled.div`
 	display: flex;
-	flex-direction: column;
-	flex-grow: 1;
-	justify-content: center;
-	align-items: center;
+	justify-items: stretch;
+	align-items: stretch;
 	width: 100%;
-	background: url(${LoginDesign}) no-repeat center center fixed;
-	background-size: cover;
+	flex-grow: 1;
+`;
+
+const StyledBanner = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+	padding: 2rem;
+	background: ${colors.blue};
+	flex: 1 0 50%;
+	font-family: ${fonts.Montserrat};
+	font-size: ${fontSizes.h3};
+	color: white;
+	${media.desktop`display: none;`}
+
+	p {
+		margin: 0;
+		:first-child {
+			font-size: ${fontSizes.xxl};
+			font-weight: lighter;
+			margin-bottom: 4rem;
+		}
+
+		:nth-child(2) {
+			font-size: ${fontSizes.h1};
+			font-weight: bolder;
+		}
+
+		:nth-child(3) {
+			font-size: ${fontSizes.h5};
+			font-weight: lighter;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		:nth-child(4) {
+			font-size: ${fontSizes.xl};
+			font-weight: lighter;
+			margin-top: auto;
+			a {
+				text-decoration: none;
+				color: white;
+			}
+		}
+	}
 `;
 
 const StyledContainer = styled.div`
-	flex-grow: 0;
-	background-color: white;
 	display: flex;
 	flex-direction: column;
-	box-shadow: 0 0 10px lightgray;
-	padding: 0rem 2rem 2rem;
 	align-items: center;
-	${media.thone`box-shadow: none; background-color: transparent; padding: 0;`}
-`;
-
-const StyledText = styled.p`
-	font-family: ${fonts.Montserrat};
-	font-size: ${fontSizes.xxl};
-	width: 100%;
-	padding-bottom: 12px;
-	margin-bottom: 0.4rem;
-	border-bottom: 1px solid lightgray;
+	justify-content: center;
+	flex: 1 1 50%;
+	box-shadow: inset 0 0 12px lightgray;
+	& > div {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		background: white;
+		border-radius: 5px;
+		box-shadow: 0 0 10px lightgray;
+		padding: 0 2rem 2rem;
+		${media.thone`box-shadow: none; padding: 0;`}
+	}
+	${media.thone`padding: 0;`}
 `;
 
 const StyledForm = styled.form`
@@ -62,7 +105,6 @@ const StyledImage = styled.div`
 	svg {
 		width: 80%;
 		margin: 0;
-		/* ${media.thone`width: 60%;`} */
 	}
 `;
 
@@ -71,7 +113,6 @@ const StyledInputContainer = styled.div`
 	align-items: center;
 	padding: 1rem;
 	width: 100%;
-	/* ${media.thone`padding: 1rem 0;`} */
 `;
 
 const StyledInput = styled.input`
@@ -108,62 +149,99 @@ const Login = (props) => {
 			<Navbar />
 			<StyledInFlex>
 				<CSSTransition in timeout={1000} classNames="fade" appear>
+					<StyledBanner>
+						<p>Log in to your account.</p>
+						<p>Wipro</p>
+						<p>
+							<div>Independent</div>
+							<div>Assessment</div>
+							<div>Engine</div>
+						</p>
+						<p>
+							Don't have an account?
+							<Button
+								color="transparent"
+								hoverColor="white"
+								hoverText={colors.blue}
+								style={{
+									border: "1px solid white",
+									marginLeft: "1rem",
+									padding: "0.25rem 0.75rem",
+								}}>
+								<Link to="/register">Register</Link>
+							</Button>
+						</p>
+					</StyledBanner>
+				</CSSTransition>
+
+				<CSSTransition in timeout={1000} classNames="fade" appear>
 					<StyledContainer>
-						<StyledText>LOGIN</StyledText>
-						<StyledImage>
-							<User />
-						</StyledImage>
+						<div>
+							<p
+								style={{
+									fontSize: fontSizes.xxl,
+									alignSelf: "stretch",
+									borderBottom: "1px solid lightgray",
+									paddingBottom: "1rem",
+								}}>
+								LOGIN
+							</p>
+							<StyledImage>
+								<User />
+							</StyledImage>
 
-						<StyledForm autoComplete="off">
-							<StyledInputContainer>
-								<IconContext.Provider
-									value={{
-										size: "18px",
-										style: {
-											position: "relative",
-											left: "22px",
-											color: "#AAAAAA",
-										},
-									}}>
-									<MdMail />
-								</IconContext.Provider>
-								<StyledInput
-									type="email"
-									name="email"
-									placeholder="Email"
-									value={username}
-									onChange={(event) => handleUsernameChange(event)}
-								/>
-							</StyledInputContainer>
+							<StyledForm autoComplete="off">
+								<StyledInputContainer>
+									<IconContext.Provider
+										value={{
+											size: "18px",
+											style: {
+												position: "relative",
+												left: "22px",
+												color: "#AAAAAA",
+											},
+										}}>
+										<MdMail />
+									</IconContext.Provider>
+									<StyledInput
+										type="email"
+										name="email"
+										placeholder="Email"
+										value={username}
+										onChange={(event) => handleUsernameChange(event)}
+									/>
+								</StyledInputContainer>
 
-							<StyledInputContainer>
-								<IconContext.Provider
-									value={{
-										size: "18px",
-										style: {
-											position: "relative",
-											left: "22px",
-											color: "#AAAAAA",
-										},
-									}}>
-									<FaLock />
-								</IconContext.Provider>
-								<StyledInput
-									type="password"
-									name="password"
-									placeholder="Password"
-									value={password}
-									onChange={(event) => handlePasswordChange(event)}
-								/>
-							</StyledInputContainer>
-						</StyledForm>
+								<StyledInputContainer>
+									<IconContext.Provider
+										value={{
+											size: "18px",
+											style: {
+												position: "relative",
+												left: "22px",
+												color: "#AAAAAA",
+											},
+										}}>
+										<FaLock />
+									</IconContext.Provider>
+									<StyledInput
+										type="password"
+										name="password"
+										placeholder="Password"
+										value={password}
+										onChange={(event) => handlePasswordChange(event)}
+									/>
+								</StyledInputContainer>
+							</StyledForm>
 
-						<Button
-							color={colors.buttonGreen}
-							onClick={(event) => handleSubmit(event)}
-							style={{ marginTop: "2rem" }}>
-							LOGIN
-						</Button>
+							<Button
+								color={colors.buttonGreen}
+								hoverColor={colors.buttonGreenDark}
+								onClick={(event) => handleSubmit(event)}
+								style={{ marginTop: "2rem", width: "10rem" }}>
+								LOGIN
+							</Button>
+						</div>
 					</StyledContainer>
 				</CSSTransition>
 			</StyledInFlex>
