@@ -24,6 +24,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
     font-family: ${fonts.Montserrat};
   }
 
@@ -34,10 +38,6 @@ const GlobalStyle = createGlobalStyle`
   .fade-appear-active {
     opacity: 1;
     transition: opacity 600ms;
-    -webkit-transition: opacity 600ms;
-    -moz-transition: opacity 600ms;
-    -o-transition: opacity 600ms;
-    -ms-transition: opacity 600ms;
   }
 
   .navlink-active {

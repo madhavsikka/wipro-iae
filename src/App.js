@@ -3,7 +3,7 @@ import "./App.css";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import ExamDashboard from "./components/ExamDashboard";
+import ExamDashboard from "./components/ExamDashboard/ExamDashboard";
 import GlobalStyle from "./styles/GlobalStyle";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
