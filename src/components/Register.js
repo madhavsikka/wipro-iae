@@ -10,9 +10,10 @@ import theme from "../styles/theme";
 import mixins from "../styles/mixins";
 import { useAuth } from "../context/auth";
 import axios from 'axios';
-import { Card, Logo, Form, Input, Error } from "../components/AuthForms";
+
 
 const { colors, fonts, fontSizes } = theme;
+
 const StyledFlex = styled.div`
 	${mixins.fullFlexCenter};
 `;
@@ -135,7 +136,7 @@ const StyledInput = styled.input`
 	margin-bottom: 1rem;
 `;
 
-function Login() {
+const Register = (props) => {
 	const [isLoggedIn, setLoggedIn] = useState(false);
 	const [isError, setIsError] = useState(false);
 	const [userName, setUserName] = useState("");
