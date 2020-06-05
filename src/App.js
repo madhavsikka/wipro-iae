@@ -3,6 +3,7 @@ import "./App.css";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import ExamDashboard from "./components/ExamDashboard";
 import GlobalStyle from "./styles/GlobalStyle";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -18,6 +19,9 @@ function App() {
 						</Route>
 						<Route path="/register">
 							<Register />
+						</Route>
+						<Route path="/exam-dashboard">
+							<ExamDashboard />
 						</Route>
 						<Route path="/">
 							<Home />
