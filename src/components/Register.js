@@ -8,8 +8,11 @@ import { ReactComponent as User } from "../images/User.svg";
 import { CSSTransition } from "react-transition-group";
 import theme from "../styles/theme";
 import mixins from "../styles/mixins";
-const { colors, fonts, fontSizes } = theme;
+import { useAuth } from "../context/auth";
+import axios from 'axios';
+import { Card, Logo, Form, Input, Error } from "../components/AuthForms";
 
+const { colors, fonts, fontSizes } = theme;
 const StyledFlex = styled.div`
 	${mixins.fullFlexCenter};
 `;
@@ -132,22 +135,28 @@ const StyledInput = styled.input`
 	margin-bottom: 1rem;
 `;
 
-const Register = (props) => {
-	const [username, setUsername] = useState("");
+function Login() {
+	const [isLoggedIn, setLoggedIn] = useState(false);
+	const [isError, setIsError] = useState(false);
+	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
-
-	const handleUsernameChange = (event) => {
-		setUsername(event.target.value);
-	};
-
-	const handlePasswordChange = (event) => {
-		setPassword(event.target.value);
-	};
-
-	const handleSubmit = (event) => {
-		alert(`Username: ${username} and Password: ${password}`);
-		event.preventDefault();
-	};
+	const { setAuthTokens } = useAuth();
+  
+	function postLogin() {
+	  axios.post("https://www.somePlace.com/auth/login", {
+		userName,
+		password
+	  }).then(result => {
+		if (result.status === 200) {
+		  setAuthTokens(result.data);
+		  setLoggedIn(true);
+		} else {
+		  setIsError(true);
+		}
+	  }).catch(e => {
+		setIsError(true);
+	  });
+	}
 
 	return (
 		<StyledFlex>
@@ -192,22 +201,28 @@ const Register = (props) => {
 									type="text"
 									name="name"
 									placeholder="Full Name"
-									value={username}
-									onChange={(event) => handleUsernameChange(event)}
+									value={userName}
+									onChange={e => {
+										setUserName(e.target.value);
+									}}
 								/>
 								<StyledInput
 									type="email"
 									name="email"
 									placeholder="Email ID"
-									value={username}
-									onChange={(event) => handleUsernameChange(event)}
+									value={userName}
+									onChange={e => {
+										setUserName(e.target.value);
+									}}
 								/>
 								<StyledInput
 									type="text"
 									name="number"
 									placeholder="Contact Number"
-									value={username}
-									onChange={(event) => handleUsernameChange(event)}
+									value={userName}
+									onChange={e => {
+										setUserName(e.target.value);
+									}}
 								/>
 
 								<StyledInput
@@ -215,17 +230,20 @@ const Register = (props) => {
 									name="password"
 									placeholder="Create Password"
 									value={password}
-									onChange={(event) => handlePasswordChange(event)}
+									onChange={e => {
+										setPassword(e.target.value);
+									}}
 								/>
 							</StyledForm>
 
 							<Button
 								color={colors.buttonGreen}
 								hoverColor={colors.buttonGreenDark}
-								onClick={(event) => handleSubmit(event)}
+								onClick={postLogin}
 								style={{ marginTop: "2rem", width: "10rem" }}>
 								REGISTER
 							</Button>
+							{ isError &&<Error>The username or password provided were incorrect!</Error> }
 						</div>
 					</StyledContainer>
 				</CSSTransition>
