@@ -36,8 +36,8 @@ const QuestionBox = () => {
 	return (
 		<div>
 			Dashboard
-			{questions.map((question) => {
-				return <p>{question.question}</p>;
+			{questions.map((question, index) => {
+				return <p key={index}>{question.question}</p>;
 			})}
 		</div>
 	);
