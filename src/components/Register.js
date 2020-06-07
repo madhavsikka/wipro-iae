@@ -145,11 +145,7 @@ const countErrors = (errors) => {
 	return count;
 }
 
-const newUser = {
-	"fullName": this.fullName,
-    "email":this.email,
-    "password":this.password
-};
+
 
 class Register extends Component {
 
@@ -202,10 +198,15 @@ class Register extends Component {
 		this.setState({formValid: validateForm(this.state.errors)});
 		this.setState({errorCount: countErrors(this.state.errors)});
 		useEffect(() => {
+			const newUser = {
+				fullName: this.state.fullName,
+				email:this.state.email,
+				password:this.state.password
+			};
 			axios
-			.post(config.jsonDb.users, newUser)
+			.post(config.jsonDb.users, {newUser})
 			.then((res) => {
-				console.log("*** Post ***");
+				console.log(res);
 				console.log(res.data);
 			})
 			.catch((err) => {
