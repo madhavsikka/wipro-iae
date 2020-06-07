@@ -239,7 +239,7 @@ class Register extends Component {
 								<StyledForm autoComplete="off" onSubmit={this.handleSubmit} noValidate>
 									<StyledInput
 										type="text"
-										name="name"
+										name="fullName"
 										placeholder="Full Name"
 										htmlFor="fullName"
 										onChange={this.handleChange} 
