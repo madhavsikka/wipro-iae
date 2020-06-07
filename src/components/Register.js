@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Component } from 'react';
+import React, { useState,Component,useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import media from "../styles/media";
@@ -9,6 +8,8 @@ import { ReactComponent as User } from "../images/User.svg";
 import { CSSTransition } from "react-transition-group";
 import theme from "../styles/theme";
 import mixins from "../styles/mixins";
+import axios from 'axios';
+import config from "../config";
 const { colors, fonts, fontSizes } = theme;
 
 const StyledFlex = styled.div`
@@ -134,15 +135,21 @@ const validateForm = (errors) => {
 	  (val) => val.length > 0 && (valid = false)
 	);
 	return valid;
-  }
+}
   
-  const countErrors = (errors) => {
+const countErrors = (errors) => {
 	let count = 0;
 	Object.values(errors).forEach(
 	  (val) => val.length > 0 && (count = count+1)
 	);
 	return count;
-  }
+}
+
+const newUser = {
+	"fullName": this.fullName,
+    "email":this.email,
+    "password":this.password
+};
 
 class Register extends Component {
 
@@ -194,6 +201,17 @@ class Register extends Component {
 		event.preventDefault();
 		this.setState({formValid: validateForm(this.state.errors)});
 		this.setState({errorCount: countErrors(this.state.errors)});
+		useEffect(() => {
+			axios
+			.post(config.jsonDb.users, newUser)
+			.then((res) => {
+				console.log("*** Post ***");
+				console.log(res.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+		}, []);
 	}
 	  
 	render() {
