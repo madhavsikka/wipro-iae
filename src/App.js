@@ -3,33 +3,43 @@ import "./App.css";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import ExamDashboard from "./components/ExamDashboard/ExamDashboard";
+import UserDashboard from "./components/UserDashboard";
 import GlobalStyle from "./styles/GlobalStyle";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Exams from "./components/Exam/Exams";
+import ExamDetail from "./components/Exam/ExamDetail";
+import ExamDashboard from "./components/Exam/ExamDashboard/ExamDashboard";
 
 function App() {
 	return (
-		<>
+		<Router>
 			<GlobalStyle />
-			<Router>
-				<div className="App">
-					<Switch>
-						<Route path="/login">
-							<Login />
-						</Route>
-						<Route path="/register">
-							<Register />
-						</Route>
-						<Route path="/exam-dashboard">
-							<ExamDashboard />
-						</Route>
-						<Route path="/">
-							<Home />
-						</Route>
-					</Switch>
-				</div>
-			</Router>
-		</>
+			<div className="App">
+				<Switch>
+					<Route path="/login" exact>
+						<Login />
+					</Route>
+					<Route path="/register" exact>
+						<Register />
+					</Route>
+					<Route path="/user-dashboard" exact>
+						<UserDashboard />
+					</Route>
+					<Route path="/exams/:examId/exam-dashboard" exact>
+						<ExamDashboard />
+					</Route>
+					<Route path="/exams/:examId" exact>
+						<ExamDetail />
+					</Route>
+					<Route path="/exams" exact>
+						<Exams />
+					</Route>
+					<Route path="/">
+						<Home />
+					</Route>
+				</Switch>
+			</div>
+		</Router>
 	);
 }
 
