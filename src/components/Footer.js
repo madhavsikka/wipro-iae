@@ -7,13 +7,13 @@ import { sizes } from "../styles/media";
 
 const StyledFooter = styled.div`
 	display: flex;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	flex-shrink: 0;
+	flex: 0 0 auto;
 	width: 100%;
+	margin: 0;
+	padding: 0;
 	svg {
 		height: 100%;
+		width: 100%;
 	}
 `;
 
