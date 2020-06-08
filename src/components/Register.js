@@ -201,6 +201,7 @@ class Register extends Component {
 			const newUser = {
 				fullName: this.state.fullName,
 				email:this.state.email,
+				
 				password:this.state.password
 			};
 			axios
