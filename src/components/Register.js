@@ -199,9 +199,8 @@ class Register extends Component {
 		this.setState({errorCount: countErrors(this.state.errors)});
 		useEffect(() => {
 			const newUser = {
-				fullName: this.state.fullName,
+				fullName:this.state.fullName,
 				email:this.state.email,
-				
 				password:this.state.password
 			};
 			axios
@@ -209,6 +208,7 @@ class Register extends Component {
 			.then((res) => {
 				console.log(res);
 				console.log(res.data);
+				console.log("done");
 			})
 			.catch((err) => {
 				console.log(err);
