@@ -152,7 +152,6 @@ const QuestionBox = ({
 	useEffect(() => {
 		setCurrentQuestion(questions[selectedSection][selectedQuestionIndex]);
 		setIsMounted(true);
-		console.log(`@@@ ${selectedOptions.current}`);
 	}, [questions, selectedSection, selectedQuestionIndex]);
 
 	const getAlphabet = (index) => String.fromCharCode(65 + index);
