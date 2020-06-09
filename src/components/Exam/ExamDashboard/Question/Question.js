@@ -15,7 +15,7 @@ const StyledGrid = styled.div`
 		"QuestionBox	    ProgressBox"
 		"QuestionBox      ProgressBox"
 		"QuestionBox      ProgressBox";
-	grid-template-columns: 2fr 1fr;
+	grid-template-columns: 2.5fr 0.8fr;
 	grid-template-rows: 50px 50px calc(100% - 150px - 3rem) 50px;
 	gap: 1rem 1rem;
 `;
@@ -34,7 +34,10 @@ const Question = ({ examData }) => {
 
 	useEffect(() => {
 		if (examData) {
-			setNumOfQuestionsInSec(examData.numQuestions[examData.sections[0]]);
+			setNumOfQuestionsInSec(
+				examData.numQuestions[examData.sections[selectedSectionIndex]]
+			);
+			setSelectedQuestionIndex(0);
 			setIsMounted(true);
 			console.log(`Section No: ${selectedSectionIndex}`);
 		}
@@ -55,7 +58,13 @@ const Question = ({ examData }) => {
 							unmountOnExit>
 							<StyledGrid>
 								<WrapperDiv area="ProgressBox">
-									<ProgressBox />
+									<ProgressBox
+										selectedSectionName={examData.sections[selectedSectionIndex]}
+										selectedSectionIndex={selectedSectionIndex}
+										selectedQuestionIndex={selectedQuestionIndex}
+										setSelectedQuestionIndex={setSelectedQuestionIndex}
+										numOfQuestionsInSec={numOfQuestionsInSec}
+									/>
 								</WrapperDiv>
 								<WrapperDiv area="Timer">
 									<Timer />
@@ -78,6 +87,7 @@ const Question = ({ examData }) => {
 									<SectionBar
 										sections={examData.sections}
 										selectedSectionIndex={selectedSectionIndex}
+										setSelectedSectionIndex={setSelectedSectionIndex}
 									/>
 								</WrapperDiv>
 							</StyledGrid>
@@ -89,4 +99,4 @@ const Question = ({ examData }) => {
 	);
 };
 
-export default Question;
+export default React.memo(Question);

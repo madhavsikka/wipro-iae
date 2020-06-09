@@ -21,6 +21,7 @@ const StyledGroup = styled.div`
 `;
 
 const BottomBar = ({
+	setIsCleared,
 	selectedOptions,
 	selectedQuestionIndex,
 	setSelectedQuestionIndex,
@@ -32,7 +33,7 @@ const BottomBar = ({
 	const onClickNextHandler = () => {
 		let postData = [...selectedOptions.current];
 		axios
-			.post(`${config.jsonDb.responses}/test`, { postData })
+			.post(`${config.jsonDb.responses}`, { postData })
 			.then((res) => {
 				console.log(res);
 				console.log(res.data);
@@ -49,6 +50,11 @@ const BottomBar = ({
 			console.log("All questions attempted");
 		}
 		console.log("BB");
+	};
+
+	const onClickClearHandler = () => {
+		setIsCleared(true);
+		selectedOptions.current = [];
 	};
 
 	return (
@@ -70,7 +76,8 @@ const BottomBar = ({
 					hoverColor={colors.blueMunsell}
 					hoverText={colors.white}
 					weight="600"
-					style={{ marginLeft: "20px" }}>
+					style={{ marginLeft: "20px" }}
+					onClick={() => onClickClearHandler()}>
 					CLEAR RESPONSE
 				</Button>
 			</StyledGroup>
