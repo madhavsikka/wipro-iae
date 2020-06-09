@@ -22,7 +22,7 @@ const StyledHead = styled.div`
 	justify-content: center;
 	align-items: center;
 	font-family: ${fonts.Montserrat};
-	font-weight: bold;
+	font-weight: 700;
 	font-size: ${fontSizes.h1};
 	color: ${colors.blue};
 	margin-right: 15px;

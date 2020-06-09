@@ -105,6 +105,12 @@ const QuestionBox = ({
 	// const [selectedOptions, setSelectedOptions] = useState([]);
 	// const [selectedOptionsState, setSelectedOptionsState] = useState([]);
 
+	const toggleClass = (arr) => {
+		arr.forEach((el) => {
+			
+		})
+	}
+
 	const onClickOption = (e, alphabet) => {
 		if (selectedOptions.current.includes(alphabet)) {
 			selectedOptions.current = selectedOptions.current.filter(
@@ -152,6 +158,11 @@ const QuestionBox = ({
 	useEffect(() => {
 		setCurrentQuestion(questions[selectedSection][selectedQuestionIndex]);
 		setIsMounted(true);
+		return () => {
+			selectedOptions.current = [];
+			console.log("cleared");
+			console.log(selectedOptions.current);
+		};
 	}, [questions, selectedSection, selectedQuestionIndex]);
 
 	const getAlphabet = (index) => String.fromCharCode(65 + index);

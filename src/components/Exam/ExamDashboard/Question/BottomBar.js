@@ -49,13 +49,6 @@ const BottomBar = ({
 			console.log("All questions attempted");
 		}
 		console.log("BB");
-		console.log(selectedOptions.current);
-		selectedOptions.current.length = 0;
-		console.log(selectedOptions.current);
-		// selectedOptions.length = 0;
-		// console.log("Try");
-
-		// selectedOptions = [];
 	};
 
 	return (
