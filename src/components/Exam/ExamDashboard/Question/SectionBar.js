@@ -21,15 +21,18 @@ const StyledGroup = styled.div`
 
 const StyledButton = styled(Button)`
 	padding: 0.25rem;
+	margin-right: 20px;
 `;
 
 const SectionBar = ({
 	sections,
 	selectedSectionIndex,
 	setSelectedSectionIndex,
+	setSelectedQuestionIndex,
 }) => {
 	const onClickHandler = (event) => {
 		setSelectedSectionIndex(sections.indexOf(event.target.innerText));
+		setSelectedQuestionIndex(0);
 	};
 
 	return (
@@ -53,7 +56,6 @@ const SectionBar = ({
 						hoverColor={colors.blueMunsell}
 						hoverText={colors.white}
 						weight="600"
-						style={{ marginRight: "20px" }}
 						onClick={(event) => onClickHandler(event)}>
 						{section}
 					</StyledButton>

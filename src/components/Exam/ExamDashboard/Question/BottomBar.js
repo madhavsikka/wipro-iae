@@ -22,15 +22,29 @@ const StyledGroup = styled.div`
 
 const BottomBar = ({
 	setIsCleared,
+	questionState,
+	setQuestionState,
 	selectedOptions,
 	selectedQuestionIndex,
 	setSelectedQuestionIndex,
 	numOfQuestionsInSec,
+	selectedSection,
 	selectedSectionIndex,
 	setSelectedSectionIndex,
 	numOfSections,
 }) => {
+	const setQuestionStateHandler = (value) => {
+		setQuestionState((prevState) => {
+			let newState = JSON.parse(JSON.stringify(prevState));
+			newState[selectedSection][selectedQuestionIndex] = value;
+			console.log(JSON.stringify(newState));
+			return newState;
+		});
+	};
+
 	const onClickNextHandler = () => {
+		setQuestionStateHandler(config.questionState.submit);
+
 		let postData = [...selectedOptions.current];
 		axios
 			.post(`${config.jsonDb.responses}`, { postData })
@@ -49,12 +63,16 @@ const BottomBar = ({
 		} else {
 			console.log("All questions attempted");
 		}
-		console.log("BB");
 	};
 
 	const onClickClearHandler = () => {
+		setQuestionStateHandler(config.questionState.unvisited);
 		setIsCleared(true);
 		selectedOptions.current = [];
+	};
+
+	const onClickReviewHandler = () => {
+		setQuestionStateHandler(config.questionState.review);
 	};
 
 	return (
@@ -66,7 +84,8 @@ const BottomBar = ({
 					borderColor={colors.blueMunsell}
 					hoverColor={colors.blueMunsell}
 					hoverText={colors.white}
-					weight="600">
+					weight="600"
+					onClick={() => onClickReviewHandler()}>
 					MARK FOR REVIEW
 				</Button>
 				<Button

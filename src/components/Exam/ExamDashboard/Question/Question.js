@@ -30,7 +30,21 @@ const Question = ({ examData }) => {
 	const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(0);
 	const [selectedSectionIndex, setSelectedSectionIndex] = useState(0);
 	const [numOfQuestionsInSec, setNumOfQuestionsInSec] = useState(0);
+	const [questionState, setQuestionState] = useState({});
 	const [isMounted, setIsMounted] = useState(false);
+
+	useEffect(() => {
+		if (examData) {
+			let object = {};
+			examData.sections.forEach((sec) => {
+				let sectionArray;
+				(sectionArray = []).length = examData.numQuestions[sec];
+				sectionArray.fill(0);
+				object[sec] = [...sectionArray];
+			});
+			setQuestionState(object);
+		}
+	}, [examData]);
 
 	useEffect(() => {
 		if (examData) {
@@ -59,7 +73,11 @@ const Question = ({ examData }) => {
 							<StyledGrid>
 								<WrapperDiv area="ProgressBox">
 									<ProgressBox
-										selectedSectionName={examData.sections[selectedSectionIndex]}
+										questionState={questionState}
+										setQuestionState={setQuestionState}
+										selectedSectionName={
+											examData.sections[selectedSectionIndex]
+										}
 										selectedSectionIndex={selectedSectionIndex}
 										selectedQuestionIndex={selectedQuestionIndex}
 										setSelectedQuestionIndex={setSelectedQuestionIndex}
@@ -73,6 +91,8 @@ const Question = ({ examData }) => {
 									{console.log("Q")}
 									<QuestionBox
 										questions={examData.questions}
+										questionState={questionState}
+										setQuestionState={setQuestionState}
 										selectedSection={examData.sections[selectedSectionIndex]}
 										selectedQuestionIndex={selectedQuestionIndex}
 										setSelectedQuestionIndex={setSelectedQuestionIndex}
@@ -88,6 +108,7 @@ const Question = ({ examData }) => {
 										sections={examData.sections}
 										selectedSectionIndex={selectedSectionIndex}
 										setSelectedSectionIndex={setSelectedSectionIndex}
+										setSelectedQuestionIndex={setSelectedQuestionIndex}
 									/>
 								</WrapperDiv>
 							</StyledGrid>

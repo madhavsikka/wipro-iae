@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import theme from "../../../../styles/theme";
+import config from "../../../../config";
 import AnswerOption from "./AnswerOption";
 import BottomBar from "./BottomBar";
 const { fontSizes } = theme;
@@ -51,6 +52,8 @@ const StyledOption = styled.div`
 
 const QuestionBox = ({
 	questions,
+	questionState,
+	setQuestionState,
 	selectedQuestionIndex,
 	setSelectedQuestionIndex,
 	numOfQuestionsInSec,
@@ -63,6 +66,7 @@ const QuestionBox = ({
 	const [isMounted, setIsMounted] = useState(false);
 	const [isCleared, setIsCleared] = useState(false);
 	const selectedOptions = useRef([]);
+	let hasSelected = false;
 
 	const onClickOptionHandler = (alphabet) => {
 		if (selectedOptions.current.includes(alphabet)) {
@@ -72,8 +76,20 @@ const QuestionBox = ({
 		} else {
 			selectedOptions.current.push(alphabet);
 		}
-		console.log(selectedOptions.current);
-		console.log(alphabet);
+		if (!hasSelected) {
+			setQuestionState((prevState) => {
+				if (
+					prevState[selectedSection][selectedQuestionIndex] ===
+					config.questionState.unvisited
+				) {
+					let newState = JSON.parse(JSON.stringify(prevState));
+					newState[selectedSection][selectedQuestionIndex] =
+						config.questionState.visited_unattempted;
+					hasSelected = true;
+					return newState;
+				}
+			});
+		}
 	};
 
 	useEffect(() => {
@@ -102,7 +118,11 @@ const QuestionBox = ({
 									<StyledOption
 										key={`${selectedSection}${selectedQuestionIndex}${index}`}
 										onClick={() => onClickOptionHandler(alphabet)}>
-										<AnswerOption isCleared={isCleared} alphabet={alphabet} option={option} />
+										<AnswerOption
+											isCleared={isCleared}
+											alphabet={alphabet}
+											option={option}
+										/>
 									</StyledOption>
 								);
 							})}
@@ -112,10 +132,12 @@ const QuestionBox = ({
 			</StyledBox>
 			<BottomBar
 				setIsCleared={setIsCleared}
+				setQuestionState={setQuestionState}
 				selectedOptions={selectedOptions}
 				selectedQuestionIndex={selectedQuestionIndex}
 				setSelectedQuestionIndex={setSelectedQuestionIndex}
 				numOfQuestionsInSec={numOfQuestionsInSec}
+				selectedSection={selectedSection}
 				selectedSectionIndex={selectedSectionIndex}
 				setSelectedSectionIndex={setSelectedSectionIndex}
 				numOfSections={numOfSections}
