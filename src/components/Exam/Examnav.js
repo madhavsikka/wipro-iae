@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as WiproLogo } from "../../../images/WiproLogo.svg";
-import { ReactComponent as UserLogo } from "../../../images/User.svg";
+import { ReactComponent as WiproLogo } from "../../images/WiproLogo.svg";
+import { ReactComponent as UserLogo } from "../../images/User.svg";
 import { NavLink } from "react-router-dom";
-import theme from "../../../styles/theme";
-import media from "../../../styles/media";
+import theme from "../../styles/theme";
+import media from "../../styles/media";
 const { colors, fonts, fontSizes } = theme;
 
 const StyledContainer = styled.section`
@@ -57,7 +57,7 @@ const StyledHeader = styled.div`
 	user-select: none;
 `;
 
-const Topbar = ({ examName }) => {
+const Examnav = ({ examName }) => {
 	return (
 		<StyledContainer>
 			<StyledNav>
@@ -75,4 +75,4 @@ const Topbar = ({ examName }) => {
 	);
 };
 
-export default Topbar;
+export default Examnav;

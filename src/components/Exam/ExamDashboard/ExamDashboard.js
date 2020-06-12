@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import mixins from "../../../styles/mixins";
 import QuestionArea from "./Question/QuestionArea";
-import Topbar from "./Topbar";
+import Examnav from "../Examnav";
 import { useLocation, Redirect } from "react-router-dom";
 
 const StyledContainer = styled.div`
@@ -17,7 +17,7 @@ const ExamDashboard = () => {
 		<>
 			{data ? (
 				<StyledContainer>
-					<Topbar examName={data.examData.name} />
+					<Examnav examName={data.examData.name} />
 					<QuestionArea examData={data.examData} />
 				</StyledContainer>
 			) : (
