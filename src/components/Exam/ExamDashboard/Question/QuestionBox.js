@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import theme from "../../../../styles/theme";
 import config from "../../../../config";
@@ -129,7 +129,7 @@ const QuestionBox = ({
 	useEffect(() => {
 		return () => {
 			selectedOptions.current = [];
-			isCleared.current=false;
+			isCleared.current = false;
 		};
 	}, [currentQuestion]);
 

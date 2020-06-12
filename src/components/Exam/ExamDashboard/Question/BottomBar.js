@@ -20,10 +20,6 @@ const StyledGroup = styled.div`
 	padding: 0;
 `;
 
-const StyledButton = styled(Button)`
-	pointer-events: ${(props) => (props.disable ? "none" : "default")};
-`;
-
 const BottomBar = ({
 	isCleared,
 	questionState,
