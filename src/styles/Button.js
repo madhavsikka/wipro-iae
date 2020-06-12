@@ -3,6 +3,7 @@ import theme from "./theme";
 const { colors, fonts, fontSizes } = theme;
 
 const StyledButton = styled.button`
+	user-select: none;
 	color: ${(props) => props.textColor || colors.white};
 	background: ${(props) => props.color || "transparent"};
 	font-family: ${fonts.Montserrat};
@@ -25,6 +26,9 @@ const StyledButton = styled.button`
 		> * {
 			color: ${(props) => props.hoverText} !important;
 		}
+	}
+	:disabled{
+		cursor: not-allowed;
 	}
 `;
 

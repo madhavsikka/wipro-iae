@@ -10,43 +10,57 @@ const StyledProgressBox = styled.div`
 	flex-direction: column;
 	justify-content: space-between;
 	height: 100%;
+	border-radius: 5px;
 	background: ${colors.cultured};
-	padding: 1rem 1rem 0;
+	padding: 0;
 `;
 
-const StyledBox = styled.div`
-	display: grid;
-	padding: 1rem 0;
-	grid-gap: 1rem;
-	grid-template-columns: repeat(auto-fill, minmax(2rem, 1fr));
+const StyledContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 0;
+	margin: 0;
 `;
 
 const StyledText = styled.div`
 	display: flex;
 	flex-direction: column;
-	color: ${colors.blueMunsell};
+	justify-content: center;
+	background: ${colors.blueMunsell};
+	color: white;
+	height: 40px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 	font-size: ${fontSizes.xl};
-	font-weight: 700;
-	padding-bottom: 8px;
-	border-bottom: 1.5px solid ${colors.blueMunsell};
+	font-weight: 500;
+	box-shadow: 0 8px 4px -7px lightgray;
+	user-select: none;
+`;
+
+const StyledBox = styled.div`
+	display: grid;
+	padding: 2rem 1rem;
+	grid-gap: 1rem;
+	grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr));
 `;
 
 const StyledDiv = styled.div`
 	display: flex;
+	user-select: none;
 	cursor: pointer;
 	font-weight: 700;
 	font-size: ${fontSizes.xl};
 	justify-content: center;
 	align-items: center;
-	border-radius: 5px;
-	padding: 0.6rem 1.2rem;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
 	transition: border, background 100ms linear;
 	border: ${(props) =>
 		props.selected
 			? `2px solid ${colors.blueSapphire}`
 			: `2px solid ${colors.blueMunsell}`};
-	/* background: ${(props) =>
-		props.selected ? colors.indigo : "transparent"}; */
 	background: ${(props) => {
 		if (props.selected) {
 			return colors.indigo;
@@ -67,7 +81,8 @@ const StyledDiv = styled.div`
 	color: ${(props) => (props.selected ? "white" : colors.blueMunsell)};
 
 	:hover {
-		background: ${(props) => (props.selected ? colors.indigo : colors.blueMunsell)};
+		background: ${(props) =>
+			props.selected ? colors.indigo : colors.blueMunsell};
 		border-color: ${(props) =>
 			props.selected ? colors.indigo : colors.blueMunsell};
 		color: ${colors.white};
@@ -78,6 +93,7 @@ const ButtonBox = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	padding: 1rem;
 
 	> div {
 		display: flex;
@@ -104,34 +120,36 @@ const ProgressBox = ({
 		});
 	};
 	const onClickHandler = (event) => {
-		setSelectedQuestionIndex(event.target.innerText - 1);
-		if (
-			questionState[selectedSectionName][selectedQuestionIndex] ===
-			config.questionState.unvisited
-		) {
-			setQuestionStateHandler(config.questionState.visited_unattempted);
+		if (selectedQuestionIndex !== +event.target.innerText - 1) {
+			setSelectedQuestionIndex(+event.target.innerText - 1);
+			if (
+				questionState[selectedSectionName][selectedQuestionIndex] ===
+				config.questionState.unvisited
+			) {
+				setQuestionStateHandler(config.questionState.visited_unattempted);
+			}
 		}
 	};
 
 	return (
 		<StyledProgressBox>
-			<StyledText>
-				<div>Question Panel</div>
-				<div>{selectedSectionName}</div>
-			</StyledText>
-			<StyledBox>
-				{[...Array(+numOfQuestionsInSec)].map((_, i) => {
-					return (
-						<StyledDiv
-							key={`${selectedSectionIndex}${i}`}
-							selected={selectedQuestionIndex === i}
-							state={questionState[selectedSectionName][i]}
-							onClick={(event) => onClickHandler(event)}>
-							{i + 1}
-						</StyledDiv>
-					);
-				})}
-			</StyledBox>
+			<StyledContainer>
+				<StyledText>Question Panel</StyledText>
+				<StyledBox>
+					{[...Array(+numOfQuestionsInSec)].map((_, i) => {
+						return (
+							<StyledDiv
+								key={`${selectedSectionIndex}${i}`}
+								selected={selectedQuestionIndex === i}
+								state={questionState[selectedSectionName][i]}
+								onClick={(event) => onClickHandler(event)}>
+								{i + 1}
+							</StyledDiv>
+						);
+					})}
+				</StyledBox>
+			</StyledContainer>
+
 			<ButtonBox>
 				<div>
 					<Button

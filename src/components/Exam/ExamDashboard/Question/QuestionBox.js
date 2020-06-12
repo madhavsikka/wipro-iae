@@ -4,14 +4,14 @@ import theme from "../../../../styles/theme";
 import config from "../../../../config";
 import AnswerOption from "./AnswerOption";
 import BottomBar from "./BottomBar";
-const { fontSizes } = theme;
+const { colors, fontSizes } = theme;
 
 const StyledContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	margin: 0;
-	padding: 0;
+	padding: 0 0 1rem 0;
 	height: 100%;
 `;
 
@@ -22,18 +22,66 @@ const StyledBox = styled.div`
 	align-items: flex-start;
 	box-shadow: 0 0 12px lightgray;
 	border-radius: 5px;
-	padding: 12px;
+	padding: 0 0 12px 0;
 	margin-bottom: 1rem;
 	flex: 1;
 	height: 100%;
 	width: 100%;
-	overflow-y: scroll;
+	overflow-y: auto;
+`;
+
+const StyledBar = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 40px;
+	width: 100%;
+	padding: 0;
+	box-shadow: 0 8px 6px -7px lightgray;
+	background: ${colors.blueMunsell};
+	color: white;
+`;
+
+const StyledQNum = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: ${fontSizes.xl};
+	font-weight: 500;
+	padding: 0 1rem;
+	user-select: none;
+`;
+
+const StyledQDetails = styled(StyledQNum)`
+	justify-content: space-between;
+`;
+
+const StyledMarking = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 8px 0rem 8px 2rem;
+	padding: 0;
+	border-radius: 4px;
+	background: white;
+	color: ${colors.blueMunsell};
+	p {
+		width: 40px;
+		padding: 2px 0;
+		margin: 0;
+		:first-child {
+			border-right: 1.25px solid ${colors.blueMunsell};
+		}
+		:last-child {
+			border-left: 1.25px solid ${colors.blueMunsell};
+		}
+	}
 `;
 
 const StyledQuestion = styled.div`
 	font-size: ${fontSizes.lg};
 	font-weight: bold;
-	margin: 12px;
+	padding: 12px;
 	text-align: left;
 `;
 
@@ -42,7 +90,7 @@ const StyledOptionBox = styled.div`
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: flex-start;
-	margin: 12px;
+	padding: 12px;
 `;
 
 const StyledOption = styled.div`
@@ -61,12 +109,13 @@ const QuestionBox = ({
 	selectedSectionIndex,
 	setSelectedSectionIndex,
 	numOfSections,
+	marking,
 }) => {
 	const [currentQuestion, setCurrentQuestion] = useState("");
 	const [isMounted, setIsMounted] = useState(false);
 	const [isCleared, setIsCleared] = useState(false);
 	const selectedOptions = useRef([]);
-	let hasSelected = false;
+	const [hasSelected, setHasSelected] = useState(false);
 
 	const onClickOptionHandler = (alphabet) => {
 		if (selectedOptions.current.includes(alphabet)) {
@@ -77,6 +126,7 @@ const QuestionBox = ({
 			selectedOptions.current.push(alphabet);
 		}
 		if (!hasSelected) {
+			console.log("HERE");
 			setQuestionState((prevState) => {
 				if (
 					prevState[selectedSection][selectedQuestionIndex] ===
@@ -85,7 +135,7 @@ const QuestionBox = ({
 					let newState = JSON.parse(JSON.stringify(prevState));
 					newState[selectedSection][selectedQuestionIndex] =
 						config.questionState.visited_unattempted;
-					hasSelected = true;
+					setHasSelected(true);
 					return newState;
 				}
 			});
@@ -97,8 +147,7 @@ const QuestionBox = ({
 		setIsMounted(true);
 		return () => {
 			selectedOptions.current = [];
-			console.log("cleared");
-			console.log(selectedOptions.current);
+			setIsCleared(false);
 		};
 	}, [questions, selectedSection, selectedQuestionIndex]);
 
@@ -109,7 +158,20 @@ const QuestionBox = ({
 			<StyledBox>
 				{!isMounted ? null : (
 					<>
-						<StyledQuestion>{`${currentQuestion.question} --- ${selectedSection} --- ${selectedQuestionIndex}`}</StyledQuestion>
+						<StyledBar>
+							<StyledQNum>{`QUESTION ${selectedQuestionIndex + 1}`}</StyledQNum>
+							<StyledQDetails>
+								<p>{`${currentQuestion.type.toUpperCase()} CORRECT`}</p>
+								<StyledMarking>
+									<p>{`+${marking[currentQuestion.type]["positive"]}`}</p>
+									<p>{`-${marking[currentQuestion.type]["negative"]}`}</p>
+								</StyledMarking>
+								{/* <StyledMarking>{`-${
+									marking[currentQuestion.type]["negative"]
+								}`}</StyledMarking> */}
+							</StyledQDetails>
+						</StyledBar>
+						<StyledQuestion>{currentQuestion.question}</StyledQuestion>
 
 						<StyledOptionBox>
 							{currentQuestion.options.map((option, index) => {
@@ -132,6 +194,7 @@ const QuestionBox = ({
 			</StyledBox>
 			<BottomBar
 				setIsCleared={setIsCleared}
+				questionState={questionState}
 				setQuestionState={setQuestionState}
 				selectedOptions={selectedOptions}
 				selectedQuestionIndex={selectedQuestionIndex}

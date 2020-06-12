@@ -9,6 +9,7 @@ const StyledBar = styled.div`
 	${mixins.flexBar};
 	grid-area: ${(props) => props.area};
 	background: ${colors.cultured};
+	user-select: none;
 `;
 
 const StyledGroup = styled.div`
@@ -22,6 +23,8 @@ const StyledGroup = styled.div`
 const StyledButton = styled(Button)`
 	padding: 0.25rem;
 	margin-right: 20px;
+	background: ${(props) => (props.active ? colors.blueMunsell : "transparent")};
+	color: ${(props) => (props.active ? "white" : colors.blueMunsell)};
 `;
 
 const SectionBar = ({
@@ -56,6 +59,7 @@ const SectionBar = ({
 						hoverColor={colors.blueMunsell}
 						hoverText={colors.white}
 						weight="600"
+						active={selectedSectionIndex === i}
 						onClick={(event) => onClickHandler(event)}>
 						{section}
 					</StyledButton>

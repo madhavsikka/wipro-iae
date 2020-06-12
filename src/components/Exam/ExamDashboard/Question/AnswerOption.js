@@ -16,6 +16,7 @@ const StyledOption = styled.div`
 		margin: 12px 12px 12px 0;
 		border-radius: 5px;
 		flex-grow: 0;
+		user-select: none;
 
 		:last-child {
 			flex: 1 0 12rem;
@@ -50,14 +51,10 @@ const AnswerOption = ({ isCleared, alphabet, option }) => {
 		setIsSelected((prevState) => !prevState);
 	};
 
-	useEffect(() => {
-		if (isCleared) {
-			setIsSelected(false);
-		}
-	}, [isCleared]);
-
 	return (
-		<StyledOption isSelected={isSelected} onClick={() => onClickHandler()}>
+		<StyledOption
+			isSelected={isSelected && !isCleared}
+			onClick={() => onClickHandler()}>
 			<div>{alphabet}</div>
 			<div>{option}</div>
 		</StyledOption>

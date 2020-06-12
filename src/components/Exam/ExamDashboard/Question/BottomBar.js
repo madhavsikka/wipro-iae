@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Button from "../../../../styles/Button";
 import theme from "../../../../styles/theme";
@@ -72,7 +72,10 @@ const BottomBar = ({
 	};
 
 	const onClickReviewHandler = () => {
-		setQuestionStateHandler(config.questionState.review);
+		questionState[selectedSection][selectedQuestionIndex] ===
+		config.questionState.review
+			? setQuestionStateHandler(config.questionState.visited_unattempted)
+			: setQuestionStateHandler(config.questionState.review);
 	};
 
 	return (
@@ -86,7 +89,10 @@ const BottomBar = ({
 					hoverText={colors.white}
 					weight="600"
 					onClick={() => onClickReviewHandler()}>
-					MARK FOR REVIEW
+					{questionState[selectedSection][selectedQuestionIndex] ===
+					config.questionState.review
+						? "UNMARK"
+						: "MARK FOR REVIEW"}
 				</Button>
 				<Button
 					textColor={colors.blueMunsell}
@@ -100,6 +106,7 @@ const BottomBar = ({
 					CLEAR RESPONSE
 				</Button>
 			</StyledGroup>
+			{console.log(selectedOptions.current)}
 			<Button
 				textColor={colors.white}
 				color={colors.blueSapphire}
@@ -108,6 +115,7 @@ const BottomBar = ({
 				hoverColor={colors.indigo}
 				hoverText={colors.white}
 				weight="600"
+				disabled={selectedOptions.current.length === 0 ? "disabled" : ""}
 				onClick={() => onClickNextHandler()}>
 				SAVE AND NEXT
 			</Button>

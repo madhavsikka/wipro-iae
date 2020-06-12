@@ -26,7 +26,7 @@ const WrapperDiv = styled.div`
 	grid-area: ${(props) => props.area};
 `;
 
-const Question = ({ examData }) => {
+const QuestionArea = ({ examData }) => {
 	const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(0);
 	const [selectedSectionIndex, setSelectedSectionIndex] = useState(0);
 	const [numOfQuestionsInSec, setNumOfQuestionsInSec] = useState(0);
@@ -85,7 +85,7 @@ const Question = ({ examData }) => {
 									/>
 								</WrapperDiv>
 								<WrapperDiv area="Timer">
-									<Timer />
+									<Timer duration={examData.duration} />
 								</WrapperDiv>
 								<WrapperDiv area="QuestionBox">
 									{console.log("Q")}
@@ -100,6 +100,7 @@ const Question = ({ examData }) => {
 										selectedSectionIndex={selectedSectionIndex}
 										setSelectedSectionIndex={setSelectedSectionIndex}
 										numOfSections={examData.sections.length}
+										marking={examData.marking}
 									/>
 								</WrapperDiv>
 
@@ -120,4 +121,4 @@ const Question = ({ examData }) => {
 	);
 };
 
-export default React.memo(Question);
+export default React.memo(QuestionArea);
