@@ -36,6 +36,7 @@ const SectionBar = ({
 	const onClickHandler = (event) => {
 		setSelectedSectionIndex(sections.indexOf(event.target.innerText));
 		setSelectedQuestionIndex(0);
+		console.log(sections.indexOf(event.target.innerText));
 	};
 
 	return (

@@ -15,7 +15,7 @@ const ExamDashboard = () => {
 
 	return (
 		<>
-			{data.examData ? (
+			{data ? (
 				<StyledContainer>
 					<Topbar examName={data.examData.name} />
 					<QuestionArea examData={data.examData} />

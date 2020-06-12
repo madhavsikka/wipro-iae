@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { CSSTransition } from "react-transition-group";
 import { Redirect } from "react-router-dom";
@@ -29,33 +29,29 @@ const WrapperDiv = styled.div`
 const QuestionArea = ({ examData }) => {
 	const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(0);
 	const [selectedSectionIndex, setSelectedSectionIndex] = useState(0);
-	const [numOfQuestionsInSec, setNumOfQuestionsInSec] = useState(0);
-	const [questionState, setQuestionState] = useState({});
 	const [isMounted, setIsMounted] = useState(false);
 
-	useEffect(() => {
-		if (examData) {
-			let object = {};
-			examData.sections.forEach((sec) => {
-				let sectionArray;
-				(sectionArray = []).length = examData.numQuestions[sec];
-				sectionArray.fill(0);
-				object[sec] = [...sectionArray];
-			});
-			setQuestionState(object);
-		}
-	}, [examData]);
+	const numOfQuestionsInSec = useRef([]);
+	const questionState = useRef({});
+
+	if (Object.keys(questionState.current).length === 0 && examData) {
+		examData.sections.forEach((sec) => {
+			let sectionArray;
+			(sectionArray = []).length = examData.numQuestions[sec];
+			sectionArray.fill(0);
+			questionState.current[sec] = [...sectionArray];
+		});
+	}
+
+	if (Object.keys(numOfQuestionsInSec.current).length === 0 && examData) {
+		Object.values(examData.numQuestions).forEach((num) => {
+			numOfQuestionsInSec.current.push(+num);
+		});
+	}
 
 	useEffect(() => {
-		if (examData) {
-			setNumOfQuestionsInSec(
-				examData.numQuestions[examData.sections[selectedSectionIndex]]
-			);
-			setSelectedQuestionIndex(0);
-			setIsMounted(true);
-			console.log(`Section No: ${selectedSectionIndex}`);
-		}
-	}, [examData, selectedSectionIndex]);
+		setIsMounted(true);
+	}, [setIsMounted]);
 
 	return (
 		<>
@@ -73,15 +69,14 @@ const QuestionArea = ({ examData }) => {
 							<StyledGrid>
 								<WrapperDiv area="ProgressBox">
 									<ProgressBox
-										questionState={questionState}
-										setQuestionState={setQuestionState}
+										questionState={questionState.current}
 										selectedSectionName={
 											examData.sections[selectedSectionIndex]
 										}
 										selectedSectionIndex={selectedSectionIndex}
 										selectedQuestionIndex={selectedQuestionIndex}
 										setSelectedQuestionIndex={setSelectedQuestionIndex}
-										numOfQuestionsInSec={numOfQuestionsInSec}
+										numOfQuestionsInSec={numOfQuestionsInSec.current}
 									/>
 								</WrapperDiv>
 								<WrapperDiv area="Timer">
@@ -91,12 +86,11 @@ const QuestionArea = ({ examData }) => {
 									{console.log("Q")}
 									<QuestionBox
 										questions={examData.questions}
-										questionState={questionState}
-										setQuestionState={setQuestionState}
-										selectedSection={examData.sections[selectedSectionIndex]}
+										questionState={questionState.current}
+										selectedSectionName={examData.sections[selectedSectionIndex]}
 										selectedQuestionIndex={selectedQuestionIndex}
 										setSelectedQuestionIndex={setSelectedQuestionIndex}
-										numOfQuestionsInSec={numOfQuestionsInSec}
+										numOfQuestionsInSec={numOfQuestionsInSec.current}
 										selectedSectionIndex={selectedSectionIndex}
 										setSelectedSectionIndex={setSelectedSectionIndex}
 										numOfSections={examData.sections.length}

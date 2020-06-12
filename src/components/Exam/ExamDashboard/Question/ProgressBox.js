@@ -104,7 +104,6 @@ const ButtonBox = styled.div`
 
 const ProgressBox = ({
 	questionState,
-	setQuestionState,
 	selectedSectionName,
 	selectedSectionIndex,
 	selectedQuestionIndex,
@@ -112,13 +111,9 @@ const ProgressBox = ({
 	numOfQuestionsInSec,
 }) => {
 	const setQuestionStateHandler = (value) => {
-		setQuestionState((prevState) => {
-			let newState = JSON.parse(JSON.stringify(prevState));
-			newState[selectedSectionName][selectedQuestionIndex] = value;
-			console.log(JSON.stringify(newState));
-			return newState;
-		});
+		questionState[selectedSectionName][selectedQuestionIndex] = value;
 	};
+
 	const onClickHandler = (event) => {
 		if (selectedQuestionIndex !== +event.target.innerText - 1) {
 			setSelectedQuestionIndex(+event.target.innerText - 1);
@@ -136,7 +131,7 @@ const ProgressBox = ({
 			<StyledContainer>
 				<StyledText>Question Panel</StyledText>
 				<StyledBox>
-					{[...Array(+numOfQuestionsInSec)].map((_, i) => {
+					{[...Array(numOfQuestionsInSec[selectedSectionIndex])].map((_, i) => {
 						return (
 							<StyledDiv
 								key={`${selectedSectionIndex}${i}`}

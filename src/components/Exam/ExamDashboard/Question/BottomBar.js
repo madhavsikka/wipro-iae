@@ -23,23 +23,18 @@ const StyledGroup = styled.div`
 const BottomBar = ({
 	setIsCleared,
 	questionState,
-	setQuestionState,
 	selectedOptions,
 	selectedQuestionIndex,
 	setSelectedQuestionIndex,
 	numOfQuestionsInSec,
-	selectedSection,
+	selectedSectionName,
 	selectedSectionIndex,
 	setSelectedSectionIndex,
 	numOfSections,
 }) => {
 	const setQuestionStateHandler = (value) => {
-		setQuestionState((prevState) => {
-			let newState = JSON.parse(JSON.stringify(prevState));
-			newState[selectedSection][selectedQuestionIndex] = value;
-			console.log(JSON.stringify(newState));
-			return newState;
-		});
+		questionState[selectedSectionName][selectedQuestionIndex] = value;
+		console.log(JSON.stringify(questionState));
 	};
 
 	const onClickNextHandler = () => {
@@ -55,7 +50,7 @@ const BottomBar = ({
 			.catch((err) => {
 				console.log(err);
 			});
-		if (selectedQuestionIndex + 1 < +numOfQuestionsInSec) {
+		if (selectedQuestionIndex + 1 < numOfQuestionsInSec) {
 			setSelectedQuestionIndex((prevState) => prevState + 1);
 		} else if (selectedSectionIndex + 1 < +numOfSections) {
 			setSelectedSectionIndex((prevState) => prevState + 1);
@@ -72,7 +67,7 @@ const BottomBar = ({
 	};
 
 	const onClickReviewHandler = () => {
-		questionState[selectedSection][selectedQuestionIndex] ===
+		questionState[selectedSectionName][selectedQuestionIndex] ===
 		config.questionState.review
 			? setQuestionStateHandler(config.questionState.visited_unattempted)
 			: setQuestionStateHandler(config.questionState.review);
@@ -80,6 +75,7 @@ const BottomBar = ({
 
 	return (
 		<StyledBar>
+			{console.log(questionState)}
 			<StyledGroup>
 				<Button
 					textColor={colors.blueMunsell}
@@ -89,7 +85,7 @@ const BottomBar = ({
 					hoverText={colors.white}
 					weight="600"
 					onClick={() => onClickReviewHandler()}>
-					{questionState[selectedSection][selectedQuestionIndex] ===
+					{questionState[selectedSectionName][selectedQuestionIndex] ===
 					config.questionState.review
 						? "UNMARK"
 						: "MARK FOR REVIEW"}

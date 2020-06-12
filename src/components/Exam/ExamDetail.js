@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { Link, useParams, useRouteMatch } from "react-router-dom";
 import Loader from "../Loader";
 import config from "../../config";
@@ -10,7 +10,7 @@ const ExamDetail = () => {
 	const [isMounted, setIsMounted] = useState(false);
 	const [examData, setExamData] = useState({});
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		axios
 			.get(`${config.jsonDb.base}/${examId}`)
 			.then((res) => {

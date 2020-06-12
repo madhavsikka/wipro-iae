@@ -101,21 +101,19 @@ const StyledOption = styled.div`
 const QuestionBox = ({
 	questions,
 	questionState,
-	setQuestionState,
 	selectedQuestionIndex,
 	setSelectedQuestionIndex,
 	numOfQuestionsInSec,
-	selectedSection,
+	selectedSectionName,
 	selectedSectionIndex,
 	setSelectedSectionIndex,
 	numOfSections,
 	marking,
 }) => {
-	const [currentQuestion, setCurrentQuestion] = useState("");
 	const [isMounted, setIsMounted] = useState(false);
 	const [isCleared, setIsCleared] = useState(false);
+	const currentQuestion = questions[selectedSectionName][selectedQuestionIndex];
 	const selectedOptions = useRef([]);
-	const [hasSelected, setHasSelected] = useState(false);
 
 	const onClickOptionHandler = (alphabet) => {
 		if (selectedOptions.current.includes(alphabet)) {
@@ -125,31 +123,17 @@ const QuestionBox = ({
 		} else {
 			selectedOptions.current.push(alphabet);
 		}
-		if (!hasSelected) {
-			console.log("HERE");
-			setQuestionState((prevState) => {
-				if (
-					prevState[selectedSection][selectedQuestionIndex] ===
-					config.questionState.unvisited
-				) {
-					let newState = JSON.parse(JSON.stringify(prevState));
-					newState[selectedSection][selectedQuestionIndex] =
-						config.questionState.visited_unattempted;
-					setHasSelected(true);
-					return newState;
-				}
-			});
-		}
+		questionState[selectedSectionName][selectedQuestionIndex] =
+			config.questionState.visited_unattempted;
 	};
 
 	useEffect(() => {
-		setCurrentQuestion(questions[selectedSection][selectedQuestionIndex]);
 		setIsMounted(true);
 		return () => {
 			selectedOptions.current = [];
 			setIsCleared(false);
 		};
-	}, [questions, selectedSection, selectedQuestionIndex]);
+	}, [questions]);
 
 	const getAlphabet = (index) => String.fromCharCode(65 + index);
 
@@ -166,9 +150,6 @@ const QuestionBox = ({
 									<p>{`+${marking[currentQuestion.type]["positive"]}`}</p>
 									<p>{`-${marking[currentQuestion.type]["negative"]}`}</p>
 								</StyledMarking>
-								{/* <StyledMarking>{`-${
-									marking[currentQuestion.type]["negative"]
-								}`}</StyledMarking> */}
 							</StyledQDetails>
 						</StyledBar>
 						<StyledQuestion>{currentQuestion.question}</StyledQuestion>
@@ -178,7 +159,7 @@ const QuestionBox = ({
 								const alphabet = getAlphabet(index);
 								return (
 									<StyledOption
-										key={`${selectedSection}${selectedQuestionIndex}${index}`}
+										key={`${selectedSectionName}${selectedQuestionIndex}${index}`}
 										onClick={() => onClickOptionHandler(alphabet)}>
 										<AnswerOption
 											isCleared={isCleared}
@@ -195,12 +176,11 @@ const QuestionBox = ({
 			<BottomBar
 				setIsCleared={setIsCleared}
 				questionState={questionState}
-				setQuestionState={setQuestionState}
 				selectedOptions={selectedOptions}
 				selectedQuestionIndex={selectedQuestionIndex}
 				setSelectedQuestionIndex={setSelectedQuestionIndex}
 				numOfQuestionsInSec={numOfQuestionsInSec}
-				selectedSection={selectedSection}
+				selectedSectionName={selectedSectionName}
 				selectedSectionIndex={selectedSectionIndex}
 				setSelectedSectionIndex={setSelectedSectionIndex}
 				numOfSections={numOfSections}
