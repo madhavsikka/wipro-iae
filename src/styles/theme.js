@@ -15,9 +15,9 @@ const theme = {
 		bottleGreen: "#E5E5E5",
 		buttonGreen: "#4BCA81",
 		buttonGreenDark: "#39DB80",
-		unattempted: "#F4CBC6",
-		review: "#FF9F1C",
-		submit: "#C1FBA4",
+		unattempted: "#AEA3B0",
+		review: "#C3F73A",
+		submit: "#1B73D7",
 	},
 
 	fonts: {

@@ -57,13 +57,29 @@ const StyledDiv = styled.div`
 	height: 50px;
 	border-radius: 50%;
 	transition: border, background 100ms linear;
-	border: ${(props) =>
-		props.selected
-			? `2px solid ${colors.blueSapphire}`
-			: `2px solid ${colors.blueMunsell}`};
+	border: 2px solid ${colors.blueMunsell};
+
+	border-color: ${(props) => {
+		if (props.selected) {
+			return colors.blueMunsell;
+		}
+		switch (props.state) {
+			case config.questionState.unvisited:
+				return colors.blueMunsell;
+			case config.questionState.visited_unattempted:
+				return colors.unattempted;
+			case config.questionState.review:
+				return colors.review;
+			case config.questionState.submit:
+				return colors.submit;
+			default:
+				return "transparent";
+		}
+	}};
+
 	background: ${(props) => {
 		if (props.selected) {
-			return colors.indigo;
+			return colors.blueMunsell;
 		}
 		switch (props.state) {
 			case config.questionState.unvisited:
@@ -78,7 +94,10 @@ const StyledDiv = styled.div`
 				return "transparent";
 		}
 	}};
-	color: ${(props) => (props.selected ? "white" : colors.blueMunsell)};
+	color: ${(props) =>
+		props.selected || props.state !== config.questionState.unvisited
+			? "white"
+			: colors.blueMunsell};
 
 	:hover {
 		background: ${(props) =>
@@ -99,6 +118,27 @@ const ButtonBox = styled.div`
 		display: flex;
 		justify-content: space-between;
 		margin-bottom: 1rem;
+	}
+`;
+
+const StyledLegend = styled.div`
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	div:first-child {
+		border-radius: 50%;
+		width: 20px;
+		height: 20px;
+		background: ${(props) => props.backColor};
+		margin: 0;
+		padding: 0;
+	}
+	div:last-child {
+		font-size: ${fontSizes.sm};
+		font-weight: 700;
+		grid-area: ${(props) => props.area};
+		margin: 0 0 0 5px;
+		padding: 8px 0;
 	}
 `;
 
@@ -146,6 +186,20 @@ const ProgressBox = ({
 			</StyledContainer>
 
 			<ButtonBox>
+				<div>
+					<StyledLegend backColor={colors.submit} area="submitted">
+						<div></div>
+						<div>Submitted</div>
+					</StyledLegend>
+					<StyledLegend backColor={colors.review} area="reviewed">
+						<div></div>
+						<div>Marked</div>
+					</StyledLegend>
+					<StyledLegend backColor={colors.unattempted} area="visited">
+						<div></div>
+						<div>Visited</div>
+					</StyledLegend>
+				</div>
 				<div>
 					<Button
 						color={colors.darkRoyalBlue}

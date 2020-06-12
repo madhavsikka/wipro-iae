@@ -110,10 +110,9 @@ const QuestionBox = ({
 	numOfSections,
 	marking,
 }) => {
-	const [isMounted, setIsMounted] = useState(false);
-	const [isCleared, setIsCleared] = useState(false);
 	const currentQuestion = questions[selectedSectionName][selectedQuestionIndex];
 	const selectedOptions = useRef([]);
+	const isCleared = useRef(false);
 
 	const onClickOptionHandler = (alphabet) => {
 		if (selectedOptions.current.includes(alphabet)) {
@@ -128,53 +127,48 @@ const QuestionBox = ({
 	};
 
 	useEffect(() => {
-		setIsMounted(true);
 		return () => {
 			selectedOptions.current = [];
-			setIsCleared(false);
+			isCleared.current=false;
 		};
-	}, [questions]);
+	}, [currentQuestion]);
 
 	const getAlphabet = (index) => String.fromCharCode(65 + index);
 
 	return (
 		<StyledContainer>
 			<StyledBox>
-				{!isMounted ? null : (
-					<>
-						<StyledBar>
-							<StyledQNum>{`QUESTION ${selectedQuestionIndex + 1}`}</StyledQNum>
-							<StyledQDetails>
-								<p>{`${currentQuestion.type.toUpperCase()} CORRECT`}</p>
-								<StyledMarking>
-									<p>{`+${marking[currentQuestion.type]["positive"]}`}</p>
-									<p>{`-${marking[currentQuestion.type]["negative"]}`}</p>
-								</StyledMarking>
-							</StyledQDetails>
-						</StyledBar>
-						<StyledQuestion>{currentQuestion.question}</StyledQuestion>
+				<StyledBar>
+					<StyledQNum>{`QUESTION ${selectedQuestionIndex + 1}`}</StyledQNum>
+					<StyledQDetails>
+						<p>{`${currentQuestion.type.toUpperCase()} CORRECT`}</p>
+						<StyledMarking>
+							<p>{`+${marking[currentQuestion.type]["positive"]}`}</p>
+							<p>{`-${marking[currentQuestion.type]["negative"]}`}</p>
+						</StyledMarking>
+					</StyledQDetails>
+				</StyledBar>
+				<StyledQuestion>{currentQuestion.question}</StyledQuestion>
 
-						<StyledOptionBox>
-							{currentQuestion.options.map((option, index) => {
-								const alphabet = getAlphabet(index);
-								return (
-									<StyledOption
-										key={`${selectedSectionName}${selectedQuestionIndex}${index}`}
-										onClick={() => onClickOptionHandler(alphabet)}>
-										<AnswerOption
-											isCleared={isCleared}
-											alphabet={alphabet}
-											option={option}
-										/>
-									</StyledOption>
-								);
-							})}
-						</StyledOptionBox>
-					</>
-				)}
+				<StyledOptionBox>
+					{currentQuestion.options.map((option, index) => {
+						const alphabet = getAlphabet(index);
+						return (
+							<StyledOption
+								key={`${selectedSectionName}${selectedQuestionIndex}${index}`}
+								onClick={() => onClickOptionHandler(alphabet)}>
+								<AnswerOption
+									isCleared={isCleared.current}
+									alphabet={alphabet}
+									option={option}
+								/>
+							</StyledOption>
+						);
+					})}
+				</StyledOptionBox>
 			</StyledBox>
 			<BottomBar
-				setIsCleared={setIsCleared}
+				isCleared={isCleared.current}
 				questionState={questionState}
 				selectedOptions={selectedOptions}
 				selectedQuestionIndex={selectedQuestionIndex}

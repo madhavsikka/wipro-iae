@@ -25,7 +25,7 @@ const StyledButton = styled(Button)`
 `;
 
 const BottomBar = ({
-	setIsCleared,
+	isCleared,
 	questionState,
 	selectedOptions,
 	selectedQuestionIndex,
@@ -66,7 +66,7 @@ const BottomBar = ({
 
 	const onClickClearHandler = () => {
 		setQuestionStateHandler(config.questionState.unvisited);
-		setIsCleared(true);
+		isCleared = true;
 		selectedOptions.current = [];
 	};
 

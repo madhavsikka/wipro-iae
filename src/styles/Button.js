@@ -3,6 +3,9 @@ import theme from "./theme";
 const { colors, fonts, fontSizes } = theme;
 
 const StyledButton = styled.button`
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	user-select: none;
 	color: ${(props) => props.textColor || colors.white};
 	background: ${(props) => props.color || "transparent"};
