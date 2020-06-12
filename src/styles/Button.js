@@ -3,7 +3,7 @@ import theme from "./theme";
 const { colors, fonts, fontSizes } = theme;
 
 const StyledButton = styled.button`
-	display: flex;
+	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	user-select: none;
