@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import UserDashboard from "./components/UserDashboard";
+import About from "./components/About";
 import GlobalStyle from "./styles/GlobalStyle";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Exams from "./components/Exam/Exams";
@@ -21,6 +22,9 @@ function App() {
 					</Route>
 					<Route path="/register" exact>
 						<Register />
+					</Route>
+					<Route path="/about" exact>
+						<About />
 					</Route>
 					<Route path="/user-dashboard" exact>
 						<UserDashboard />
