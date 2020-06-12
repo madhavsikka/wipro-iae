@@ -34,6 +34,7 @@ const StyledMenu = styled.nav`
 const Menu = ({ open }) => {
 	return (
 		<StyledMenu open={open}>
+			<NavLink to="/exams" activeClassName="menulink-active">DASHBOARD</NavLink>
 			<NavLink to="/login" activeClassName="menulink-active">LOGIN</NavLink>
 			<NavLink to="/register" activeClassName="menulink-active">REGISTER</NavLink>
 			<NavLink to="/contact" activeClassName="menulink-active">CONTACT</NavLink>
