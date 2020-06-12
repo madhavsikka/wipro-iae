@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import Button from "../../../../styles/Button";
 import theme from "../../../../styles/theme";
@@ -18,6 +18,10 @@ const StyledGroup = styled.div`
 	justify-content: space-between;
 	margin: 0;
 	padding: 0;
+`;
+
+const StyledButton = styled(Button)`
+	pointer-events: ${(props) => (props.disable ? "none" : "default")};
 `;
 
 const BottomBar = ({
@@ -50,7 +54,7 @@ const BottomBar = ({
 			.catch((err) => {
 				console.log(err);
 			});
-		if (selectedQuestionIndex + 1 < numOfQuestionsInSec) {
+		if (selectedQuestionIndex + 1 < numOfQuestionsInSec[selectedSectionIndex]) {
 			setSelectedQuestionIndex((prevState) => prevState + 1);
 		} else if (selectedSectionIndex + 1 < +numOfSections) {
 			setSelectedSectionIndex((prevState) => prevState + 1);
@@ -111,7 +115,7 @@ const BottomBar = ({
 				hoverColor={colors.indigo}
 				hoverText={colors.white}
 				weight="600"
-				disabled={selectedOptions.current.length === 0 ? "disabled" : ""}
+				disable={selectedOptions.current.length === 0}
 				onClick={() => onClickNextHandler()}>
 				SAVE AND NEXT
 			</Button>

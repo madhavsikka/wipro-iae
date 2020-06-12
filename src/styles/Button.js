@@ -27,9 +27,6 @@ const StyledButton = styled.button`
 			color: ${(props) => props.hoverText} !important;
 		}
 	}
-	:disabled{
-		cursor: not-allowed;
-	}
 `;
 
 export default StyledButton;
