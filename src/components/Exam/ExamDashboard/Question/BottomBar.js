@@ -21,9 +21,9 @@ const StyledGroup = styled.div`
 `;
 
 const BottomBar = ({
-	isCleared,
 	questionState,
 	selectedOptions,
+	setSelectedOptions,
 	selectedQuestionIndex,
 	setSelectedQuestionIndex,
 	numOfQuestionsInSec,
@@ -31,25 +31,31 @@ const BottomBar = ({
 	selectedSectionIndex,
 	setSelectedSectionIndex,
 	numOfSections,
+	isReviewed,
+	setIsReviewed,
 }) => {
 	const setQuestionStateHandler = (value) => {
 		questionState[selectedSectionName][selectedQuestionIndex] = value;
 		console.log(JSON.stringify(questionState));
 	};
 
-	const onClickNextHandler = () => {
-		setQuestionStateHandler(config.questionState.submit);
-
-		let postData = [...selectedOptions.current];
-		axios
-			.post(`${config.jsonDb.responses}`, { postData })
-			.then((res) => {
-				console.log(res);
-				console.log(res.data);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+	const onClickNextHandler = (type) => {
+		if (!isReviewed) {
+			setQuestionStateHandler(config.questionState.visited_unattempted);
+		}
+		if (type === "submit") {
+			setQuestionStateHandler(config.questionState.submit);
+			let postData = [...selectedOptions];
+			axios
+				.post(`${config.jsonDb.responses}`, { postData })
+				.then((res) => {
+					console.log(res);
+					console.log(res.data);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
 		if (selectedQuestionIndex + 1 < numOfQuestionsInSec[selectedSectionIndex]) {
 			setSelectedQuestionIndex((prevState) => prevState + 1);
 		} else if (selectedSectionIndex + 1 < +numOfSections) {
@@ -58,12 +64,13 @@ const BottomBar = ({
 		} else {
 			console.log("All questions attempted");
 		}
+		setIsReviewed(false);
+		setSelectedOptions([]);
 	};
 
 	const onClickClearHandler = () => {
 		setQuestionStateHandler(config.questionState.unvisited);
-		isCleared = true;
-		selectedOptions.current = [];
+		setSelectedOptions([]);
 	};
 
 	const onClickReviewHandler = () => {
@@ -71,6 +78,7 @@ const BottomBar = ({
 		config.questionState.review
 			? setQuestionStateHandler(config.questionState.visited_unattempted)
 			: setQuestionStateHandler(config.questionState.review);
+		setIsReviewed((prevState) => !prevState);
 	};
 
 	return (
@@ -102,21 +110,35 @@ const BottomBar = ({
 					CLEAR RESPONSE
 				</Button>
 			</StyledGroup>
-			{console.log(selectedOptions.current)}
-			<Button
-				textColor={colors.white}
-				color={colors.blueSapphire}
-				fontSize={fontSizes.sm}
-				borderColor={colors.blueSapphire}
-				hoverColor={colors.indigo}
-				hoverText={colors.white}
-				weight="600"
-				disable={selectedOptions.current.length === 0}
-				onClick={() => onClickNextHandler()}>
-				SAVE AND NEXT
-			</Button>
+			{console.log(`Selected: ${selectedOptions}`)}
+			<StyledGroup>
+				<Button
+					color={colors.darkRoyalBlue}
+					textColor={colors.white}
+					fontSize={fontSizes.sm}
+					borderColor={colors.darkRoyalBlue}
+					hoverColor={colors.royalBlue}
+					hoverText={colors.white}
+					weight="600"
+					onClick={() => onClickNextHandler("next")}>
+					NEXT
+				</Button>
+				<Button
+					color={colors.darkRoyalBlue}
+					textColor={colors.white}
+					fontSize={fontSizes.sm}
+					borderColor={colors.darkRoyalBlue}
+					hoverColor={colors.royalBlue}
+					hoverText={colors.white}
+					weight="600"
+					style={{ marginLeft: "20px" }}
+					disable={selectedOptions.length === 0}
+					onClick={() => onClickNextHandler("submit")}>
+					SUBMIT AND NEXT
+				</Button>
+			</StyledGroup>
 		</StyledBar>
 	);
 };
 
-export default BottomBar;
+export default React.memo(BottomBar);

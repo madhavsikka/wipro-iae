@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import theme from "../../../../styles/theme";
 import config from "../../../../config";
@@ -81,7 +81,7 @@ const StyledMarking = styled.div`
 const StyledQuestion = styled.div`
 	font-size: ${fontSizes.lg};
 	font-weight: bold;
-	padding: 12px;
+	padding: 1rem;
 	text-align: left;
 `;
 
@@ -90,7 +90,7 @@ const StyledOptionBox = styled.div`
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: flex-start;
-	padding: 12px;
+	padding: 1rem;
 `;
 
 const StyledOption = styled.div`
@@ -109,29 +109,23 @@ const QuestionBox = ({
 	setSelectedSectionIndex,
 	numOfSections,
 	marking,
+	isReviewed,
+	setIsReviewed,
 }) => {
 	const currentQuestion = questions[selectedSectionName][selectedQuestionIndex];
-	const selectedOptions = useRef([]);
-	const isCleared = useRef(false);
+	const [selectedOptions, setSelectedOptions] = useState([]);
 
 	const onClickOptionHandler = (alphabet) => {
-		if (selectedOptions.current.includes(alphabet)) {
-			selectedOptions.current = selectedOptions.current.filter(
-				(i) => i !== alphabet
-			);
-		} else {
-			selectedOptions.current.push(alphabet);
-		}
+		setSelectedOptions((prevState) => {
+			if (prevState.includes(alphabet)) {
+				return prevState.filter((i) => i !== alphabet);
+			} else {
+				return [...prevState, alphabet];
+			}
+		});
 		questionState[selectedSectionName][selectedQuestionIndex] =
 			config.questionState.visited_unattempted;
 	};
-
-	useEffect(() => {
-		return () => {
-			selectedOptions.current = [];
-			isCleared.current = false;
-		};
-	}, [currentQuestion]);
 
 	const getAlphabet = (index) => String.fromCharCode(65 + index);
 
@@ -158,7 +152,7 @@ const QuestionBox = ({
 								key={`${selectedSectionName}${selectedQuestionIndex}${index}`}
 								onClick={() => onClickOptionHandler(alphabet)}>
 								<AnswerOption
-									isCleared={isCleared.current}
+									selectedOptions={selectedOptions}
 									alphabet={alphabet}
 									option={option}
 								/>
@@ -168,9 +162,9 @@ const QuestionBox = ({
 				</StyledOptionBox>
 			</StyledBox>
 			<BottomBar
-				isCleared={isCleared.current}
 				questionState={questionState}
 				selectedOptions={selectedOptions}
+				setSelectedOptions={setSelectedOptions}
 				selectedQuestionIndex={selectedQuestionIndex}
 				setSelectedQuestionIndex={setSelectedQuestionIndex}
 				numOfQuestionsInSec={numOfQuestionsInSec}
@@ -178,6 +172,8 @@ const QuestionBox = ({
 				selectedSectionIndex={selectedSectionIndex}
 				setSelectedSectionIndex={setSelectedSectionIndex}
 				numOfSections={numOfSections}
+				isReviewed={isReviewed}
+				setIsReviewed={setIsReviewed}
 			/>
 		</StyledContainer>
 	);

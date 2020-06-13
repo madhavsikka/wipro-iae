@@ -30,6 +30,9 @@ const StyledButton = styled.button`
 			color: ${(props) => props.hoverText} !important;
 		}
 	}
+	pointer-events: ${(props) => (props.disable ? "none !important" : "")};
+	background: ${(props) => (props.disable ? colors.unattempted : props.color)};
+	border-color: ${(props) => (props.disable ? colors.unattempted : props.borderColor)};
 `;
 
 export default StyledButton;

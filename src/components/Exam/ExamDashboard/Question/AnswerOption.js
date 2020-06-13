@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import theme from "../../../../styles/theme";
 const { colors, fontSizes } = theme;
@@ -44,21 +44,13 @@ const StyledOption = styled.div`
 	}
 `;
 
-const AnswerOption = ({ isCleared, alphabet, option }) => {
-	const [isSelected, setIsSelected] = useState(false);
-
-	const onClickHandler = () => {
-		setIsSelected((prevState) => !prevState);
-	};
-
+const AnswerOption = ({ selectedOptions, alphabet, option }) => {
 	return (
-		<StyledOption
-			isSelected={isSelected && !isCleared}
-			onClick={() => onClickHandler()}>
+		<StyledOption isSelected={selectedOptions.includes(alphabet)}>
 			<div>{alphabet}</div>
 			<div>{option}</div>
 		</StyledOption>
 	);
 };
 
-export default AnswerOption;
+export default React.memo(AnswerOption);

@@ -30,6 +30,7 @@ const QuestionArea = ({ examData }) => {
 	const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(0);
 	const [selectedSectionIndex, setSelectedSectionIndex] = useState(0);
 	const [isMounted, setIsMounted] = useState(false);
+	const [isReviewed, setIsReviewed] = useState(false);
 
 	const numOfQuestionsInSec = useRef([]);
 	const questionState = useRef({});
@@ -69,6 +70,7 @@ const QuestionArea = ({ examData }) => {
 							<StyledGrid>
 								<WrapperDiv area="ProgressBox">
 									<ProgressBox
+										isReviewed={isReviewed}
 										questionState={questionState.current}
 										selectedSectionName={
 											examData.sections[selectedSectionIndex]
@@ -87,7 +89,9 @@ const QuestionArea = ({ examData }) => {
 									<QuestionBox
 										questions={examData.questions}
 										questionState={questionState.current}
-										selectedSectionName={examData.sections[selectedSectionIndex]}
+										selectedSectionName={
+											examData.sections[selectedSectionIndex]
+										}
 										selectedQuestionIndex={selectedQuestionIndex}
 										setSelectedQuestionIndex={setSelectedQuestionIndex}
 										numOfQuestionsInSec={numOfQuestionsInSec.current}
@@ -95,6 +99,8 @@ const QuestionArea = ({ examData }) => {
 										setSelectedSectionIndex={setSelectedSectionIndex}
 										numOfSections={examData.sections.length}
 										marking={examData.marking}
+										isReviewed={isReviewed}
+										setIsReviewed={setIsReviewed}
 									/>
 								</WrapperDiv>
 

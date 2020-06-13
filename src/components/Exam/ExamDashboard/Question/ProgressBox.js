@@ -60,36 +60,36 @@ const StyledDiv = styled.div`
 	border: 2px solid ${colors.blueMunsell};
 
 	border-color: ${(props) => {
-		if (props.selected) {
+		if (props.selected && !props.reviewed) {
 			return colors.blueMunsell;
 		}
 		switch (props.state) {
-			case config.questionState.unvisited:
-				return colors.blueMunsell;
-			case config.questionState.visited_unattempted:
-				return colors.unattempted;
 			case config.questionState.review:
 				return colors.review;
 			case config.questionState.submit:
 				return colors.submit;
+			case config.questionState.unvisited:
+				return colors.blueMunsell;
+			case config.questionState.visited_unattempted:
+				return colors.unattempted;
 			default:
 				return "transparent";
 		}
 	}};
 
 	background: ${(props) => {
-		if (props.selected) {
+		if (props.selected && !props.reviewed) {
 			return colors.blueMunsell;
 		}
 		switch (props.state) {
-			case config.questionState.unvisited:
-				return "transparent";
-			case config.questionState.visited_unattempted:
-				return colors.unattempted;
 			case config.questionState.review:
 				return colors.review;
 			case config.questionState.submit:
 				return colors.submit;
+			case config.questionState.visited_unattempted:
+				return colors.unattempted;
+			case config.questionState.unvisited:
+				return "transparent";
 			default:
 				return "transparent";
 		}
@@ -143,6 +143,7 @@ const StyledLegend = styled.div`
 `;
 
 const ProgressBox = ({
+	isReviewed,
 	questionState,
 	selectedSectionName,
 	selectedSectionIndex,
@@ -176,6 +177,7 @@ const ProgressBox = ({
 							<StyledDiv
 								key={`${selectedSectionIndex}${i}`}
 								selected={selectedQuestionIndex === i}
+								reviewed={isReviewed}
 								state={questionState[selectedSectionName][i]}
 								onClick={(event) => onClickHandler(event)}>
 								{i + 1}
