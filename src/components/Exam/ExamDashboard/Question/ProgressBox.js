@@ -91,7 +91,7 @@ const StyledDiv = styled.div`
 			case config.questionState.unvisited:
 				return "transparent";
 			default:
-				return "transparent";
+				return colors.blueMunsell;
 		}
 	}};
 	color: ${(props) =>
@@ -144,6 +144,7 @@ const StyledLegend = styled.div`
 
 const ProgressBox = ({
 	isReviewed,
+	setIsReviewed,
 	questionState,
 	selectedSectionName,
 	selectedSectionIndex,
@@ -158,6 +159,7 @@ const ProgressBox = ({
 	const onClickHandler = (event) => {
 		if (selectedQuestionIndex !== +event.target.innerText - 1) {
 			setSelectedQuestionIndex(+event.target.innerText - 1);
+			setIsReviewed(false);
 			if (
 				questionState[selectedSectionName][selectedQuestionIndex] ===
 				config.questionState.unvisited

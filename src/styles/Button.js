@@ -21,7 +21,7 @@ const StyledButton = styled.button`
 	min-width: 7rem;
 	margin: 0;
 	padding: 0.5rem 0.75rem;
-	transition: background 200ms;
+	transition: all 200ms;
 	&:hover {
 		background: ${(props) => props.hoverColor};
 		color: ${(props) => props.hoverText} !important;

@@ -71,6 +71,7 @@ const QuestionArea = ({ examData }) => {
 								<WrapperDiv area="ProgressBox">
 									<ProgressBox
 										isReviewed={isReviewed}
+										setIsReviewed={setIsReviewed}
 										questionState={questionState.current}
 										selectedSectionName={
 											examData.sections[selectedSectionIndex]
