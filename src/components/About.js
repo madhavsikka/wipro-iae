@@ -22,7 +22,7 @@ const StyledHead = styled.div`
 	justify-content: center;
 	align-items: center;
 	font-family: ${fonts.Montserrat};
-	font-weight: 700;
+	font-weight: bold;
 	font-size: ${fontSizes.h1};
 	color: ${colors.blue};
 	margin-right: 15px;
@@ -55,25 +55,34 @@ const StyledName = styled.div`
 	${media.tablet`border: none; align-items: center; font-size: ${fontSizes.xxl};`};
 `;
 
-const Home = () => {
+const About = (props) => {
 	return (
-		<CSSTransition in timeout={600} classNames="fade" appear>
-			<StyledFlex>
+		<StyledFlex>
+			<CSSTransition in timeout={600} classNames="fade" appear>
 				<Navbar />
+			</CSSTransition>
 
+			<CSSTransition in timeout={600} classNames="fade" appear>
 				<StyledContainer>
 					<StyledHead>WIPRO</StyledHead>
 					<StyledName>
-						<p>INDEPENDENT</p>
-						<p>ASSESSMENT</p>
-						<p>ENGINE</p>
+						<p>IAE Team</p>
 					</StyledName>
 				</StyledContainer>
+			</CSSTransition>
 
+			<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et 
+		dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea 
+		commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat 
+		nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim 
+		d est laborum.</div>
+
+			<CSSTransition in timeout={600} classNames="fade" appear>
 				<Footer />
-			</StyledFlex>
-		</CSSTransition>
+			</CSSTransition>
+
+		</StyledFlex>
 	);
 };
 
-export default Home;
+export default About;
