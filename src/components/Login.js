@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React,{Component} from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import media from "../styles/media";
 import Navbar from "../components/Navbar";
 import Button from "../styles/Button";
@@ -11,6 +11,7 @@ import mixins from "../styles/mixins";
 import { IconContext } from "react-icons";
 import { MdMail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
+
 const { colors, fonts, fontSizes } = theme;
 
 const StyledFlex = styled.div`
@@ -111,6 +112,9 @@ const StyledForm = styled.form`
 	flex-direction: column;
 	justify-content: center;
 	align-items: stretch;
+	color: red;
+	font-size: 15px;
+
 `;
 
 const StyledImage = styled.div`
@@ -143,24 +147,64 @@ const StyledInput = styled.input`
 	margin-right: 10px;
 `;
 
-const Login = (props) => {
-	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
+const UserIDRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
 
-	const handleUsernameChange = (event) => {
-		setUsername(event.target.value);
-	};
+class Login extends Component {
 
-	const handlePasswordChange = (event) => {
-		setPassword(event.target.value);
-	};
 
-	const handleSubmit = (event) => {
-		alert(`Username: ${username} and Password: ${password}`);
+	constructor(props) {
+		super(props);
+		
+		this.state = {
+		  formValid: false,
+		  errorCount: null,
+		  isLoggedIn: false,
+		  isError: false,
+		  userName: "",
+		  password: "",
+
+		  errors: {
+			username: '',
+			password: '',
+		  }
+		};
+	}
+
+	handleChange = (event) => {
 		event.preventDefault();
+		const { name, value } = event.target;
+		let errors = this.state.errors;
+
+		switch (name) {
+		  case 'username': 
+			errors.username = 
+			  UserIDRegex.test(value) 
+				? ''
+				: value.length<1?'UserID cannot be empty':'Invalid UserID';
+			break;
+		  case 'password': 
+			errors.password = 
+			  value.length < 1
+				? 'Password field cannot be empty'
+				: value.length < 6?'Short Password':'';
+			break;
+		  default:
+			break;
+			
+		}
+
+		this.setState({errors, [name]: value});
+	}
+
+	handleSubmit = (event) => {
+		event.preventDefault();
+		
 	};
 
-	return (
+	render() {
+
+		const {errors} = this.state;
+		return (
 		<StyledFlex>
 			<Navbar />
 			<StyledInFlex>
@@ -198,7 +242,7 @@ const Login = (props) => {
 								<User />
 							</StyledImage>
 
-							<StyledForm autoComplete="off">
+							<StyledForm autoComplete="off" onSubmit={this.handleSubmit} noValidate>
 								<StyledInputContainer>
 									<IconContext.Provider
 										value={{
@@ -212,14 +256,18 @@ const Login = (props) => {
 										<MdMail />
 									</IconContext.Provider>
 									<StyledInput
-										type="email"
-										name="email"
-										placeholder="Email"
-										value={username}
-										onChange={(event) => handleUsernameChange(event)}
+										type="username"
+										name="username"
+										placeholder="UserID"
+										
+										onChange={this.handleChange}
+										noValidate
 									/>
-								</StyledInputContainer>
+									
 
+
+								</StyledInputContainer>
+								{errors.username.length > 0 &&  <span className='error' >{errors.username}</span>}
 								<StyledInputContainer>
 									<IconContext.Provider
 										value={{
@@ -236,16 +284,21 @@ const Login = (props) => {
 										type="password"
 										name="password"
 										placeholder="Password"
-										value={password}
-										onChange={(event) => handlePasswordChange(event)}
+										
+										onChange={this.handleChange}
+										noValidate
 									/>
+
+
 								</StyledInputContainer>
+								{errors.password.length > 0 && <span className='error'>{errors.password}</span>}
+								
 							</StyledForm>
 
 							<Button
 								color={colors.buttonGreen}
 								hoverColor={colors.buttonGreenDark}
-								onClick={(event) => handleSubmit(event)}
+								onClick={this.handleSubmit}
 								style={{ marginTop: "2rem", width: "10rem" }}>
 								LOGIN
 							</Button>
@@ -255,6 +308,8 @@ const Login = (props) => {
 			</StyledInFlex>
 		</StyledFlex>
 	);
-};
+									}
+								}
+									
 
-export default Login;
+							;export default Login;
