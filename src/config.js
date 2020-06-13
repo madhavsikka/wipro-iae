@@ -1,7 +1,15 @@
 module.exports = {
-	colors: {
-		blue: "#0079A1",
-		green: "#66AE9C",
-		white: "#FFFFFF",
+	jsonDb: {
+		users: "https://my-json-server.typicode.com/madhavsikka/json-db/users",
+		exams: "https://my-json-server.typicode.com/madhavsikka/json-db/exams",
+		responses:
+			"https://my-json-server.typicode.com/madhavsikka/json-db/responses",
+		base: "https://my-json-server.typicode.com/madhavsikka/json-db",
+	},
+	questionState: {
+		unvisited: 0,
+		visited_unattempted: 1,
+		review: 2,
+		submit: 3,
 	},
 };
