@@ -1,7 +1,6 @@
-/* eslint-disable */
-import React,{useState} from "react";
+import React,{Component} from "react";
 import styled from "styled-components";
-import { Link, Redirect} from "react-router-dom";
+import { Link} from "react-router-dom";
 import media from "../styles/media";
 import Navbar from "../components/Navbar";
 import Button from "../styles/Button";
@@ -12,13 +11,7 @@ import mixins from "../styles/mixins";
 import { IconContext } from "react-icons";
 import { MdMail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
-import { Component } from 'react';
-import axios from 'axios';
-import config from "../config";
-import {useAuth} from "../context/auth"
-//import validate from './ValidateLogin';
-//import { Formik } from "formik";
-//import * as EmailValidator from "email-validator";
+
 const { colors, fonts, fontSizes } = theme;
 
 const StyledFlex = styled.div`
@@ -176,36 +169,6 @@ class Login extends Component {
 		  }
 		};
 	}
-//-----------------!!!---------------
-
-
-/*
-
-{ setAuthTokens } =useAuth();
-
- referer = props.location.state.referer || '/';
- 
- postLogin() =(event)=>{
-    axios.post("https://www.somePlace.com/auth/login", {
-      userName,
-      password
-    }).then(result => {
-      if (result.status === 200) {
-        setAuthTokens(result.data);
-        setLoggedIn(true);
-      } else {
-        setIsError(true);
-      }
-    }).catch(e => {
-      setIsError(true);
-    });
-  }
-
-  if (isLoggedIn) {
-    return <Redirect to={referer} />;
-  }
-*/
-//---------------------!!!-----------
 
 	handleChange = (event) => {
 		event.preventDefault();
@@ -225,6 +188,8 @@ class Login extends Component {
 				? 'Password field cannot be empty'
 				: value.length < 6?'Short Password':'';
 			break;
+		  default:
+			break;
 			
 		}
 
@@ -233,7 +198,6 @@ class Login extends Component {
 
 	handleSubmit = (event) => {
 		event.preventDefault();
-		const {username,password}=this.state
 		
 	};
 
