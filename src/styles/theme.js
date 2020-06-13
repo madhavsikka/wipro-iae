@@ -17,7 +17,7 @@ const theme = {
 		buttonGreenDark: "#39DB80",
 		unattempted: "#AEA3B0",
 		review: "#C3F73A",
-		submit: "#1B73D7",
+		submit: "#8DE969",
 	},
 
 	fonts: {
