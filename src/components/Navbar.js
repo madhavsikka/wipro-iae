@@ -77,6 +77,9 @@ const Navbar = () => {
 
 	const linkList = (
 		<StyledList>
+			<StyledLink to="/exams" activeClassName="navlink-active">
+				DASHBOARD
+			</StyledLink>
 			<StyledLink to="/login" activeClassName="navlink-active">
 				LOGIN
 			</StyledLink>

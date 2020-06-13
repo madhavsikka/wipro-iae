@@ -1,7 +1,4 @@
 import { css } from "styled-components";
-// import theme from "./theme";
-// import media from "./media";
-// const { colors, fontSizes, fonts } = theme;
 
 const mixins = {
 	fullFlexCenter: css`
@@ -16,6 +13,14 @@ const mixins = {
 		align-items: center;
 		justify-content: center;
 		flex: 1 0 auto;
+	`,
+	flexBar: css`
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-radius: 5px;
+		padding: 10px;
+		margin: 0;
 	`,
 };
 

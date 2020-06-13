@@ -22,7 +22,7 @@ const StyledHead = styled.div`
 	justify-content: center;
 	align-items: center;
 	font-family: ${fonts.Montserrat};
-	font-weight: bold;
+	font-weight: 700;
 	font-size: ${fontSizes.h1};
 	color: ${colors.blue};
 	margin-right: 15px;
@@ -57,12 +57,10 @@ const StyledName = styled.div`
 
 const Home = () => {
 	return (
-		<StyledFlex>
-			<CSSTransition in timeout={600} classNames="fade" appear>
+		<CSSTransition in timeout={600} classNames="fade" appear>
+			<StyledFlex>
 				<Navbar />
-			</CSSTransition>
 
-			<CSSTransition in timeout={600} classNames="fade" appear>
 				<StyledContainer>
 					<StyledHead>WIPRO</StyledHead>
 					<StyledName>
@@ -71,12 +69,10 @@ const Home = () => {
 						<p>ENGINE</p>
 					</StyledName>
 				</StyledContainer>
-			</CSSTransition>
 
-			<CSSTransition in timeout={600} classNames="fade" appear>
 				<Footer />
-			</CSSTransition>
-		</StyledFlex>
+			</StyledFlex>
+		</CSSTransition>
 	);
 };
 
