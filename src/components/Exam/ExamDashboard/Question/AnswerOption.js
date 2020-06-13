@@ -10,6 +10,14 @@ const StyledOption = styled.div`
 	font-size: ${fontSizes.md};
 	margin: 0;
 	padding: 0;
+	cursor: ${(props) =>
+		props.type === "multi"
+			? "pointer"
+			: props.isSelected
+			? "pointer"
+			: props.length === 0
+			? "pointer"
+			: "not-allowed"};
 
 	> div {
 		padding: 12px 0;
@@ -35,18 +43,18 @@ const StyledOption = styled.div`
 			transition: background 0.1s linear;
 		}
 	}
-	:hover {
-		cursor: pointer;
-	}
+
 	:hover div:last-child {
-		cursor: pointer;
 		border: 2px solid ${colors.blueMunsell};
 	}
 `;
 
-const AnswerOption = ({ selectedOptions, alphabet, option }) => {
+const AnswerOption = ({ type, selectedOptions, alphabet, option }) => {
 	return (
-		<StyledOption isSelected={selectedOptions.includes(alphabet)}>
+		<StyledOption
+			isSelected={selectedOptions.includes(alphabet)}
+			type={type}
+			length={selectedOptions.length}>
 			<div>{alphabet}</div>
 			<div>{option}</div>
 		</StyledOption>

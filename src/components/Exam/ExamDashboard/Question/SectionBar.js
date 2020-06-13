@@ -29,6 +29,7 @@ const StyledButton = styled(Button)`
 
 const SectionBar = ({
 	sections,
+	setSelectedOptions,
 	selectedSectionIndex,
 	setSelectedSectionIndex,
 	setSelectedQuestionIndex,
@@ -36,6 +37,7 @@ const SectionBar = ({
 	const onClickHandler = (event) => {
 		setSelectedSectionIndex(sections.indexOf(event.target.innerText));
 		setSelectedQuestionIndex(0);
+		setSelectedOptions([]);
 		console.log(sections.indexOf(event.target.innerText));
 	};
 

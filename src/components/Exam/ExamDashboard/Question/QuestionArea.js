@@ -31,7 +31,7 @@ const QuestionArea = ({ examData }) => {
 	const [selectedSectionIndex, setSelectedSectionIndex] = useState(0);
 	const [isMounted, setIsMounted] = useState(false);
 	const [isReviewed, setIsReviewed] = useState(false);
-
+	const [selectedOptions, setSelectedOptions] = useState([]);
 	const numOfQuestionsInSec = useRef([]);
 	const questionState = useRef({});
 
@@ -73,6 +73,7 @@ const QuestionArea = ({ examData }) => {
 										isReviewed={isReviewed}
 										setIsReviewed={setIsReviewed}
 										questionState={questionState.current}
+										setSelectedOptions={setSelectedOptions}
 										selectedSectionName={
 											examData.sections[selectedSectionIndex]
 										}
@@ -90,6 +91,8 @@ const QuestionArea = ({ examData }) => {
 									<QuestionBox
 										questions={examData.questions}
 										questionState={questionState.current}
+										selectedOptions={selectedOptions}
+										setSelectedOptions={setSelectedOptions}
 										selectedSectionName={
 											examData.sections[selectedSectionIndex]
 										}
@@ -108,6 +111,7 @@ const QuestionArea = ({ examData }) => {
 								<WrapperDiv area="SectionBar">
 									<SectionBar
 										sections={examData.sections}
+										setSelectedOptions={setSelectedOptions}
 										selectedSectionIndex={selectedSectionIndex}
 										setSelectedSectionIndex={setSelectedSectionIndex}
 										setSelectedQuestionIndex={setSelectedQuestionIndex}

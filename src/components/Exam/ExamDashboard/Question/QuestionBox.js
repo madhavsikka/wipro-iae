@@ -101,6 +101,8 @@ const StyledOption = styled.div`
 const QuestionBox = ({
 	questions,
 	questionState,
+	selectedOptions,
+	setSelectedOptions,
 	selectedQuestionIndex,
 	setSelectedQuestionIndex,
 	numOfQuestionsInSec,
@@ -113,15 +115,20 @@ const QuestionBox = ({
 	setIsReviewed,
 }) => {
 	const currentQuestion = questions[selectedSectionName][selectedQuestionIndex];
-	const [selectedOptions, setSelectedOptions] = useState([]);
+	// const [selectedOptions, setSelectedOptions] = useState([]);
 
 	const onClickOptionHandler = (alphabet) => {
 		setSelectedOptions((prevState) => {
 			if (prevState.includes(alphabet)) {
 				return prevState.filter((i) => i !== alphabet);
-			} else {
+			}
+			if (
+				currentQuestion.type === "multi" ||
+				(currentQuestion.type === "single" && selectedOptions.length === 0)
+			) {
 				return [...prevState, alphabet];
 			}
+			return prevState;
 		});
 		questionState[selectedSectionName][selectedQuestionIndex] =
 			config.questionState.visited_unattempted;
@@ -152,6 +159,7 @@ const QuestionBox = ({
 								key={`${selectedSectionName}${selectedQuestionIndex}${index}`}
 								onClick={() => onClickOptionHandler(alphabet)}>
 								<AnswerOption
+									type={currentQuestion.type}
 									selectedOptions={selectedOptions}
 									alphabet={alphabet}
 									option={option}

@@ -146,6 +146,7 @@ const ProgressBox = ({
 	isReviewed,
 	setIsReviewed,
 	questionState,
+	setSelectedOptions,
 	selectedSectionName,
 	selectedSectionIndex,
 	selectedQuestionIndex,
@@ -166,6 +167,7 @@ const ProgressBox = ({
 			) {
 				setQuestionStateHandler(config.questionState.visited_unattempted);
 			}
+			setSelectedOptions([]);
 		}
 	};
 
