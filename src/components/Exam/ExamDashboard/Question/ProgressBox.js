@@ -105,6 +105,7 @@ const StyledDiv = styled.div`
 		border-color: ${(props) =>
 			props.selected ? colors.indigo : colors.blueMunsell}; */
 		background: ${colors.blueMunsell};
+		border: ${colors.blueMunsell};
 		color: ${colors.white};
 	}
 `;
