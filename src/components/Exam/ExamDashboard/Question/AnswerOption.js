@@ -61,4 +61,4 @@ const AnswerOption = ({ type, selectedOptions, alphabet, option }) => {
 	);
 };
 
-export default React.memo(AnswerOption);
+export default AnswerOption;

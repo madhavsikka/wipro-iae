@@ -118,18 +118,24 @@ const QuestionBox = ({
 
 	const onClickOptionHandler = (alphabet) => {
 		setSelectedOptions((prevState) => {
-			if (prevState[selectedSectionName].includes(alphabet)) {
-				let newSection = prevState[selectedSectionName].filter(
-					(i) => i !== alphabet
-				);
-				return { ...prevState, newSection };
+			if (
+				prevState[selectedSectionName][selectedQuestionIndex].includes(alphabet)
+			) {
+				let newState = JSON.parse(JSON.stringify(prevState));
+				newState[selectedSectionName][selectedQuestionIndex] = newState[
+					selectedSectionName
+				][selectedQuestionIndex].filter((i) => i !== alphabet);
+				return newState;
 			}
 			if (
 				currentQuestion.type === "multi" ||
-				(currentQuestion.type === "single" && selectedOptions.length === 0)
+				(currentQuestion.type === "single" &&
+					selectedOptions[selectedSectionName][selectedQuestionIndex].length ===
+						0)
 			) {
-				let newSection = prevState[selectedSectionName]
-				return [...prevState, alphabet];
+				let newState = JSON.parse(JSON.stringify(prevState));
+				newState[selectedSectionName][selectedQuestionIndex].push(alphabet);
+				return newState;
 			}
 			return prevState;
 		});
@@ -163,7 +169,9 @@ const QuestionBox = ({
 								onClick={() => onClickOptionHandler(alphabet)}>
 								<AnswerOption
 									type={currentQuestion.type}
-									selectedOptions={selectedOptions}
+									selectedOptions={
+										selectedOptions[selectedSectionName][selectedQuestionIndex]
+									}
 									alphabet={alphabet}
 									option={option}
 								/>

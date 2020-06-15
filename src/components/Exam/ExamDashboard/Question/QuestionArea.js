@@ -56,7 +56,9 @@ const QuestionArea = ({ examData }) => {
 		examData.sections.forEach((sec) => {
 			let sectionArray;
 			(sectionArray = []).length = examData.numQuestions[sec];
-			optionsObject[sec] = [...sectionArray];
+			sectionArray.fill([]);
+			optionsObject[sec] = sectionArray;
+			console.log(JSON.stringify(optionsObject));
 		});
 		setSelectedOptions(optionsObject);
 	}
