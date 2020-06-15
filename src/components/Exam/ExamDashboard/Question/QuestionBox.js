@@ -115,17 +115,20 @@ const QuestionBox = ({
 	setIsReviewed,
 }) => {
 	const currentQuestion = questions[selectedSectionName][selectedQuestionIndex];
-	// const [selectedOptions, setSelectedOptions] = useState([]);
 
 	const onClickOptionHandler = (alphabet) => {
 		setSelectedOptions((prevState) => {
-			if (prevState.includes(alphabet)) {
-				return prevState.filter((i) => i !== alphabet);
+			if (prevState[selectedSectionName].includes(alphabet)) {
+				let newSection = prevState[selectedSectionName].filter(
+					(i) => i !== alphabet
+				);
+				return { ...prevState, newSection };
 			}
 			if (
 				currentQuestion.type === "multi" ||
 				(currentQuestion.type === "single" && selectedOptions.length === 0)
 			) {
+				let newSection = prevState[selectedSectionName]
 				return [...prevState, alphabet];
 			}
 			return prevState;
