@@ -41,7 +41,7 @@ const Exams = () => {
 	return (
 		<>
 			<StyledContainer>
-				<Examnav />
+				<Examnav name="All Exams" />
 				<StyledBox>
 					{!isMounted ? <Loader /> : null}
 					{exams.map((exam, index) => (

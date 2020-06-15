@@ -57,7 +57,7 @@ const StyledHeader = styled.div`
 	user-select: none;
 `;
 
-const Examnav = ({ examName }) => {
+const Examnav = ({ name }) => {
 	return (
 		<StyledContainer>
 			<StyledNav>
@@ -66,7 +66,7 @@ const Examnav = ({ examName }) => {
 						<WiproLogo />
 					</NavLink>
 				</StyledLogo>
-				<StyledHeader>{examName}</StyledHeader>
+				<StyledHeader>{name}</StyledHeader>
 				<NavLink to="/user-dashboard">
 					<StyledUser />
 				</NavLink>

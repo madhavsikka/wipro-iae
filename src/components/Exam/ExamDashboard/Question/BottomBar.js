@@ -46,8 +46,20 @@ const BottomBar = ({
 		if (type === "submit") {
 			setQuestionStateHandler(config.questionState.submit);
 			let postData = [...selectedOptions];
+			// axios
+			// 	.post(`${config.jsonDb.responses}`, { postData })
+			// 	.then((res) => {
+			// 		console.log(res);
+			// 		console.log(res.data);
+			// 	})
+			// 	.catch((err) => {
+			// 		console.log(err);
+			// 	});
 			axios
-				.post(`${config.jsonDb.responses}`, { postData })
+				.post(
+					`${config.firebase.databaseURL}/e1/responses/${selectedSectionName}/${selectedQuestionIndex}.json`,
+					{ postData }
+				)
 				.then((res) => {
 					console.log(res);
 					console.log(res.data);

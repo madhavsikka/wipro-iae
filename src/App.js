@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Exams from "./components/Exam/Exams";
 import ExamDetail from "./components/Exam/ExamDetail";
 import ExamDashboard from "./components/Exam/ExamDashboard/ExamDashboard";
+import Result from "./components/Exam/Result/Result";
 
 function App() {
 	return (
@@ -28,6 +29,9 @@ function App() {
 					</Route>
 					<Route path="/user-dashboard" exact>
 						<UserDashboard />
+					</Route>
+					<Route path="/exams/:examId/result" exact>
+						<Result />
 					</Route>
 					<Route path="/exams/:examId/exam-dashboard" exact>
 						<ExamDashboard />

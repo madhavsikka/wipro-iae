@@ -42,7 +42,7 @@ const ExamDetail = () => {
 	return (
 		<>
 			<StyledContainer>
-				<Examnav />
+				<Examnav name={`Details For Exam ${examId}`} />
 				{!isMounted ? (
 					<Loader />
 				) : (
