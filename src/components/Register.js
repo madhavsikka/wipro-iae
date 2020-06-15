@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,Component,useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import media from "../styles/media";
@@ -8,6 +8,8 @@ import { ReactComponent as User } from "../images/User.svg";
 import { CSSTransition } from "react-transition-group";
 import theme from "../styles/theme";
 import mixins from "../styles/mixins";
+import axios from 'axios';
+import config from "../config";
 const { colors, fonts, fontSizes } = theme;
 
 const StyledFlex = styled.div`
@@ -34,7 +36,6 @@ const StyledBanner = styled.div`
 	font-size: ${fontSizes.h3};
 	color: white;
 	${media.desktop`display: none;`}
-
 	p {
 		margin: 0;
 		:first-child {
@@ -42,12 +43,10 @@ const StyledBanner = styled.div`
 			font-weight: lighter;
 			margin-bottom: 4rem;
 		}
-
 		:nth-child(2) {
 			font-size: ${fontSizes.h1};
 			font-weight: bolder;
 		}
-
 		:nth-child(3) {
 			font-size: ${fontSizes.h5};
 			font-weight: lighter;
@@ -55,7 +54,6 @@ const StyledBanner = styled.div`
 			flex-direction: column;
 			align-items: flex-start;
 		}
-
 		:nth-child(4) {
 			font-size: ${fontSizes.xl};
 			font-weight: lighter;
@@ -114,7 +112,6 @@ const StyledImage = styled.div`
 	display: flex;
 	justify-content: center;
 	margin-bottom: 1rem;
-
 	svg {
 		width: 80%;
 		margin: 0;
@@ -131,107 +128,181 @@ const StyledInput = styled.input`
 	padding: 6px 7px;
 	margin-bottom: 1rem;
 `;
-
-const Register = (props) => {
-	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
-
-	const handleUsernameChange = (event) => {
-		setUsername(event.target.value);
-	};
-
-	const handlePasswordChange = (event) => {
-		setPassword(event.target.value);
-	};
-
-	const handleSubmit = (event) => {
-		alert(`Username: ${username} and Password: ${password}`);
-		event.preventDefault();
-	};
-
-	return (
-		<StyledFlex>
-			<Navbar />
-			<StyledInFlex>
-				<CSSTransition in timeout={600} classNames="fade" appear>
-					<StyledBanner>
-						<p>Sign up for a new account.</p>
-						<p>Wipro</p>
-						<p>
-							<div>Independent</div>
-							<div>Assessment</div>
-							<div>Engine</div>
-						</p>
-						<p>
-							Already have an account?
-							<Button
-								color="transparent"
-								hoverColor="white"
-								hoverText={colors.blue}
-								style={{
-									border: "1px solid white",
-									marginLeft: "1rem",
-									padding: "0.25rem 0.75rem",
-								}}>
-								<Link to="/login">Log in</Link>
-							</Button>
-						</p>
-					</StyledBanner>
-				</CSSTransition>
-
-				<CSSTransition in timeout={600} classNames="fade" appear>
-					<StyledContainer>
-						<div>
-							<StyledText>REGISTER</StyledText>
-							<StyledImage>
-								<User />
-							</StyledImage>
-
-							<StyledForm autoComplete="off">
-								<StyledInput
-									type="text"
-									name="name"
-									placeholder="Full Name"
-									value={username}
-									onChange={(event) => handleUsernameChange(event)}
-								/>
-								<StyledInput
-									type="email"
-									name="email"
-									placeholder="Email ID"
-									value={username}
-									onChange={(event) => handleUsernameChange(event)}
-								/>
-								<StyledInput
-									type="text"
-									name="number"
-									placeholder="Contact Number"
-									value={username}
-									onChange={(event) => handleUsernameChange(event)}
-								/>
-
-								<StyledInput
-									type="password"
-									name="password"
-									placeholder="Create Password"
-									value={password}
-									onChange={(event) => handlePasswordChange(event)}
-								/>
-							</StyledForm>
-
-							<Button
-								color={colors.buttonGreen}
-								hoverColor={colors.buttonGreenDark}
-								onClick={(event) => handleSubmit(event)}
-								style={{ marginTop: "2rem", width: "10rem" }}>
-								REGISTER
-							</Button>
-						</div>
-					</StyledContainer>
-				</CSSTransition>
-			</StyledInFlex>
-		</StyledFlex>
+// eslint-disable-next-line
+const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+const validateForm = (errors) => {
+	let valid = true;
+	Object.values(errors).forEach(
+	  (val) => val.length > 0 && (valid = false)
 	);
-};
+	return valid;
+}
+  
+const countErrors = (errors) => {
+	let count = 0;
+	Object.values(errors).forEach(
+	  (val) => val.length > 0 && (count = count+1)
+	);
+	return count;
+}
+
+
+
+class Register extends Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+		  formValid: false,
+		  errorCount: null,
+		  errors: {
+			fullName: '',
+			email: '',
+			password: '',
+		  }
+		};
+	}
+	
+	handleChange = (event) => {
+		event.preventDefault();
+		const { name, value } = event.target;
+		let errors = this.state.errors;
+	
+		// switch (name) {
+		//   case 'fullName': 
+		// 	errors.fullName = 
+		// 	  value.length < 5
+		// 		? 'Full Name must be 5 characters long!'
+		// 		: '';
+		// 	break;
+		//   case 'email': 
+		// 	errors.email = 
+		// 	  validEmailRegex.test(value)
+		// 		? ''
+		// 		: 'Email is not valid!';
+		// 	break;
+		//   case 'password': 
+		// 	errors.password = 
+		// 	  value.length < 8
+		// 		? 'Password must be 8 characters long!'
+		// 		: '';
+		// 	break;
+		//   default:
+		// 	break;
+		// }
+	
+		this.setState({errors, [name]: value});
+	}
+
+	handleSubmit = (event) => {
+		event.preventDefault();
+		this.setState({formValid: validateForm(this.state.errors)});
+		this.setState({errorCount: countErrors(this.state.errors)});
+		useEffect(() => {
+			const newUser = {
+				fullName:this.state.fullName,
+				email:this.state.email,
+				password:this.state.password
+			};
+			axios
+			.post(config.jsonDb.users, {newUser})
+			.then((res) => {
+				console.log(res);
+				console.log(res.data);
+				console.log("done");
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+		}, []);
+	}
+	  
+	render() {
+		const {errors} = this.state;
+		return (
+			<StyledFlex>
+				<Navbar />
+				<StyledInFlex>
+					<CSSTransition in timeout={600} classNames="fade" appear>
+						<StyledBanner>
+							<p>Sign up for a new account.</p>
+							<p>Wipro</p>
+							<p>
+								<div>Independent</div>
+								<div>Assessment</div>
+								<div>Engine</div>
+							</p>
+							<p>
+								Already have an account?
+								<Button
+									color="transparent"
+									hoverColor="white"
+									hoverText={colors.blue}
+									style={{
+										border: "1px solid white",
+										marginLeft: "1rem",
+										padding: "0.25rem 0.75rem",
+									}}>
+									<Link to="/login">Log in</Link>
+								</Button>
+							</p>
+						</StyledBanner>
+					</CSSTransition>
+
+					<CSSTransition in timeout={600} classNames="fade" appear>
+						<StyledContainer>
+							<div>
+								<StyledText>REGISTER</StyledText>
+								<StyledImage>
+									<User />
+								</StyledImage>
+
+								<StyledForm autoComplete="off" onSubmit={this.handleSubmit} noValidate>
+									<StyledInput
+										type="text"
+										name="fullName"
+										placeholder="Full Name"
+										htmlFor="fullName"
+										onChange={this.handleChange} 
+										noValidate
+									/>
+									{errors.fullName.length > 0 && <span className='error'>{errors.fullName}</span>}
+
+									<StyledInput
+										type="email"
+										name="email"
+										placeholder="Email ID"
+										htmlFor="email"
+										onChange={this.handleChange} 
+										noValidate
+									/>
+									{errors.email.length > 0 &&  <span className='error'>{errors.email}</span>}
+
+									<StyledInput
+										type="password"
+										name="password"
+										placeholder="Create Password"
+										htmlFor="password"
+										onChange={this.handleChange} 
+										noValidate
+									/>
+									{errors.password.length > 0 && <span className='error'>{errors.password}</span>}
+
+								</StyledForm>
+
+								<Button
+									color={colors.buttonGreen}
+									hoverColor={colors.buttonGreenDark}
+									style={{ marginTop: "2rem", width: "10rem" }}>
+									REGISTER
+								</Button>
+							</div>
+						</StyledContainer>
+					</CSSTransition>
+				</StyledInFlex>
+			</StyledFlex>
+		);
+	}
+}
 
 export default Register;

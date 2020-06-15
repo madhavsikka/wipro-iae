@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import media from "../styles/media";
@@ -11,6 +11,7 @@ import mixins from "../styles/mixins";
 import { IconContext } from "react-icons";
 import { MdMail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
+
 const { colors, fonts, fontSizes } = theme;
 
 const StyledFlex = styled.div`
@@ -111,6 +112,8 @@ const StyledForm = styled.form`
 	flex-direction: column;
 	justify-content: center;
 	align-items: stretch;
+	color: red;
+	font-size: 15px;
 `;
 
 const StyledImage = styled.div`
@@ -143,118 +146,167 @@ const StyledInput = styled.input`
 	margin-right: 10px;
 `;
 
-const Login = (props) => {
-	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
+const UserIDRegex = RegExp(
+	/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+);
 
-	const handleUsernameChange = (event) => {
-		setUsername(event.target.value);
+class Login extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			formValid: false,
+			errorCount: null,
+			isLoggedIn: false,
+			isError: false,
+			userName: "",
+			password: "",
+
+			errors: {
+				username: "",
+				password: "",
+			},
+		};
+	}
+
+	handleChange = (event) => {
+		event.preventDefault();
+		const { name, value } = event.target;
+		let errors = this.state.errors;
+
+		switch (name) {
+			case "username":
+				errors.username = UserIDRegex.test(value)
+					? ""
+					: value.length < 1
+					? "UserID cannot be empty"
+					: "Invalid UserID";
+				break;
+			case "password":
+				errors.password =
+					value.length < 1
+						? "Password field cannot be empty"
+						: value.length < 6
+						? "Short Password"
+						: "";
+				break;
+			default:
+				break;
+		}
+
+		this.setState({ errors, [name]: value });
 	};
 
-	const handlePasswordChange = (event) => {
-		setPassword(event.target.value);
-	};
-
-	const handleSubmit = (event) => {
-		alert(`Username: ${username} and Password: ${password}`);
+	handleSubmit = (event) => {
 		event.preventDefault();
 	};
 
-	return (
-		<StyledFlex>
-			<Navbar />
-			<StyledInFlex>
-				<CSSTransition in timeout={600} classNames="fade" appear>
-					<StyledBanner>
-						<p>Log in to your account.</p>
-						<p>Wipro</p>
-						<p>
-							<div>Independent</div>
-							<div>Assessment</div>
-							<div>Engine</div>
-						</p>
-						<p>
-							Don't have an account?
-							<Button
-								color="transparent"
-								hoverColor="white"
-								hoverText={colors.blue}
-								style={{
-									border: "1px solid white",
-									marginLeft: "1rem",
-									padding: "0.25rem 0.75rem",
-								}}>
-								<Link to="/register">Register</Link>
-							</Button>
-						</p>
-					</StyledBanner>
-				</CSSTransition>
+	render() {
+		const { errors } = this.state;
+		return (
+			<StyledFlex>
+				<Navbar />
+				<StyledInFlex>
+					<CSSTransition in timeout={600} classNames="fade" appear>
+						<StyledBanner>
+							<p>Log in to your account.</p>
+							<p>Wipro</p>
+							<p>
+								<div>Independent</div>
+								<div>Assessment</div>
+								<div>Engine</div>
+							</p>
+							<p>
+								Don't have an account?
+								<Button
+									color="transparent"
+									hoverColor="white"
+									hoverText={colors.blue}
+									style={{
+										border: "1px solid white",
+										marginLeft: "1rem",
+										padding: "0.25rem 0.75rem",
+									}}>
+									<Link to="/register">Register</Link>
+								</Button>
+							</p>
+						</StyledBanner>
+					</CSSTransition>
 
-				<CSSTransition in timeout={600} classNames="fade" appear>
-					<StyledContainer>
-						<div>
-							<StyledText>LOGIN</StyledText>
-							<StyledImage>
-								<User />
-							</StyledImage>
+					<CSSTransition in timeout={600} classNames="fade" appear>
+						<StyledContainer>
+							<div>
+								<StyledText>LOGIN</StyledText>
+								<StyledImage>
+									<User />
+								</StyledImage>
 
-							<StyledForm autoComplete="off">
-								<StyledInputContainer>
-									<IconContext.Provider
-										value={{
-											size: "18px",
-											style: {
-												position: "relative",
-												left: "22px",
-												color: "#AAAAAA",
-											},
-										}}>
-										<MdMail />
-									</IconContext.Provider>
-									<StyledInput
-										type="email"
-										name="email"
-										placeholder="Email"
-										value={username}
-										onChange={(event) => handleUsernameChange(event)}
-									/>
-								</StyledInputContainer>
+								<StyledForm
+									autoComplete="off"
+									onSubmit={this.handleSubmit}
+									noValidate>
+									<StyledInputContainer>
+										<IconContext.Provider
+											value={{
+												size: "18px",
+												style: {
+													position: "relative",
+													left: "22px",
+													color: "#AAAAAA",
+												},
+											}}>
+											<MdMail />
+										</IconContext.Provider>
+										<StyledInput
+											type="username"
+											name="username"
+											placeholder="UserID"
+											onChange={this.handleChange}
+											noValidate
+										/>
+									</StyledInputContainer>
+									{errors.username.length > 0 && (
+										<span className="error">{errors.username}</span>
+									)}
+									<StyledInputContainer>
+										<IconContext.Provider
+											value={{
+												size: "18px",
+												style: {
+													position: "relative",
+													left: "22px",
+													color: "#AAAAAA",
+												},
+											}}>
+											<FaLock />
+										</IconContext.Provider>
+										<StyledInput
+											type="password"
+											name="password"
+											placeholder="Password"
+											onChange={this.handleChange}
+											noValidate
+										/>
+									</StyledInputContainer>
+									{errors.password.length > 0 && (
+										<span className="error">{errors.password}</span>
+									)}
+								</StyledForm>
 
-								<StyledInputContainer>
-									<IconContext.Provider
-										value={{
-											size: "18px",
-											style: {
-												position: "relative",
-												left: "22px",
-												color: "#AAAAAA",
-											},
-										}}>
-										<FaLock />
-									</IconContext.Provider>
-									<StyledInput
-										type="password"
-										name="password"
-										placeholder="Password"
-										value={password}
-										onChange={(event) => handlePasswordChange(event)}
-									/>
-								</StyledInputContainer>
-							</StyledForm>
-
-							<Button
-								color={colors.buttonGreen}
-								hoverColor={colors.buttonGreenDark}
-								onClick={(event) => handleSubmit(event)}
-								style={{ marginTop: "2rem", width: "10rem" }}>
-								LOGIN
-							</Button>
-						</div>
-					</StyledContainer>
-				</CSSTransition>
-			</StyledInFlex>
-		</StyledFlex>
-	);
-};
+								<Button
+									color={colors.buttonGreen}
+									hoverColor={colors.buttonGreenDark}
+									onClick={this.handleSubmit}
+									style={{ marginTop: "2rem", width: "10rem" }}>
+									LOGIN
+								</Button>
+							</div>
+						</StyledContainer>
+					</CSSTransition>
+				</StyledInFlex>
+			</StyledFlex>
+		);
+	}
+}
 
 export default Login;
