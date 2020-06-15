@@ -100,10 +100,11 @@ const StyledDiv = styled.div`
 			: colors.blueMunsell};
 
 	:hover {
-		background: ${(props) =>
+		/* background: ${(props) =>
 			props.selected ? colors.indigo : colors.blueMunsell};
 		border-color: ${(props) =>
-			props.selected ? colors.indigo : colors.blueMunsell};
+			props.selected ? colors.indigo : colors.blueMunsell}; */
+		background: ${colors.blueMunsell};
 		color: ${colors.white};
 	}
 `;
@@ -116,7 +117,7 @@ const ButtonBox = styled.div`
 
 	> div {
 		display: flex;
-		justify-content: space-between;
+		justify-content: space-around;
 		margin-bottom: 1rem;
 	}
 `;
@@ -161,13 +162,12 @@ const ProgressBox = ({
 		if (selectedQuestionIndex !== +event.target.innerText - 1) {
 			setSelectedQuestionIndex(+event.target.innerText - 1);
 			setIsReviewed(false);
-			if (
-				questionState[selectedSectionName][selectedQuestionIndex] ===
-				config.questionState.unvisited
-			) {
-				setQuestionStateHandler(config.questionState.visited_unattempted);
-			}
-			setSelectedOptions([]);
+			// if (
+			// 	questionState[selectedSectionName][selectedQuestionIndex] ===
+			// 	config.questionState.unvisited
+			// ) {
+			// 	setQuestionStateHandler(config.questionState.visited_unattempted);
+			// }
 		}
 	};
 
@@ -201,10 +201,10 @@ const ProgressBox = ({
 						<div></div>
 						<div>Marked</div>
 					</StyledLegend>
-					<StyledLegend backColor={colors.unattempted} area="visited">
+					{/* <StyledLegend backColor={colors.unattempted} area="visited">
 						<div></div>
 						<div>Visited</div>
-					</StyledLegend>
+					</StyledLegend> */}
 				</div>
 				<div>
 					<Button

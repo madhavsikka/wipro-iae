@@ -115,18 +115,27 @@ const QuestionBox = ({
 	setIsReviewed,
 }) => {
 	const currentQuestion = questions[selectedSectionName][selectedQuestionIndex];
-	// const [selectedOptions, setSelectedOptions] = useState([]);
 
 	const onClickOptionHandler = (alphabet) => {
 		setSelectedOptions((prevState) => {
-			if (prevState.includes(alphabet)) {
-				return prevState.filter((i) => i !== alphabet);
+			if (
+				prevState[selectedSectionName][selectedQuestionIndex].includes(alphabet)
+			) {
+				let newState = JSON.parse(JSON.stringify(prevState));
+				newState[selectedSectionName][selectedQuestionIndex] = newState[
+					selectedSectionName
+				][selectedQuestionIndex].filter((i) => i !== alphabet);
+				return newState;
 			}
 			if (
 				currentQuestion.type === "multi" ||
-				(currentQuestion.type === "single" && selectedOptions.length === 0)
+				(currentQuestion.type === "single" &&
+					selectedOptions[selectedSectionName][selectedQuestionIndex].length ===
+						0)
 			) {
-				return [...prevState, alphabet];
+				let newState = JSON.parse(JSON.stringify(prevState));
+				newState[selectedSectionName][selectedQuestionIndex].push(alphabet);
+				return newState;
 			}
 			return prevState;
 		});
@@ -160,7 +169,9 @@ const QuestionBox = ({
 								onClick={() => onClickOptionHandler(alphabet)}>
 								<AnswerOption
 									type={currentQuestion.type}
-									selectedOptions={selectedOptions}
+									selectedOptions={
+										selectedOptions[selectedSectionName][selectedQuestionIndex]
+									}
 									alphabet={alphabet}
 									option={option}
 								/>

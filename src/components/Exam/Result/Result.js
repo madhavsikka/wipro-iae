@@ -4,7 +4,7 @@ import mixins from "../../../styles/mixins";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import Bargraph from "./Bargraph";
-import Pichart from "./Pichart";
+// import Pichart from "./Pichart";
 import Table from "./Table";
 import theme from "../../../styles/theme";
 // import axios from "axios";

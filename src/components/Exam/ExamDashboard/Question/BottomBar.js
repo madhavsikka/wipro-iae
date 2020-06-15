@@ -40,26 +40,16 @@ const BottomBar = ({
 	};
 
 	const onClickNextHandler = (type) => {
-		if (!isReviewed) {
-			setQuestionStateHandler(config.questionState.visited_unattempted);
-		}
+		// if (!isReviewed) {
+		// 	setQuestionStateHandler(config.questionState.visited_unattempted);
+		// }
 		if (type === "submit") {
 			setQuestionStateHandler(config.questionState.submit);
-			let postData = [...selectedOptions];
-			// axios
-			// 	.post(`${config.jsonDb.responses}`, { postData })
-			// 	.then((res) => {
-			// 		console.log(res);
-			// 		console.log(res.data);
-			// 	})
-			// 	.catch((err) => {
-			// 		console.log(err);
-			// 	});
+			let postData = [
+				...selectedOptions[selectedSectionName][selectedQuestionIndex],
+			];
 			axios
-				.post(
-					`${config.firebase.databaseURL}/e1/responses/${selectedSectionName}/${selectedQuestionIndex}.json`,
-					{ postData }
-				)
+				.post(`${config.jsonDb.responses}`, { postData })
 				.then((res) => {
 					console.log(res);
 					console.log(res.data);
@@ -67,6 +57,18 @@ const BottomBar = ({
 				.catch((err) => {
 					console.log(err);
 				});
+			// axios
+			// 	.post(
+			// 		`${config.firebase.databaseURL}/e1/responses/${selectedSectionName}/${selectedQuestionIndex}.json`,
+			// 		{ postData }
+			// 	)
+			// 	.then((res) => {
+			// 		console.log(res);
+			// 		console.log(res.data);
+			// 	})
+			// 	.catch((err) => {
+			// 		console.log(err);
+			// 	});
 		}
 		if (selectedQuestionIndex + 1 < numOfQuestionsInSec[selectedSectionIndex]) {
 			setSelectedQuestionIndex((prevState) => prevState + 1);
@@ -77,12 +79,15 @@ const BottomBar = ({
 			console.log("All questions attempted");
 		}
 		setIsReviewed(false);
-		setSelectedOptions([]);
 	};
 
 	const onClickClearHandler = () => {
 		setQuestionStateHandler(config.questionState.unvisited);
-		setSelectedOptions([]);
+		setSelectedOptions((prevState) => {
+			let newState = JSON.parse(JSON.stringify(prevState));
+			newState[selectedSectionName][selectedQuestionIndex] = [];
+			return newState;
+		});
 	};
 
 	const onClickReviewHandler = () => {
@@ -122,7 +127,9 @@ const BottomBar = ({
 					CLEAR RESPONSE
 				</Button>
 			</StyledGroup>
-			{console.log(`Selected: ${selectedOptions}`)}
+			{console.log(
+				`Selected: ${JSON.stringify(selectedOptions)}`
+			)}
 			<StyledGroup>
 				<Button
 					color={colors.darkRoyalBlue}
@@ -144,7 +151,10 @@ const BottomBar = ({
 					hoverText={colors.white}
 					weight="600"
 					style={{ marginLeft: "20px" }}
-					disable={selectedOptions.length === 0}
+					disable={
+						selectedOptions[selectedSectionName][selectedQuestionIndex]
+							.length === 0
+					}
 					onClick={() => onClickNextHandler("submit")}>
 					SUBMIT AND NEXT
 				</Button>
