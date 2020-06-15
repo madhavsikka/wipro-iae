@@ -31,7 +31,8 @@ const QuestionArea = ({ examData }) => {
 	const [selectedSectionIndex, setSelectedSectionIndex] = useState(0);
 	const [isMounted, setIsMounted] = useState(false);
 	const [isReviewed, setIsReviewed] = useState(false);
-	const [selectedOptions, setSelectedOptions] = useState([]);
+	// const [selectedOptions, setSelectedOptions] = useState([]);
+	const [selectedOptions, setSelectedOptions] = useState({});
 	const numOfQuestionsInSec = useRef([]);
 	const questionState = useRef({});
 
@@ -48,6 +49,16 @@ const QuestionArea = ({ examData }) => {
 		Object.values(examData.numQuestions).forEach((num) => {
 			numOfQuestionsInSec.current.push(+num);
 		});
+	}
+
+	if (Object.keys(selectedOptions).length === 0 && examData) {
+		let optionsObject = {};
+		examData.sections.forEach((sec) => {
+			let sectionArray;
+			(sectionArray = []).length = examData.numQuestions[sec];
+			optionsObject[sec] = [...sectionArray];
+		});
+		setSelectedOptions(optionsObject);
 	}
 
 	useEffect(() => {
