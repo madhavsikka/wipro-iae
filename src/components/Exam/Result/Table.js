@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import theme from "../../../styles/theme";
-const { colors, fontSizes, fonts } = theme;
+const { colors } = theme;
 
 const StyleContainer = styled.div`
 	grid-area: ${(props) => (props.area ? props.area : "")};

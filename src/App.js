@@ -11,6 +11,8 @@ import Exams from "./components/Exam/Exams";
 import ExamDetail from "./components/Exam/ExamDetail";
 import ExamDashboard from "./components/Exam/ExamDashboard/ExamDashboard";
 import Result from "./components/Exam/Result/Result";
+import AdminDashboard from "./components/Exam/AdminDashboard/AdminDashboard";
+import NewExam from "./components/Exam/AdminDashboard/NewExam";
 
 function App() {
 	return (
@@ -29,6 +31,12 @@ function App() {
 					</Route>
 					<Route path="/user-dashboard" exact>
 						<UserDashboard />
+					</Route>
+					<Route path="/admin-dashboard/new-exam" exact>
+						<NewExam />
+					</Route>
+					<Route path="/admin-dashboard" exact>
+						<AdminDashboard />
 					</Route>
 					<Route path="/exams/:examId/result" exact>
 						<Result />

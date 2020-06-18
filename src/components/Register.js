@@ -1,4 +1,4 @@
-import React, { useState,Component,useEffect } from "react";
+import React, { Component, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import media from "../styles/media";
@@ -8,7 +8,7 @@ import { ReactComponent as User } from "../images/User.svg";
 import { CSSTransition } from "react-transition-group";
 import theme from "../styles/theme";
 import mixins from "../styles/mixins";
-import axios from 'axios';
+import axios from "axios";
 import config from "../config";
 const { colors, fonts, fontSizes } = theme;
 
@@ -129,60 +129,55 @@ const StyledInput = styled.input`
 	margin-bottom: 1rem;
 `;
 // eslint-disable-next-line
-const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+const validEmailRegex = RegExp(
+	/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
+);
 const validateForm = (errors) => {
 	let valid = true;
-	Object.values(errors).forEach(
-	  (val) => val.length > 0 && (valid = false)
-	);
+	Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
 	return valid;
-}
-  
+};
+
 const countErrors = (errors) => {
 	let count = 0;
-	Object.values(errors).forEach(
-	  (val) => val.length > 0 && (count = count+1)
-	);
+	Object.values(errors).forEach((val) => val.length > 0 && (count = count + 1));
 	return count;
-}
-
-
+};
 
 class Register extends Component {
-
 	constructor(props) {
 		super(props);
 		this.state = {
-		  formValid: false,
-		  errorCount: null,
-		  errors: {
-			fullName: '',
-			email: '',
-			password: '',
-		  }
+			formValid: false,
+			errorCount: null,
+			errors: {
+				fullName: "",
+				email: "",
+				password: "",
+			},
 		};
 	}
-	
+
 	handleChange = (event) => {
 		event.preventDefault();
 		const { name, value } = event.target;
 		let errors = this.state.errors;
-	
+
 		// switch (name) {
-		//   case 'fullName': 
-		// 	errors.fullName = 
+		//   case 'fullName':
+		// 	errors.fullName =
 		// 	  value.length < 5
 		// 		? 'Full Name must be 5 characters long!'
 		// 		: '';
 		// 	break;
-		//   case 'email': 
-		// 	errors.email = 
+		//   case 'email':
+		// 	errors.email =
 		// 	  validEmailRegex.test(value)
 		// 		? ''
 		// 		: 'Email is not valid!';
 		// 	break;
-		//   case 'password': 
-		// 	errors.password = 
+		//   case 'password':
+		// 	errors.password =
 		// 	  value.length < 8
 		// 		? 'Password must be 8 characters long!'
 		// 		: '';
@@ -190,35 +185,35 @@ class Register extends Component {
 		//   default:
 		// 	break;
 		// }
-	
-		this.setState({errors, [name]: value});
-	}
+
+		this.setState({ errors, [name]: value });
+	};
 
 	handleSubmit = (event) => {
 		event.preventDefault();
-		this.setState({formValid: validateForm(this.state.errors)});
-		this.setState({errorCount: countErrors(this.state.errors)});
+		this.setState({ formValid: validateForm(this.state.errors) });
+		this.setState({ errorCount: countErrors(this.state.errors) });
 		useEffect(() => {
 			const newUser = {
-				fullName:this.state.fullName,
-				email:this.state.email,
-				password:this.state.password
+				fullName: this.state.fullName,
+				email: this.state.email,
+				password: this.state.password,
 			};
 			axios
-			.post(config.jsonDb.users, {newUser})
-			.then((res) => {
-				console.log(res);
-				console.log(res.data);
-				console.log("done");
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+				.post(config.jsonDb.users, { newUser })
+				.then((res) => {
+					console.log(res);
+					console.log(res.data);
+					console.log("done");
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 		}, []);
-	}
-	  
+	};
+
 	render() {
-		const {errors} = this.state;
+		const { errors } = this.state;
 		return (
 			<StyledFlex>
 				<Navbar />
@@ -257,37 +252,45 @@ class Register extends Component {
 									<User />
 								</StyledImage>
 
-								<StyledForm autoComplete="off" onSubmit={this.handleSubmit} noValidate>
+								<StyledForm
+									autoComplete="off"
+									onSubmit={this.handleSubmit}
+									noValidate>
 									<StyledInput
 										type="text"
 										name="fullName"
 										placeholder="Full Name"
 										htmlFor="fullName"
-										onChange={this.handleChange} 
+										onChange={this.handleChange}
 										noValidate
 									/>
-									{errors.fullName.length > 0 && <span className='error'>{errors.fullName}</span>}
+									{errors.fullName.length > 0 && (
+										<span className="error">{errors.fullName}</span>
+									)}
 
 									<StyledInput
 										type="email"
 										name="email"
 										placeholder="Email ID"
 										htmlFor="email"
-										onChange={this.handleChange} 
+										onChange={this.handleChange}
 										noValidate
 									/>
-									{errors.email.length > 0 &&  <span className='error'>{errors.email}</span>}
+									{errors.email.length > 0 && (
+										<span className="error">{errors.email}</span>
+									)}
 
 									<StyledInput
 										type="password"
 										name="password"
 										placeholder="Create Password"
 										htmlFor="password"
-										onChange={this.handleChange} 
+										onChange={this.handleChange}
 										noValidate
 									/>
-									{errors.password.length > 0 && <span className='error'>{errors.password}</span>}
-
+									{errors.password.length > 0 && (
+										<span className="error">{errors.password}</span>
+									)}
 								</StyledForm>
 
 								<Button

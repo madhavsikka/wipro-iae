@@ -48,8 +48,10 @@ const BottomBar = ({
 			let postData = [
 				...selectedOptions[selectedSectionName][selectedQuestionIndex],
 			];
+			console.log(postData);
+			console.log("****");
 			axios
-				.post(`${config.jsonDb.responses}`, { postData })
+				.post(`${config.jsonDb.db}`, { postData })
 				.then((res) => {
 					console.log(res);
 					console.log(res.data);

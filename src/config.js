@@ -1,5 +1,6 @@
 module.exports = {
 	jsonDb: {
+		db: "https://my-json-server.typicode.com/madhavsikka/json-db/db",
 		users: "https://my-json-server.typicode.com/madhavsikka/json-db/users",
 		exams: "https://my-json-server.typicode.com/madhavsikka/json-db/exams",
 		responses:

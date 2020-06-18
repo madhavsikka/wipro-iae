@@ -155,9 +155,9 @@ const ProgressBox = ({
 	setSelectedQuestionIndex,
 	numOfQuestionsInSec,
 }) => {
-	const setQuestionStateHandler = (value) => {
-		questionState[selectedSectionName][selectedQuestionIndex] = value;
-	};
+	// const setQuestionStateHandler = (value) => {
+	// 	questionState[selectedSectionName][selectedQuestionIndex] = value;
+	// };
 
 	const onClickHandler = (event) => {
 		if (selectedQuestionIndex !== +event.target.innerText - 1) {

@@ -22,6 +22,14 @@ const mixins = {
 		padding: 10px;
 		margin: 0;
 	`,
+	styledForm: css`
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+		flex: 1 0 0;
+		padding: 0 2rem;
+		margin: 1rem;
+	`,
 };
 
 export default mixins;

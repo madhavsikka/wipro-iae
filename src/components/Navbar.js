@@ -77,8 +77,11 @@ const Navbar = () => {
 
 	const linkList = (
 		<StyledList>
+			<StyledLink to="/admin-dashboard" activeClassName="navlink-active">
+				ADMIN
+			</StyledLink>
 			<StyledLink to="/exams" activeClassName="navlink-active">
-				DASHBOARD
+				EXAM
 			</StyledLink>
 			<StyledLink to="/login" activeClassName="navlink-active">
 				LOGIN
@@ -86,12 +89,12 @@ const Navbar = () => {
 			<StyledLink to="/register" activeClassName="navlink-active">
 				REGISTER
 			</StyledLink>
-			<StyledLink to="/contact" activeClassName="navlink-active">
+			{/* <StyledLink to="/contact" activeClassName="navlink-active">
 				CONTACT
 			</StyledLink>
 			<StyledLink to="/about" activeClassName="navlink-active">
 				ABOUT
-			</StyledLink>
+			</StyledLink> */}
 		</StyledList>
 	);
 

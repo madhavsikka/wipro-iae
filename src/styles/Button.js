@@ -19,6 +19,7 @@ const StyledButton = styled.button`
 	border-radius: 5px;
 	cursor: pointer;
 	min-width: 7rem;
+	width: ${(props) => props.setWidth};
 	margin: 0;
 	padding: 0.5rem 0.75rem;
 	transition: all 200ms;
@@ -32,7 +33,8 @@ const StyledButton = styled.button`
 	}
 	pointer-events: ${(props) => (props.disable ? "none !important" : "")};
 	background: ${(props) => (props.disable ? colors.unattempted : props.color)};
-	border-color: ${(props) => (props.disable ? colors.unattempted : props.borderColor)};
+	border-color: ${(props) =>
+		props.disable ? colors.unattempted : props.borderColor};
 `;
 
 export default StyledButton;

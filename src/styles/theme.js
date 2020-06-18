@@ -8,7 +8,7 @@ const theme = {
 		indigo: "#033F63",
 		cultured: "#EFF7F6",
 		blueMunsell: "#568EA3",
-		blueMunsellTransparent: "#568EA390",
+		blueMunsellTransparent: "#7FA9B9",
 		blueSapphire: "#19647E",
 		buttonGreen: "#4BCA81",
 		buttonGreenDark: "#39DB80",
