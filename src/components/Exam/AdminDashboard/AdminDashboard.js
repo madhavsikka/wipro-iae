@@ -22,6 +22,7 @@ const StyledFlex = styled.div`
 	justify-content: space-between;
 	align-items: center;
 	padding: 0 0 1rem 0;
+	min-width: 600px;
 	:before {
 		width: 100%;
 		padding: 0.25rem;
@@ -56,7 +57,7 @@ const StyledExamList = styled.div`
 	margin: 1rem;
 	width: 100%;
 	place-content: center;
-	grid-template-columns: repeat(auto-fill, 9rem);
+	grid-template-columns: repeat(auto-fill, 11rem);
 	grid-gap: 1rem;
 	margin: 1rem 0;
 	max-height: 450px;
@@ -71,8 +72,8 @@ const StyledCard = styled.div`
 	justify-content: space-between;
 	align-items: flex-start;
 	padding: 0.5rem;
-	width: 9rem;
-	max-width: 9rem;
+	width: 11rem;
+	max-width: 11rem;
 	height: 8rem;
 	max-height: 8rem;
 	overflow-y: auto;
