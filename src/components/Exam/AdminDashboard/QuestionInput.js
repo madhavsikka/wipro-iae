@@ -1,33 +1,39 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Dropdown from "react-dropdown";
+import axios from "axios";
+import { Redirect } from "react-router-dom";
+import config from "../../../config";
 import "react-dropdown/style.css";
+import { CSSTransition } from "react-transition-group";
 import { IconContext } from "react-icons";
 import { MdDone, MdAddCircleOutline, MdClear } from "react-icons/md";
+import Loader from "../../Loader";
 import Button from "../../../styles/Button";
 import mixins from "../../../styles/mixins";
 import theme from "../../../styles/theme";
 const { colors, fontSizes } = theme;
+
+const StyledFormFlex = styled.div`
+	${mixins.styledFormFlex};
+	:before {
+		content: "Add Questions";
+		display: ${(props) => (props.isPosting ? "none" : "block")};
+	}
+`;
 
 const StyledForm = styled.div`
 	${mixins.styledForm};
 	align-items: stretch;
 `;
 
-const StyledHeading = styled.div`
-	color: ${colors.blueMunsell};
-	font-weight: 500;
-	font-size: ${fontSizes.xxl};
-	margin: 0 0 10px 0;
-`;
-
 const StyledSectionBar = styled.div`
 	${mixins.flexBar};
 	justify-content: space-between;
 	align-items: center;
-  width: 100%;
-  padding: 0;
-  margin: 12px 0;
+	width: 100%;
+	padding: 0;
+	margin: 0 0 12px;
 	max-height: 8rem;
 	max-width: 480px;
 	overflow-y: auto;
@@ -156,7 +162,7 @@ const OptionBox = styled.div`
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: stretch;
-	height: 270px;
+	height: 230px;
 	overflow-y: auto;
 `;
 
@@ -200,10 +206,10 @@ const StyledCross = styled.div`
 	transition: all 100ms;
 	svg {
 		width: 20px;
-    height: 20px;
-    :hover {
-      color: ${colors.blueMunsell} !important;
-    }
+		height: 20px;
+		:hover {
+			color: ${colors.blueMunsell} !important;
+		}
 	}
 `;
 
@@ -233,6 +239,7 @@ const ButtonBox = styled.div`
 
 const QuestionInput = ({
 	setStep,
+	examDetails,
 	sections,
 	questionAnswers,
 	setQuestionAnswers,
@@ -241,6 +248,8 @@ const QuestionInput = ({
 	const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(0);
 	const [questionBox, setQuestionBox] = useState("");
 	const [optionBox, setOptionBox] = useState([]);
+	const [isPosting, setIsPosting] = useState(false);
+	const [redirect, setRedirect] = useState(false);
 	let optionsListDropdown = [
 		...Array(questionAnswers[selectedSection]["numOfQuestions"]).keys(),
 	].map((x) => ++x);
@@ -285,6 +294,7 @@ const QuestionInput = ({
 					question: questionBox,
 					options: optionBox,
 				};
+				console.log(JSON.stringify(newState));
 				return newState;
 			});
 			setQuestionBox("");
@@ -318,145 +328,182 @@ const QuestionInput = ({
 		});
 	};
 
+	const onClickFinishHandler = () => {
+		setIsPosting(true);
+		let postData = {};
+		postData = {
+			name: examDetails.name,
+			sections: sections,
+			questions: questionAnswers,
+			date: examDetails.date.toLocaleDateString(),
+			startTime: examDetails.startTime.toLocaleTimeString(),
+			endTime: examDetails.endTime.toLocaleTimeString(),
+		};
+		console.log(postData);
+		axios
+			.post(`${config.firebase.databaseURL}/exams.json`, { ...postData })
+			.then((res) => {
+				setRedirect(true);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
 	return (
-		<StyledForm>
-			<StyledHeading>Add Questions</StyledHeading>
-			<StyledSectionBar>
-				{sections.map((section, i) => (
-					<StyledButton
-						key={i}
-						textColor={colors.blueMunsell}
-						fontSize={fontSizes.sm}
-						borderColor={colors.blueMunsell}
-						hoverColor={colors.blueMunsell}
-						hoverText={colors.white}
-						weight="600"
-						active={selectedSection === section}
-						onClick={(event) => onClickSectionHandler(event)}>
-						{section}
-					</StyledButton>
-				))}
-			</StyledSectionBar>
-			<StyledInputContainer>
-				<div>
-					<span>
-						<div>Question</div>
-						<DropdownWrapper>
-							<Dropdown
-								options={optionsListDropdown}
-								placeholder="-"
-								value={(selectedQuestionIndex + 1).toString()}
-								onChange={(event) => onDropdownSelectHandler(event)}
-							/>
-						</DropdownWrapper>
-					</span>
-					<StyledAddButton
-						textColor="white"
-						fontSize={fontSizes.sm}
-						borderColor="white"
-						hoverColor="white"
-						hoverText={colors.blueMunsell}
-						weight="600"
-						onClick={() => onClickAddHandler()}
-						disable={questionBox === "" || optionBox.length === 0}>
-						<IconContext.Provider
-							value={{
-								size: "19px",
-								style: {
-									color: "white",
-									marginRight: "0.2rem",
-									marginBottom: "2px",
-									strokeWidth: "1.5px",
-								},
-							}}>
-							<MdDone />
-						</IconContext.Provider>
-						Add
-					</StyledAddButton>
-				</div>
-				<textarea
-					placeholder="Enter Question Here"
-					value={questionBox}
-					onChange={(event) => onQuestionChangeHandler(event)}></textarea>
-			</StyledInputContainer>
-			<OptionBox>
-				{optionBox.map((option, index) => {
-					let alphabet = getAlphabet(index);
-					return (
-						<StyledBar key={index}>
-							<StyledTag>{alphabet}</StyledTag>
-							<StyledInput
-								placeholder={`Option ${alphabet}`}
-								value={optionBox[index]}
-								onChange={(event) => onOptionChangeHandler(event, index)}
-							/>
-							<StyledCross onClick={() => onClickCrossHandler(index)}>
-								<IconContext.Provider
-									value={{
-										size: "20px",
-										style: {
-											color: "lightgrey",
-											marginRight: "0.2rem",
-											marginBottom: "2px",
-											strokeWidth: "1.5px",
-										},
-									}}>
-									<MdClear />
-								</IconContext.Provider>
-							</StyledCross>
-						</StyledBar>
-					);
-				})}
-				<StyledAddOptionButton
-					fontSize={fontSizes.md}
-					weight="600"
-					onClick={() => onClickAddOptionHandler()}>
-					<IconContext.Provider
-						value={{
-							size: "22px",
-							style: {
-								color: colors.blueMunsell,
-								marginRight: "0.3rem",
-								marginBottom: "2px",
-								strokeWidth: "1px",
-							},
-						}}>
-						<MdAddCircleOutline />
-					</IconContext.Provider>
-					Add Option
-				</StyledAddOptionButton>
-			</OptionBox>
-			<ButtonBox>
-				<Button
-					color={colors.buttonGreen}
-					textColor={colors.white}
-					fontSize={fontSizes.md}
-					borderColor={colors.buttonGreen}
-					hoverColor={colors.buttonGreenDark}
-					hoverText={colors.white}
-					weight="600"
-					setWidth="9rem"
-					onClick={() => {
-						setStep((prevState) => prevState - 1);
-					}}>
-					BACK
-				</Button>
-				<Button
-					color={colors.buttonGreen}
-					textColor={colors.white}
-					fontSize={fontSizes.md}
-					borderColor={colors.buttonGreen}
-					hoverColor={colors.buttonGreenDark}
-					hoverText={colors.white}
-					weight="600"
-					setWidth="9rem"
-					onClick={() => {
-						setStep((prevState) => prevState + 1);
-					}}>
-					FINISH
-				</Button>
-			</ButtonBox>
-		</StyledForm>
+		<>
+			{redirect ? (
+				<Redirect to="/admin-dashboard" />
+			) : (
+				<CSSTransition in timeout={300} classNames="page" appear>
+					<StyledFormFlex isPosting={isPosting}>
+						{isPosting ? (
+							<Loader />
+						) : (
+							<StyledForm>
+								<StyledSectionBar>
+									{sections.map((section, i) => (
+										<StyledButton
+											key={i}
+											textColor={colors.blueMunsell}
+											fontSize={fontSizes.sm}
+											borderColor={colors.blueMunsell}
+											hoverColor={colors.blueMunsell}
+											hoverText={colors.white}
+											weight="600"
+											active={selectedSection === section}
+											onClick={(event) => onClickSectionHandler(event)}>
+											{section}
+										</StyledButton>
+									))}
+								</StyledSectionBar>
+								<StyledInputContainer>
+									<div>
+										<span>
+											<div>Question</div>
+											<DropdownWrapper>
+												<Dropdown
+													options={optionsListDropdown}
+													placeholder="-"
+													value={(selectedQuestionIndex + 1).toString()}
+													onChange={(event) => onDropdownSelectHandler(event)}
+												/>
+											</DropdownWrapper>
+										</span>
+										<StyledAddButton
+											textColor="white"
+											fontSize={fontSizes.sm}
+											borderColor="white"
+											hoverColor="white"
+											hoverText={colors.blueMunsell}
+											weight="600"
+											onClick={() => onClickAddHandler()}
+											disable={questionBox === "" || optionBox.length === 0}>
+											<IconContext.Provider
+												value={{
+													size: "19px",
+													style: {
+														color: "white",
+														marginRight: "0.2rem",
+														marginBottom: "2px",
+														strokeWidth: "1.5px",
+													},
+												}}>
+												<MdDone />
+											</IconContext.Provider>
+											Add
+										</StyledAddButton>
+									</div>
+									<textarea
+										placeholder="Enter Question Here"
+										value={questionBox}
+										onChange={(event) =>
+											onQuestionChangeHandler(event)
+										}></textarea>
+								</StyledInputContainer>
+								<OptionBox>
+									{optionBox.map((option, index) => {
+										let alphabet = getAlphabet(index);
+										return (
+											<StyledBar key={index}>
+												<StyledTag>{alphabet}</StyledTag>
+												<StyledInput
+													placeholder={`Option ${alphabet}`}
+													value={optionBox[index]}
+													onChange={(event) =>
+														onOptionChangeHandler(event, index)
+													}
+												/>
+												<StyledCross onClick={() => onClickCrossHandler(index)}>
+													<IconContext.Provider
+														value={{
+															size: "20px",
+															style: {
+																color: "lightgrey",
+																marginRight: "0.2rem",
+																marginBottom: "2px",
+																strokeWidth: "1.5px",
+															},
+														}}>
+														<MdClear />
+													</IconContext.Provider>
+												</StyledCross>
+											</StyledBar>
+										);
+									})}
+									<StyledAddOptionButton
+										fontSize={fontSizes.md}
+										weight="600"
+										onClick={() => onClickAddOptionHandler()}>
+										<IconContext.Provider
+											value={{
+												size: "22px",
+												style: {
+													color: colors.blueMunsell,
+													marginRight: "0.3rem",
+													marginBottom: "2px",
+													strokeWidth: "1px",
+												},
+											}}>
+											<MdAddCircleOutline />
+										</IconContext.Provider>
+										Add Option
+									</StyledAddOptionButton>
+								</OptionBox>
+								<ButtonBox>
+									<Button
+										color={colors.buttonGreen}
+										textColor={colors.white}
+										fontSize={fontSizes.md}
+										borderColor={colors.buttonGreen}
+										hoverColor={colors.buttonGreenDark}
+										hoverText={colors.white}
+										weight="600"
+										setWidth="9rem"
+										onClick={() => {
+											setStep((prevState) => prevState - 1);
+										}}>
+										BACK
+									</Button>
+									<Button
+										color={colors.buttonGreen}
+										textColor={colors.white}
+										fontSize={fontSizes.md}
+										borderColor={colors.buttonGreen}
+										hoverColor={colors.buttonGreenDark}
+										hoverText={colors.white}
+										weight="600"
+										setWidth="9rem"
+										onClick={() => onClickFinishHandler()}>
+										FINISH
+									</Button>
+								</ButtonBox>
+							</StyledForm>
+						)}
+					</StyledFormFlex>
+				</CSSTransition>
+			)}
+		</>
 	);
 };
 

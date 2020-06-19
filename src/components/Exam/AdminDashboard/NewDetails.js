@@ -7,16 +7,16 @@ import mixins from "../../../styles/mixins";
 import theme from "../../../styles/theme";
 const { colors, fontSizes } = theme;
 
+const StyledFormFlex = styled.div`
+	${mixins.styledFormFlex};
+	:before {
+		content: "Add Section";
+	}
+`;
+
 const StyledForm = styled.div`
 	${mixins.styledForm};
 	align-items: center;
-`;
-
-const StyledHeading = styled.div`
-	color: ${colors.blueMunsell};
-	font-weight: 500;
-	font-size: ${fontSizes.xxl};
-	margin: 0 0 10px 0;
 `;
 
 const StyledBar = styled.div`
@@ -137,124 +137,124 @@ const NewDetails = ({
 				},
 			};
 		});
-		console.log("New Details");
 		console.log(JSON.stringify(newObject));
 		setQuestionAnswers(newObject);
 		setStep((prevState) => prevState + 1);
 	};
 
 	return (
-		<CSSTransition in timeout={600} classNames="page">
-			<StyledForm>
-				<StyledHeading>Add Sections</StyledHeading>
-				<StyledBar>
-					<InputBox
-						tag="New"
-						place="Name of the Section"
-						background={colors.blueMunsell}
-						textColor="white"
-						setMinWidth="25rem"
-						inputState={inputState}
-						setInputState={setInputState}
-						onEnter={onAddHandler}
-					/>
-					<StyledPlus onClick={() => onAddHandler()}>+</StyledPlus>
-				</StyledBar>
-				<StyledBar>
-					<InputBox
-						tag="Positive"
-						place="Positive Marks"
-						background={colors.blueMunsell}
-						textColor="white"
-						setMinWidth="25rem"
-						type="positive"
-						arrowState={positive}
-						setArrowState={setPositive}
-					/>
-					<StyledUpDown>
-						<div onClick={() => setPositive((prevState) => prevState + 0.25)}>
-							&#9650;
-						</div>
-						<div
-							onClick={() =>
-								setPositive((prevState) =>
-									prevState > 0.25 ? prevState - 0.25 : prevState
-								)
-							}>
-							&#9660;
-						</div>
-					</StyledUpDown>
-				</StyledBar>
-				<StyledBar>
-					<InputBox
-						tag="Negative"
-						place="Negative Marks"
-						background={colors.blueMunsell}
-						textColor="white"
-						setMinWidth="25rem"
-						type="negative"
-						arrowState={negative}
-						setArrowState={setNegative}
-					/>
-					<StyledUpDown>
-						<div
-							onClick={() =>
-								setNegative((prevState) =>
-									prevState < -0.25 ? prevState + 0.25 : prevState
-								)
-							}>
-							&#9650;
-						</div>
-						<div onClick={() => setNegative((prevState) => prevState - 0.25)}>
-							&#9660;
-						</div>
-					</StyledUpDown>
-				</StyledBar>
-				<StyledSectionBar>
-					{sections.map((section, i) => (
-						<StyledButton
-							key={i}
-							textColor={colors.blueMunsell}
-							fontSize={fontSizes.sm}
-							borderColor={colors.blueMunsell}
-							hoverColor={colors.blueMunsell}
+		<CSSTransition in timeout={300} classNames="page" appear>
+			<StyledFormFlex>
+				<StyledForm>
+					<StyledBar>
+						<InputBox
+							tag="New"
+							place="Name of the Section"
+							background={colors.blueMunsell}
+							textColor="white"
+							setMinWidth="25rem"
+							inputState={inputState}
+							setInputState={setInputState}
+							onEnter={onAddHandler}
+						/>
+						<StyledPlus onClick={() => onAddHandler()}>+</StyledPlus>
+					</StyledBar>
+					<StyledBar>
+						<InputBox
+							tag="Positive"
+							place="Positive Marks"
+							background={colors.blueMunsell}
+							textColor="white"
+							setMinWidth="25rem"
+							type="positive"
+							arrowState={positive}
+							setArrowState={setPositive}
+						/>
+						<StyledUpDown>
+							<div onClick={() => setPositive((prevState) => prevState + 0.25)}>
+								&#9650;
+							</div>
+							<div
+								onClick={() =>
+									setPositive((prevState) =>
+										prevState > 0.25 ? prevState - 0.25 : prevState
+									)
+								}>
+								&#9660;
+							</div>
+						</StyledUpDown>
+					</StyledBar>
+					<StyledBar>
+						<InputBox
+							tag="Negative"
+							place="Negative Marks"
+							background={colors.blueMunsell}
+							textColor="white"
+							setMinWidth="25rem"
+							type="negative"
+							arrowState={negative}
+							setArrowState={setNegative}
+						/>
+						<StyledUpDown>
+							<div
+								onClick={() =>
+									setNegative((prevState) =>
+										prevState < -0.25 ? prevState + 0.25 : prevState
+									)
+								}>
+								&#9650;
+							</div>
+							<div onClick={() => setNegative((prevState) => prevState - 0.25)}>
+								&#9660;
+							</div>
+						</StyledUpDown>
+					</StyledBar>
+					<StyledSectionBar>
+						{sections.map((section, i) => (
+							<StyledButton
+								key={i}
+								textColor={colors.blueMunsell}
+								fontSize={fontSizes.sm}
+								borderColor={colors.blueMunsell}
+								hoverColor={colors.blueMunsell}
+								hoverText={colors.white}
+								weight="600"
+								onClick={(event) => onSectionClickHandler(event)}>
+								{section}
+							</StyledButton>
+						))}
+					</StyledSectionBar>
+					<ButtonBox>
+						<Button
+							color={colors.buttonGreen}
+							textColor={colors.white}
+							fontSize={fontSizes.md}
+							borderColor={colors.buttonGreen}
+							hoverColor={colors.buttonGreenDark}
 							hoverText={colors.white}
 							weight="600"
-							onClick={(event) => onSectionClickHandler(event)}>
-							{section}
-						</StyledButton>
-					))}
-				</StyledSectionBar>
-				<ButtonBox>
-					<Button
-						color={colors.buttonGreen}
-						textColor={colors.white}
-						fontSize={fontSizes.md}
-						borderColor={colors.buttonGreen}
-						hoverColor={colors.buttonGreenDark}
-						hoverText={colors.white}
-						weight="600"
-						setWidth="9rem"
-						onClick={() => {
-							setStep((prevState) => prevState - 1);
-						}}>
-						BACK
-					</Button>
-					<Button
-						color={colors.buttonGreen}
-						textColor={colors.white}
-						fontSize={fontSizes.md}
-						borderColor={colors.buttonGreen}
-						hoverColor={colors.buttonGreenDark}
-						hoverText={colors.white}
-						weight="600"
-						setWidth="9rem"
-						disable={sections.length === 0}
-						onClick={() => onClickNextHandler()}>
-						NEXT
-					</Button>
-				</ButtonBox>
-			</StyledForm>
+							setWidth="9rem"
+							onClick={() => {
+								setStep((prevState) => prevState - 1);
+							}}>
+							BACK
+						</Button>
+						<Button
+							color={colors.buttonGreen}
+							textColor={colors.white}
+							fontSize={fontSizes.md}
+							borderColor={colors.buttonGreen}
+							hoverColor={colors.buttonGreenDark}
+							hoverText={colors.white}
+							weight="600"
+							setWidth="9rem"
+							disable={sections.length === 0}
+							onClick={() => onClickNextHandler()}>
+							NEXT
+						</Button>
+					</ButtonBox>
+				</StyledForm>
+			</StyledFormFlex>
 		</CSSTransition>
 	);
 };

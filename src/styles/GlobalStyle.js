@@ -1,36 +1,8 @@
-import { createGlobalStyle, keyframes } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 import FontFaces from "./fonts";
 import theme from "./theme";
 // eslint-disable-next-line
 const { colors, fonts, fontSizes } = theme;
-
-// animation to slide in the home page from left
-const slideInLeft = keyframes`
-  from {
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
-    visibility: visible;
-  }
-
-  to {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
-`;
-
-// animation to slide out the home page to the left
-const slideOutLeft = keyframes`
-  from {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
-
-  to {
-    visibility: hidden;
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
-  }
-`;
 
 const GlobalStyle = createGlobalStyle`
   ${FontFaces};
@@ -78,13 +50,39 @@ const GlobalStyle = createGlobalStyle`
     transition: opacity 600ms;
   }
 
-  .page-enter {
-    animation: ${slideInLeft} 0.2s forwards;
+  .page-appear {
+    animation: slideInRight 0.3s forwards;
   }
 
   .page-exit {
-    animation: ${slideOutLeft} 0.2s forwards;
+    animation: slideOutLeft 0.3s forwards;
   }
+
+@keyframes slideInRight {
+  from {
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    visibility: hidden;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+}
 
   .navlink-active {
     color: ${colors.white} !important;

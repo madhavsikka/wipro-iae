@@ -3,27 +3,13 @@ import styled from "styled-components";
 import { CSSTransition } from "react-transition-group";
 import mixins from "../../../styles/mixins";
 import Examnav from "../Examnav";
-import theme from "../../../styles/theme";
 import NewForm from "./NewForm";
 import NewDetails from "./NewDetails";
 import QuestionInput from "./QuestionInput";
-import FinishExam from "./FinishExam";
-const { colors } = theme;
 
 const StyledContainer = styled.div`
 	${mixins.fullFlexCenter};
 	align-items: center;
-`;
-
-const StyledFlex = styled.div`
-	display: flex;
-	flex-direction: column;
-	flex-grow: 1;
-	justify-content: center;
-	align-items: center;
-	margin: 2rem;
-	background: ${colors.cultured};
-	border-radius: 5px;
 `;
 
 const NewExam = () => {
@@ -74,13 +60,11 @@ const NewExam = () => {
 				<QuestionInput
 					setStep={setStep}
 					sections={sections}
+					examDetails={examDetails}
 					questionAnswers={questionAnswers}
 					setQuestionAnswers={setQuestionAnswers}
 				/>
 			);
-			break;
-		case 3:
-			currentForm = <FinishExam questionAnswers={questionAnswers} />;
 			break;
 		default:
 			break;
@@ -89,8 +73,8 @@ const NewExam = () => {
 	return (
 		<CSSTransition in timeout={600} classNames="fade" appear>
 			<StyledContainer>
-				<Examnav name="Admin Dashboard" />
-				<StyledFlex>{currentForm}</StyledFlex>
+				<Examnav name="Wipro IAE" />
+				{currentForm}
 			</StyledContainer>
 		</CSSTransition>
 	);

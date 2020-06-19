@@ -9,6 +9,7 @@ const theme = {
 		cultured: "#EFF7F6",
 		blueMunsell: "#568EA3",
 		blueMunsellTransparent: "#7FA9B9",
+		blueMunsellTransparent2: "#639FB5",
 		blueSapphire: "#19647E",
 		buttonGreen: "#4BCA81",
 		buttonGreenDark: "#39DB80",

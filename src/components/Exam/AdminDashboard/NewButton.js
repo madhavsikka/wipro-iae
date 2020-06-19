@@ -6,23 +6,27 @@ import { BsPencil } from "react-icons/bs";
 const { colors, fontSizes } = theme;
 
 const StyledButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-	background: ${colors.buttonGreen};
-	border-radius: 7px;
-	padding: 2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	max-width: 350px;
+	background: ${colors.blueMunsell};
+	border: 2px solid ${colors.blueMunsell};
+	color: white;
+	border-radius: 5px;
+	padding: 0.5rem;
 	transition: all 100ms;
+	cursor: pointer;
 	div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-		font-size: ${fontSizes.xxl};
-		color: white;
-    font-weight: 500;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: ${fontSizes.xl};
+		font-weight: 500;
 	}
 	:hover {
-		background: ${colors.buttonGreenDark};
+		background: ${colors.blueMunsellTransparent2};
+		border: 2px solid ${colors.blueMunsellTransparent2};
 	}
 `;
 
@@ -32,10 +36,10 @@ const NewButton = (props) => {
 			<div>
 				<IconContext.Provider
 					value={{
-						size: "30px",
+						size: "21px",
 						style: {
 							color: "white",
-							marginRight: "1rem",
+							marginRight: "0.8rem",
 						},
 					}}>
 					<BsPencil />
