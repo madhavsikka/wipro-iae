@@ -293,6 +293,7 @@ const QuestionInput = ({
 				newState[selectedSection]["questions"][selectedQuestionIndex] = {
 					question: questionBox,
 					options: optionBox,
+					type: "multi",
 				};
 				console.log(JSON.stringify(newState));
 				return newState;

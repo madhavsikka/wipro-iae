@@ -100,7 +100,7 @@ const QuestionArea = ({ examData }) => {
 									<Timer duration={examData.duration} />
 								</WrapperDiv>
 								<WrapperDiv area="QuestionBox">
-									{console.log("Q")}
+									{console.log(examData)}
 									<QuestionBox
 										questions={examData.questions}
 										questionState={questionState.current}

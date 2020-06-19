@@ -114,7 +114,9 @@ const QuestionBox = ({
 	isReviewed,
 	setIsReviewed,
 }) => {
-	const currentQuestion = questions[selectedSectionName][selectedQuestionIndex];
+	// const currentQuestion = questions[selectedSectionName][selectedQuestionIndex];
+	const currentQuestion =
+		questions[selectedSectionName]["questions"][selectedQuestionIndex];
 
 	const onClickOptionHandler = (alphabet) => {
 		setSelectedOptions((prevState) => {

@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Link, useParams, useRouteMatch } from "react-router-dom";
+import React from "react";
+import {
+	Link,
+	useParams,
+	useRouteMatch,
+	useLocation,
+	Redirect,
+} from "react-router-dom";
 import Examnav from "./Examnav";
 import mixins from "../../styles/mixins";
 import styled from "styled-components";
-import Loader from "../Loader";
-import config from "../../config";
-import axios from "axios";
+// import config from "../../config";
+// import axios from "axios";
 
 const StyledContainer = styled.div`
 	${mixins.fullFlexCenter};
@@ -23,34 +28,40 @@ const StyledBox = styled.div`
 const ExamDetail = () => {
 	const { examId } = useParams();
 	const { url } = useRouteMatch();
-	const [isMounted, setIsMounted] = useState(false);
-	const [examData, setExamData] = useState({});
+	let { data } = useLocation();
+	let currentExam = null;
+	if (data) {
+		currentExam = data["examData"][examId];
+	}
+	// const [isMounted, setIsMounted] = useState(false);
+	// const [examData, setExamData] = useState({});
 
-	useEffect(() => {
-		axios
-			.get(`${config.jsonDb.base}/${examId}`)
-			.then((res) => {
-				console.log(res.data);
-				setExamData(res.data);
-				setIsMounted(true);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, [examId]);
+	// useEffect(() => {
+	// 	axios
+	// 		.get(`${config.jsonDb.base}/${examId}`)
+	// 		.then((res) => {
+	// 			console.log(res.data);
+	// 			setExamData(res.data);
+	// 			setIsMounted(true);
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log(err);
+	// 		});
+	// }, [examId]);
 
 	return (
 		<>
 			<StyledContainer>
 				<Examnav name={`Details For Exam ${examId}`} />
-				{!isMounted ? (
-					<Loader />
+				{console.log(data)}
+				{!currentExam ? (
+					<Redirect to="/exams" />
 				) : (
 					<StyledBox>
 						<div>ExamDetail for {examId}</div>
-						<div>Details for {examData.name}</div>
+						<div>Details for {currentExam.name}</div>
 						<Link
-							to={{ pathname: `${url}/exam-dashboard`, data: { examData } }}>
+							to={{ pathname: `${url}/exam-dashboard`, data: { currentExam } }}>
 							Start Exam
 						</Link>
 					</StyledBox>

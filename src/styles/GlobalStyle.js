@@ -143,8 +143,6 @@ const GlobalStyle = createGlobalStyle`
 	100%{ -moz-transform: rotate(360deg); transform: rotate(360deg); }
 }
 
-
-
 `;
 
 export default GlobalStyle;
