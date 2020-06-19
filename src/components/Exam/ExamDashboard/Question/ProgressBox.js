@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Button from "../../../../styles/Button";
 import config from "../../../../config";
 import theme from "../../../../styles/theme";
+import axios from "axios";
 const { colors, fontSizes } = theme;
 
 const StyledProgressBox = styled.div`
@@ -43,6 +44,17 @@ const StyledBox = styled.div`
 	padding: 2rem 1rem;
 	grid-gap: 1rem;
 	grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr));
+`;
+
+const TextArea = styled.textarea`
+	border-radius: 5px;
+	borderColor: ${colors.darkRoyalBlue};
+	background: ${colors.cultured};
+	border: 2px solid ;
+	color: ${colors.blueMunsell};
+	rows: 100;
+	cols: 28;
+
 `;
 
 const StyledDiv = styled.div`
@@ -171,8 +183,68 @@ const ProgressBox = ({
 			// }
 		}
 	};
+	const onQuestion = (event) =>{
+		setQuery(event.target.value);
+	}
+	const onDoubtAsk =(event) => {
+		event.preventDefault();
 
+		console.log({query});
+		axios
+			.post("https://jsonplaceholder.typicode.com/posts", {
+				query
+			})
+			.then(res => {
+				console.log(res);
+			})
+			.catch(error =>{
+				console.log(error);
+			})
+		setDoubt(false);
+	};
+	const onDoubt = () => {
+		setDoubt(true);
+	};
+	const cancel = () => {
+		setDoubt(false);
+	};
+
+	const [doubt,setDoubt] = useState(false);
+	const [query,setQuery] = useState("");
 	return (
+		doubt?
+		<StyledProgressBox>
+			<StyledContainer>
+				<form>
+					<StyledText>Ask a Doubt</StyledText>
+					<br/><br/>
+					<TextArea cols="28" rows="15" placeholder="your question here..." onChange={(event)=>onQuestion(event)}></TextArea>
+					<br/><br/>
+					<Button
+						color={colors.darkRoyalBlue}
+						textColor={colors.white}
+						fontSize={fontSizes.sm}
+						borderColor={colors.darkRoyalBlue}
+						hoverColor={colors.royalBlue}
+						weight="600"
+						style={{ flexGrow: "1", marginRight: "4px" }}
+						onClick={(event)=>onDoubtAsk(event)}>
+						ASK
+					</Button>
+					<Button
+						color={colors.darkRoyalBlue}
+						textColor={colors.white}
+						fontSize={fontSizes.sm}
+						borderColor={colors.darkRoyalBlue}
+						hoverColor={colors.royalBlue}
+						weight="600"
+						style={{ flexGrow: "1", marginRight: "4px" }}
+						onClick={()=>cancel()}>
+						Cancel
+					</Button>
+				</form>
+			</StyledContainer>
+		</StyledProgressBox>:
 		<StyledProgressBox>
 			<StyledContainer>
 				<StyledText>Question Panel</StyledText>
@@ -225,7 +297,8 @@ const ProgressBox = ({
 						borderColor={colors.darkRoyalBlue}
 						hoverColor={colors.royalBlue}
 						weight="600"
-						style={{ flexGrow: "1", marginLeft: "4px" }}>
+						style={{ flexGrow: "1", marginLeft: "4px" }}
+						onClick={()=>onDoubt()}>
 						ASK A DOUBT
 					</Button>
 				</div>
