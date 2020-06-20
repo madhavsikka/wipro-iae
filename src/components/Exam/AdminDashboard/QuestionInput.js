@@ -223,6 +223,43 @@ const StyledTag = styled.div`
 	font-size: ${fontSizes.md};
 `;
 
+const StyledCheckBox = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 50px;
+	width: 40px;
+	background: white;
+	input {
+		cursor: ${(props) =>
+			props.selected ? "pointer" : props.disable ? "not-allowed" : "pointer"};
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 2px;
+		color: white;
+		appearance: none;
+		width: 16px;
+		min-width: 16px;
+		height: 16px;
+		min-height: 16px;
+		outline: none;
+		border: 2px solid lightgrey;
+		transition: all 0.1s;
+		:checked {
+			border: 2px solid ${colors.blueMunsell};
+			border-radius: 2px;
+			:before {
+				content: "✓";
+				font-weight: bold;
+				font-size: ${fontSizes.lg};
+			}
+			color: ${colors.blueMunsell};
+			border: ${colors.blueMunsell};
+		}
+	}
+`;
+
 const StyledCross = styled.div`
 	display: flex;
 	justify-content: center;
@@ -273,11 +310,14 @@ const QuestionInput = ({
 	sections,
 	questionAnswers,
 	setQuestionAnswers,
+	correctAnswers,
+	setCorrectAnswers,
 }) => {
 	const [selectedSection, setSelectedSection] = useState(sections[0]);
 	const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(0);
 	const [questionBox, setQuestionBox] = useState("");
 	const [optionBox, setOptionBox] = useState([]);
+	const [correctOptions, setCorrectOptions] = useState([]);
 	const [type, setType] = useState("single");
 	const [isPosting, setIsPosting] = useState(false);
 	const [redirect, setRedirect] = useState(false);
@@ -313,6 +353,7 @@ const QuestionInput = ({
 		setSelectedQuestionIndex(newQuestionIndex);
 		setQuestionBox("");
 		setOptionBox([]);
+		setCorrectOptions([]);
 		setType("single");
 	};
 
@@ -335,8 +376,17 @@ const QuestionInput = ({
 				console.log(JSON.stringify(newState));
 				return newState;
 			});
+
+			setCorrectAnswers((prevState) => {
+				let newObject = JSON.parse(JSON.stringify(prevState));
+				newObject[selectedSection][selectedQuestionIndex] = [...correctOptions];
+				console.log(JSON.stringify(newObject));
+				return newObject;
+			});
+
 			setQuestionBox("");
 			setOptionBox([]);
+			setCorrectOptions([]);
 			setType("single");
 			setSelectedQuestionIndex((prevState) => prevState + 1);
 		}
@@ -357,10 +407,31 @@ const QuestionInput = ({
 		setOptionBox(
 			questionAnswers[selectedSection]["questions"][+event.value - 1]["options"]
 		);
+		setCorrectOptions(correctAnswers[selectedSection][+event.value - 1]);
+	};
+
+	const onSelectCorrectOptionHandler = (alphabet) => {
+		setCorrectOptions((prevState) => {
+			if (
+				(type === "single" && correctOptions.length === 0) ||
+				type === "multi"
+			) {
+				return prevState.includes(alphabet)
+					? prevState.filter((i) => i !== alphabet)
+					: [...prevState, alphabet];
+			} else {
+				return prevState.filter((i) => i !== alphabet);
+			}
+		});
 	};
 
 	const onClickCrossHandler = (index) => {
 		setOptionBox((prevState) => {
+			let newState = [...prevState];
+			newState.splice(index, 1);
+			return newState;
+		});
+		setCorrectOptions((prevState) => {
 			let newState = [...prevState];
 			newState.splice(index, 1);
 			return newState;
@@ -370,6 +441,8 @@ const QuestionInput = ({
 	const onClickFinishHandler = () => {
 		setIsPosting(true);
 		let postData = {};
+		let postExamDetails = {};
+		let postAnswerKey = {};
 		postData = {
 			name: examDetails.name,
 			sections: sections,
@@ -378,7 +451,37 @@ const QuestionInput = ({
 			startTime: examDetails.startTime.toLocaleTimeString(),
 			endTime: examDetails.endTime.toLocaleTimeString(),
 		};
-		console.log(postData);
+		postExamDetails = {
+			name: examDetails.name,
+			date: examDetails.date.toLocaleDateString(),
+			startTime: examDetails.startTime.toLocaleTimeString(),
+			endTime: examDetails.endTime.toLocaleTimeString(),
+		};
+		postAnswerKey = {
+			name: examDetails.name,
+			answerKey: correctAnswers,
+		};
+
+		axios
+			.post(`${config.firebase.databaseURL}/examList.json`, {
+				...postExamDetails,
+			})
+			.then((res) => {
+				console.log(res);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+		axios
+			.post(`${config.firebase.databaseURL}/answerKeys.json`, {
+				...postAnswerKey,
+			})
+			.then((res) => {
+				console.log(res);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 		axios
 			.post(`${config.firebase.databaseURL}/exams.json`, { ...postData })
 			.then((res) => {
@@ -497,6 +600,19 @@ const QuestionInput = ({
 														onOptionChangeHandler(event, index)
 													}
 												/>
+												<StyledCheckBox
+													selected={correctOptions.includes(alphabet)}
+													disable={
+														type === "single" && correctOptions.length === 1
+													}>
+													<input
+														type="checkbox"
+														checked={correctOptions.includes(alphabet)}
+														onChange={() =>
+															onSelectCorrectOptionHandler(alphabet)
+														}
+													/>
+												</StyledCheckBox>
 												<StyledCross onClick={() => onClickCrossHandler(index)}>
 													<IconContext.Provider
 														value={{

@@ -43,7 +43,7 @@ const StyledHeadingContainer = styled.div`
 	justify-content: flex-start;
 	align-items: stretch;
 	width: 100%;
-	>div:first-child {
+	> div:first-child {
 		margin: 1rem 0 0.1rem 1.25rem;
 		text-align: left;
 		color: ${colors.blueMunsell};
@@ -117,7 +117,7 @@ const AdminDashboard = () => {
 
 	useEffect(() => {
 		axios
-			.get(`${config.firebase.databaseURL}/exams.json`)
+			.get(`${config.firebase.databaseURL}/examList.json`)
 			.then((res) => {
 				console.log(res.data);
 				setExamData(res.data);
@@ -140,13 +140,19 @@ const AdminDashboard = () => {
 								<div>All Exams</div>
 								<StyledExamList>
 									{Object.keys(examData).map((examId) => (
-										<StyledCard>
-											<div>{examData[examId].name}</div>
-											<div>
-												<p>{timeFormat12(examData[examId].startTime)}</p>
-												<p>{dateStringWithMonthName(examData[examId].date)}</p>
-											</div>
-										</StyledCard>
+										<Link
+											to={`/exams/${examId}`}
+											style={{ textDecoration: "none" }}>
+											<StyledCard>
+												<div>{examData[examId].name}</div>
+												<div>
+													<p>{timeFormat12(examData[examId].startTime)}</p>
+													<p>
+														{dateStringWithMonthName(examData[examId].date)}
+													</p>
+												</div>
+											</StyledCard>
+										</Link>
 									))}
 								</StyledExamList>
 							</StyledHeadingContainer>

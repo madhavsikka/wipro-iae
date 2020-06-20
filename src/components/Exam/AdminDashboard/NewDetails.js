@@ -95,6 +95,7 @@ const NewDetails = ({
 	sections,
 	setSections,
 	setQuestionAnswers,
+	setCorrectAnswers,
 	marking,
 	setMarking,
 }) => {
@@ -127,6 +128,7 @@ const NewDetails = ({
 
 	const onClickNextHandler = () => {
 		let newObject = {};
+		let newCorrectAnswerObject = {};
 		sections.forEach((sec) => {
 			newObject[sec] = {
 				numOfQuestions: 0,
@@ -136,8 +138,9 @@ const NewDetails = ({
 					negative: marking[sec]["negative"],
 				},
 			};
+			newCorrectAnswerObject[sec] = [];
 		});
-		console.log(JSON.stringify(newObject));
+		setCorrectAnswers(newCorrectAnswerObject);
 		setQuestionAnswers(newObject);
 		setStep((prevState) => prevState + 1);
 	};

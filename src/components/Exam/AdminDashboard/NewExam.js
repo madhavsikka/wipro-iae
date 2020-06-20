@@ -18,6 +18,7 @@ const NewExam = () => {
 	const [sections, setSections] = useState([]);
 	const [marking, setMarking] = useState({});
 	const [questionAnswers, setQuestionAnswers] = useState({});
+	const [correctAnswers, setCorrectAnswers] = useState({});
 	const [examName, setExamName] = useState("");
 	const [startDate, setStartDate] = useState(null);
 	const [startTime, setStartTime] = useState(null);
@@ -52,6 +53,7 @@ const NewExam = () => {
 					marking={marking}
 					setMarking={setMarking}
 					setQuestionAnswers={setQuestionAnswers}
+					setCorrectAnswers={setCorrectAnswers}
 				/>
 			);
 			break;
@@ -63,6 +65,8 @@ const NewExam = () => {
 					examDetails={examDetails}
 					questionAnswers={questionAnswers}
 					setQuestionAnswers={setQuestionAnswers}
+					correctAnswers={correctAnswers}
+					setCorrectAnswers={setCorrectAnswers}
 				/>
 			);
 			break;
