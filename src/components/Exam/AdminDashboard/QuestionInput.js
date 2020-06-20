@@ -79,7 +79,7 @@ const StyledInputContainer = styled.div`
 	margin: 0 0 1rem 0;
 	padding: 0;
 	box-shadow: 0 0 5px 4px rgba(0, 0, 0, 0.05);
-	> div {
+	> div:first-child {
 		padding: 0 8px;
 		display: flex;
 		justify-content: space-between;
@@ -112,6 +112,36 @@ const StyledInputContainer = styled.div`
 		:focus {
 			border: 2px solid ${colors.blueMunsell};
 			outline: none;
+		}
+	}
+	> div:last-child {
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
+		border-bottom-right-radius: 5px;
+		border-bottom-left-radius: 5px;
+		height: 30px;
+		font-size: ${fontSizes.sm};
+		font-weight: bold;
+		span {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		input {
+			margin: 0 4px 0 0;
+			appearance: none;
+			border-radius: 50%;
+			width: 16px;
+			height: 16px;
+			border: 2px solid ${colors.blueMunsell};
+			padding: 1px;
+			transition: 0.1s all linear;
+			outline: none;
+		}
+		input:checked {
+			outline: none;
+			border: 5px solid ${colors.blueMunsell};
 		}
 	}
 `;
@@ -248,6 +278,7 @@ const QuestionInput = ({
 	const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(0);
 	const [questionBox, setQuestionBox] = useState("");
 	const [optionBox, setOptionBox] = useState([]);
+	const [type, setType] = useState("single");
 	const [isPosting, setIsPosting] = useState(false);
 	const [redirect, setRedirect] = useState(false);
 	let optionsListDropdown = [
@@ -257,6 +288,11 @@ const QuestionInput = ({
 
 	const onQuestionChangeHandler = (event) => {
 		setQuestionBox(event.target.value);
+	};
+
+	const onClickTypeHandler = (event) => {
+		console.log(event.target.value);
+		setType(event.target.value);
 	};
 
 	const onOptionChangeHandler = (event, index) => {
@@ -277,6 +313,7 @@ const QuestionInput = ({
 		setSelectedQuestionIndex(newQuestionIndex);
 		setQuestionBox("");
 		setOptionBox([]);
+		setType("single");
 	};
 
 	const onClickAddHandler = () => {
@@ -293,13 +330,14 @@ const QuestionInput = ({
 				newState[selectedSection]["questions"][selectedQuestionIndex] = {
 					question: questionBox,
 					options: optionBox,
-					type: "multi",
+					type: type,
 				};
 				console.log(JSON.stringify(newState));
 				return newState;
 			});
 			setQuestionBox("");
 			setOptionBox([]);
+			setType("single");
 			setSelectedQuestionIndex((prevState) => prevState + 1);
 		}
 	};
@@ -421,6 +459,30 @@ const QuestionInput = ({
 										onChange={(event) =>
 											onQuestionChangeHandler(event)
 										}></textarea>
+									<div>
+										<span>
+											<input
+												type="radio"
+												id="single"
+												name="type"
+												value="single"
+												checked={type === "single"}
+												onChange={(event) => onClickTypeHandler(event)}
+											/>
+											<label for="single">Single Correct</label>
+										</span>
+										<span>
+											<input
+												type="radio"
+												id="multi"
+												name="type"
+												value="multi"
+												checked={type === "multi"}
+												onChange={(event) => onClickTypeHandler(event)}
+											/>
+											<label for="multi">Multi Correct</label>
+										</span>
+									</div>
 								</StyledInputContainer>
 								<OptionBox>
 									{optionBox.map((option, index) => {
