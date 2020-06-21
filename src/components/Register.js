@@ -128,21 +128,6 @@ const StyledInput = styled.input`
 	padding: 6px 7px;
 	margin-bottom: 1rem;
 `;
-// eslint-disable-next-line
-const validEmailRegex = RegExp(
-	/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
-);
-const validateForm = (errors) => {
-	let valid = true;
-	Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
-	return valid;
-};
-
-const countErrors = (errors) => {
-	let count = 0;
-	Object.values(errors).forEach((val) => val.length > 0 && (count = count + 1));
-	return count;
-};
 
 class Register extends Component {
 	constructor(props) {
@@ -157,6 +142,23 @@ class Register extends Component {
 			},
 		};
 	}
+	// eslint-disable-next-line
+	validEmailRegex = RegExp(
+		/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
+	);
+	validateForm = (errors) => {
+		let valid = true;
+		Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
+		return valid;
+	};
+
+	countErrors = (errors) => {
+		let count = 0;
+		Object.values(errors).forEach(
+			(val) => val.length > 0 && (count = count + 1)
+		);
+		return count;
+	};
 
 	handleChange = (event) => {
 		event.preventDefault();
@@ -191,8 +193,8 @@ class Register extends Component {
 
 	handleSubmit = (event) => {
 		event.preventDefault();
-		this.setState({ formValid: validateForm(this.state.errors) });
-		this.setState({ errorCount: countErrors(this.state.errors) });
+		this.setState({ formValid: this.validateForm(this.state.errors) });
+		this.setState({ errorCount: this.countErrors(this.state.errors) });
 		useEffect(() => {
 			const newUser = {
 				fullName: this.state.fullName,
