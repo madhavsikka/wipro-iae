@@ -88,7 +88,7 @@ const GlobalStyle = createGlobalStyle`
     color: ${colors.white} !important;
     background: ${colors.blue};
     border-radius: 5px;
-    font-weight: bold;
+    font-weight: normal;
     padding: 2px 8px;
     transition: background 400ms;
   }

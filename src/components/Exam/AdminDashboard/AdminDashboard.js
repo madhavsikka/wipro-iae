@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link, useRouteMatch, Redirect } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import { timeFormat12, dateStringWithMonthName } from "../../../utils";
 import mixins from "../../../styles/mixins";
@@ -111,7 +111,7 @@ const StyledCard = styled.div`
 	}
 `;
 
-const AdminDashboard = () => {
+const AdminDashboard = ({ user, displayName, logOutHandler }) => {
 	const { url } = useRouteMatch();
 	const [examData, setExamData] = useState(null);
 
@@ -128,42 +128,52 @@ const AdminDashboard = () => {
 	}, []);
 
 	return (
-		<CSSTransition in timeout={600} classNames="fade" appear>
-			<StyledContainer>
-				<Examnav name="Wipro IAE" />
-				{!examData ? (
-					<Loader />
-				) : (
-					<StyledFlex>
-						<CSSTransition in timeout={600} classNames="fade" appear>
-							<StyledHeadingContainer>
-								<div>All Exams</div>
-								<StyledExamList>
-									{Object.keys(examData).map((examId) => (
-										<Link
-											to={`/exams/${examId}`}
-											style={{ textDecoration: "none" }}>
-											<StyledCard>
-												<div>{examData[examId].name}</div>
-												<div>
-													<p>{timeFormat12(examData[examId].startTime)}</p>
-													<p>
-														{dateStringWithMonthName(examData[examId].date)}
-													</p>
-												</div>
-											</StyledCard>
-										</Link>
-									))}
-								</StyledExamList>
-							</StyledHeadingContainer>
-						</CSSTransition>
-						<Link to={`${url}/new-exam`} style={{ textDecoration: "none" }}>
-							<NewButton>Create New Exam</NewButton>
-						</Link>
-					</StyledFlex>
-				)}
-			</StyledContainer>
-		</CSSTransition>
+		<>
+			{!user ? (
+				<Redirect to="/login" />
+			) : (
+				<CSSTransition in timeout={600} classNames="fade" appear>
+					<StyledContainer>
+						<Examnav
+							name="Wipro IAE"
+							displayName={displayName}
+							logOutHandler={logOutHandler}
+						/>
+						{!examData ? (
+							<Loader />
+						) : (
+							<StyledFlex>
+								<CSSTransition in timeout={600} classNames="fade" appear>
+									<StyledHeadingContainer>
+										<div>All Exams</div>
+										<StyledExamList>
+											{Object.keys(examData).map((examId) => (
+												<Link
+													to={`/exams/${examId}`}
+													style={{ textDecoration: "none" }}>
+													<StyledCard>
+														<div>{examData[examId].name}</div>
+														<div>
+															<p>{timeFormat12(examData[examId].startTime)}</p>
+															<p>
+																{dateStringWithMonthName(examData[examId].date)}
+															</p>
+														</div>
+													</StyledCard>
+												</Link>
+											))}
+										</StyledExamList>
+									</StyledHeadingContainer>
+								</CSSTransition>
+								<Link to={`${url}/new-exam`} style={{ textDecoration: "none" }}>
+									<NewButton>Create New Exam</NewButton>
+								</Link>
+							</StyledFlex>
+						)}
+					</StyledContainer>
+				</CSSTransition>
+			)}
+		</>
 	);
 };
 

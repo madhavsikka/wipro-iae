@@ -33,7 +33,7 @@ const StyledNav = styled.nav`
 
 const StyledLogo = styled.div`
 	display: flex;
-	margin-top: 3px;
+	margin: 3px 70px 0 0;
 	a {
 		display: block;
 		width: 50px;
@@ -48,6 +48,7 @@ const StyledUser = styled(UserLogo)`
 `;
 
 const StyledHeader = styled.div`
+	justify-self: center;
 	font-size: ${fontSizes.xxl};
 	font-weight: bolder;
 	color: ${colors.blueMunsell};
@@ -57,7 +58,51 @@ const StyledHeader = styled.div`
 	user-select: none;
 `;
 
-const Examnav = ({ name }) => {
+const StyledUserNameContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+	padding: 0;
+`;
+
+const StyledBox = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-end;
+	margin: 0 3px 0 0;
+	padding-right: 5px;
+	div {
+		color: #6c757d;
+		font-family: ${fonts.Montserrat};
+		font-size: ${fontSizes.lg};
+	}
+	a {
+		margin: 0;
+		padding: 0;
+		cursor: pointer;
+		color: lightgrey;
+		font-family: ${fonts.Montserrat};
+		font-size: ${fontSizes.sm};
+	}
+`;
+
+const StyledAnchor = styled.a`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 0 0 50px;
+	padding: 0 8px;
+	text-decoration: none;
+	color: ${colors.blue};
+
+	&:hover {
+		color: ${colors.green};
+	}
+`;
+
+const Examnav = ({ name, displayName, logOutHandler }) => {
 	return (
 		<StyledContainer>
 			<StyledNav>
@@ -67,9 +112,15 @@ const Examnav = ({ name }) => {
 					</NavLink>
 				</StyledLogo>
 				<StyledHeader>{name}</StyledHeader>
-				<NavLink to="/user-dashboard">
-					<StyledUser />
-				</NavLink>
+				<StyledUserNameContainer>
+					<StyledBox>
+						<div>{displayName}</div>
+						<StyledAnchor onClick={logOutHandler}>Logout</StyledAnchor>
+					</StyledBox>
+					<NavLink to="/user-dashboard">
+						<StyledUser />
+					</NavLink>
+				</StyledUserNameContainer>
 			</StyledNav>
 		</StyledContainer>
 	);

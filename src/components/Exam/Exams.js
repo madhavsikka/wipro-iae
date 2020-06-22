@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link, useRouteMatch, Redirect } from "react-router-dom";
 import Loader from "../Loader";
 import styled from "styled-components";
 import Examnav from "./Examnav";
@@ -110,24 +110,10 @@ const StyledCard = styled.div`
 	}
 `;
 
-const Exams = () => {
-	// const [isMounted, setIsMounted] = useState(false);
-	// const [examData, setExamData] = useState([]);
+const Exams = ({ user, logOutHandler, displayName }) => {
 	const [examData, setExamData] = useState({});
 
 	let match = useRouteMatch();
-
-	// useEffect(() => {
-	// 	axios
-	// 		.get(config.jsonDb.exams)
-	// 		.then((res) => {
-	// 			setExams(res.data);
-	// 			setIsMounted(true);
-	// 		})
-	// 		.catch((err) => {
-	// 			console.log(err);
-	// 		});
-	// }, []);
 
 	useEffect(() => {
 		axios
@@ -135,7 +121,6 @@ const Exams = () => {
 			.then((res) => {
 				console.log(res.data);
 				setExamData(res.data);
-				// setIsMounted(true);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -143,61 +128,53 @@ const Exams = () => {
 	}, []);
 
 	return (
-		<CSSTransition in timeout={600} classNames="fade" appear>
-			<StyledContainer>
-				<Examnav name="Wipro IAE" />
-				{Object.keys(examData).length === 0 ? (
-					<Loader />
-				) : (
-					<StyledFlex>
-						<CSSTransition in timeout={600} classNames="fade" appear>
-							<StyledHeadingContainer>
-								<div>All Exams</div>
-								<StyledExamList>
-									{Object.keys(examData).map((examId) => (
-										<Link
-											style={{ textDecoration: "none" }}
-											to={{
-												pathname: `${match.url}/${examId}`,
-												data: { examData },
-											}}>
-											<StyledCard>
-												<div>{examData[examId].name}</div>
-												<div>
-													<p>{timeFormat12(examData[examId].startTime)}</p>
-													<p>
-														{dateStringWithMonthName(examData[examId].date)}
-													</p>
-												</div>
-											</StyledCard>
-										</Link>
-									))}
-								</StyledExamList>
-							</StyledHeadingContainer>
-						</CSSTransition>
-					</StyledFlex>
-				)}
-			</StyledContainer>
-		</CSSTransition>
+		<>
+			{!user ? (
+				<Redirect to="/login" />
+			) : (
+				<CSSTransition in timeout={600} classNames="fade" appear>
+					<StyledContainer>
+						<Examnav
+							name="Wipro IAE"
+							displayName={displayName}
+							logOutHandler={logOutHandler}
+						/>
+						{Object.keys(examData).length === 0 ? (
+							<Loader />
+						) : (
+							<StyledFlex>
+								<CSSTransition in timeout={600} classNames="fade" appear>
+									<StyledHeadingContainer>
+										<div>All Exams</div>
+										<StyledExamList>
+											{Object.keys(examData).map((examId) => (
+												<Link
+													style={{ textDecoration: "none" }}
+													to={{
+														pathname: `${match.url}/${examId}`,
+														data: { examData },
+													}}>
+													<StyledCard>
+														<div>{examData[examId].name}</div>
+														<div>
+															<p>{timeFormat12(examData[examId].startTime)}</p>
+															<p>
+																{dateStringWithMonthName(examData[examId].date)}
+															</p>
+														</div>
+													</StyledCard>
+												</Link>
+											))}
+										</StyledExamList>
+									</StyledHeadingContainer>
+								</CSSTransition>
+							</StyledFlex>
+						)}
+					</StyledContainer>
+				</CSSTransition>
+			)}
+		</>
 	);
-
-	// return (
-	// 	<>
-	// 		<StyledContainer>
-	// 			<Examnav name="All Exams" />
-	// 			<StyledBox>
-	// 				{!isMounted ? <Loader /> : null}
-	// 				{exams.map((exam, index) => (
-	// 					<div key={index}>
-	// <Link to={`${match.url}/${Object.keys(exam)[0]}`}>
-	// 	{Object.values(exam)[0]}
-	// </Link>
-	// 					</div>
-	// 				))}
-	// 			</StyledBox>
-	// 		</StyledContainer>
-	// 	</>
-	// );
 };
 
 export default Exams;

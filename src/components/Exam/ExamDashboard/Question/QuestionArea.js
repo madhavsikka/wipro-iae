@@ -26,15 +26,23 @@ const WrapperDiv = styled.div`
 	grid-area: ${(props) => props.area};
 `;
 
-const QuestionArea = ({ examData }) => {
+const QuestionArea = ({
+	examId,
+	examData,
+	user,
+	uid,
+	setIsSubmitting,
+	setIsSubmittedSuccessfully,
+}) => {
 	const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(0);
 	const [selectedSectionIndex, setSelectedSectionIndex] = useState(0);
 	const [isMounted, setIsMounted] = useState(false);
 	const [isReviewed, setIsReviewed] = useState(false);
-	// const [selectedOptions, setSelectedOptions] = useState([]);
 	const [selectedOptions, setSelectedOptions] = useState({});
 	const numOfQuestionsInSec = useRef([]);
 	const questionState = useRef({});
+
+	console.log("selectedOptions", selectedOptions);
 
 	if (Object.keys(questionState.current).length === 0 && examData) {
 		examData.sections.forEach((sec) => {
@@ -83,9 +91,15 @@ const QuestionArea = ({ examData }) => {
 							<StyledGrid>
 								<WrapperDiv area="ProgressBox">
 									<ProgressBox
+										examId={examId}
+										user={user}
+										uid={uid}
+										setIsSubmitting={setIsSubmitting}
+										setIsSubmittedSuccessfully={setIsSubmittedSuccessfully}
 										isReviewed={isReviewed}
 										setIsReviewed={setIsReviewed}
 										questionState={questionState.current}
+										selectedOptions={selectedOptions}
 										setSelectedOptions={setSelectedOptions}
 										selectedSectionName={
 											examData.sections[selectedSectionIndex]

@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import theme from "../styles/theme";
 import Burger from "./Burger";
 import Menu from "./Menu";
+import { ReactComponent as UserLogo } from "../images/User.svg";
 import media, { sizes } from "../styles/media";
 import { useWindowSize } from "react-use";
 const { colors, fonts, fontSizes } = theme;
@@ -29,7 +30,7 @@ const StyledNav = styled.nav`
 	padding-top: 0px;
 	margin: 0;
 	color: ${colors.blue};
-	font-family: ${fonts.Nexa};
+	font-family: ${fonts.Montserrat};
 	font-size: ${fontSizes.xl};
 `;
 
@@ -41,6 +42,34 @@ const StyledLogo = styled.div`
 		width: 70px;
 	}
 	${media.phablet`margin-top: 4px; width: 60px`};
+`;
+
+const StyledUser = styled(UserLogo)`
+	width: 40px;
+	height: 40px;
+	margin-left: 4px;
+`;
+
+const StyledBox = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-end;
+	margin: 0 3px 0 3rem;
+	padding-right: 5px;
+	div {
+		color: #6c757d;
+		font-family: ${fonts.Montserrat};
+		font-size: ${fontSizes.lg};
+	}
+	a {
+		margin: 0;
+		padding: 0;
+		cursor: pointer;
+		color: lightgrey;
+		font-family: ${fonts.Montserrat};
+		font-size: ${fontSizes.sm};
+	}
 `;
 
 const StyledList = styled.ul`
@@ -66,7 +95,21 @@ const StyledLink = styled(NavLink)`
 	}
 `;
 
-const Navbar = () => {
+const StyledAnchor = styled.a`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 0 0 50px;
+	padding: 0 8px;
+	text-decoration: none;
+	color: ${colors.blue};
+
+	&:hover {
+		color: ${colors.green};
+	}
+`;
+
+const Navbar = ({ user, auth, setUser, logOutHandler }) => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	const { width } = useWindowSize();
@@ -77,18 +120,31 @@ const Navbar = () => {
 
 	const linkList = (
 		<StyledList>
-			<StyledLink to="/admin-dashboard" activeClassName="navlink-active">
-				ADMIN
-			</StyledLink>
-			<StyledLink to="/exams" activeClassName="navlink-active">
-				EXAM
-			</StyledLink>
-			<StyledLink to="/login" activeClassName="navlink-active">
-				LOGIN
-			</StyledLink>
-			<StyledLink to="/register" activeClassName="navlink-active">
-				REGISTER
-			</StyledLink>
+			{user ? (
+				<>
+					<StyledLink to="/admin-dashboard" activeClassName="navlink-active">
+						Create Exam
+					</StyledLink>
+					<StyledLink to="/exams" activeClassName="navlink-active">
+						View Exams
+					</StyledLink>
+					<StyledBox>
+						<div>{auth().currentUser.displayName}</div>
+						{/* <div>{localStorage.getItem("Wipro_Name")}</div> */}
+						<StyledAnchor onClick={logOutHandler}>Logout</StyledAnchor>
+					</StyledBox>
+					<StyledUser />
+				</>
+			) : (
+				<>
+					<StyledLink to="/login" activeClassName="navlink-active">
+						LOGIN
+					</StyledLink>
+					<StyledLink to="/register" activeClassName="navlink-active">
+						REGISTER
+					</StyledLink>
+				</>
+			)}
 			{/* <StyledLink to="/contact" activeClassName="navlink-active">
 				CONTACT
 			</StyledLink>

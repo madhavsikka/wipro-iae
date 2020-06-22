@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Button from "../../../../styles/Button";
 import config from "../../../../config";
 import theme from "../../../../styles/theme";
+import axios from "axios";
 const { colors, fontSizes } = theme;
 
 const StyledProgressBox = styled.div`
@@ -145,9 +146,15 @@ const StyledLegend = styled.div`
 `;
 
 const ProgressBox = ({
+	examId,
+	user,
+	uid,
+	setIsSubmitting,
+	setIsSubmittedSuccessfully,
 	isReviewed,
 	setIsReviewed,
 	questionState,
+	selectedOptions,
 	setSelectedOptions,
 	selectedSectionName,
 	selectedSectionIndex,
@@ -170,6 +177,23 @@ const ProgressBox = ({
 			// 	setQuestionStateHandler(config.questionState.visited_unattempted);
 			// }
 		}
+	};
+
+	const onExamSubmitHandler = () => {
+		let postData = {};
+		postData[uid] = { ...selectedOptions };
+		axios
+			.post(`${config.firebase.databaseURL}/userResponses.json`, {
+				...postData,
+			})
+			.then((res) => {
+				console.log(res);
+				setIsSubmittedSuccessfully(true);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+		setIsSubmitting(true);
 	};
 
 	return (
@@ -236,7 +260,8 @@ const ProgressBox = ({
 					borderColor={colors.buttonGreen}
 					hoverColor={colors.buttonGreenDark}
 					hoverText={colors.white}
-					weight="600">
+					weight="600"
+					onClick={() => onExamSubmitHandler()}>
 					SUBMIT
 				</Button>
 			</ButtonBox>

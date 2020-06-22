@@ -55,11 +55,16 @@ const StyledName = styled.div`
 	${media.tablet`border: none; align-items: center; font-size: ${fontSizes.xxl};`};
 `;
 
-const Home = () => {
+const Home = ({ user, auth, setUser, logOutHandler }) => {
 	return (
 		<CSSTransition in timeout={600} classNames="fade" appear>
 			<StyledFlex>
-				<Navbar />
+				<Navbar
+					user={user}
+					auth={auth}
+					setUser={setUser}
+					logOutHandler={logOutHandler}
+				/>
 
 				<StyledContainer>
 					<StyledHead>WIPRO</StyledHead>
@@ -76,4 +81,4 @@ const Home = () => {
 	);
 };
 
-export default Home;
+export default React.memo(Home);

@@ -6,13 +6,14 @@ import Examnav from "../Examnav";
 import NewForm from "./NewForm";
 import NewDetails from "./NewDetails";
 import QuestionInput from "./QuestionInput";
+import { Redirect } from "react-router-dom";
 
 const StyledContainer = styled.div`
 	${mixins.fullFlexCenter};
 	align-items: center;
 `;
 
-const NewExam = () => {
+const NewExam = ({ user, displayName, logOutHandler }) => {
 	const [step, setStep] = useState(0);
 	const [examDetails, setExamDetails] = useState({});
 	const [sections, setSections] = useState([]);
@@ -75,12 +76,22 @@ const NewExam = () => {
 	}
 
 	return (
-		<CSSTransition in timeout={600} classNames="fade" appear>
-			<StyledContainer>
-				<Examnav name="Wipro IAE" />
-				{currentForm}
-			</StyledContainer>
-		</CSSTransition>
+		<>
+			{!user ? (
+				<Redirect to="/login" />
+			) : (
+				<CSSTransition in timeout={600} classNames="fade" appear>
+					<StyledContainer>
+						<Examnav
+							name="Wipro IAE"
+							displayName={displayName}
+							logOutHandler={logOutHandler}
+						/>
+						{currentForm}
+					</StyledContainer>
+				</CSSTransition>
+			)}
+		</>
 	);
 };
 

@@ -25,7 +25,7 @@ const StyledBox = styled.div`
 	justify-content: center;
 `;
 
-const ExamDetail = () => {
+const ExamDetail = ({ user, displayName, logOutHandler }) => {
 	const { examId } = useParams();
 	const { url } = useRouteMatch();
 	let { data } = useLocation();
@@ -51,22 +51,33 @@ const ExamDetail = () => {
 
 	return (
 		<>
-			<StyledContainer>
-				<Examnav name={`Details For Exam ${examId}`} />
-				{console.log(data)}
-				{!currentExam ? (
-					<Redirect to="/exams" />
-				) : (
-					<StyledBox>
-						<div>ExamDetail for {examId}</div>
-						<div>Details for {currentExam.name}</div>
-						<Link
-							to={{ pathname: `${url}/exam-dashboard`, data: { currentExam } }}>
-							Start Exam
-						</Link>
-					</StyledBox>
-				)}
-			</StyledContainer>
+			{!user ? (
+				<Redirect to="/login" />
+			) : (
+				<StyledContainer>
+					<Examnav
+						name={`Details For Exam ${examId}`}
+						displayName={displayName}
+						logOutHandler={logOutHandler}
+					/>
+					{console.log(data)}
+					{!currentExam ? (
+						<Redirect to="/exams" />
+					) : (
+						<StyledBox>
+							<div>ExamDetail for {examId}</div>
+							<div>Details for {currentExam.name}</div>
+							<Link
+								to={{
+									pathname: `${url}/exam-dashboard`,
+									data: { currentExam, examId },
+								}}>
+								Start Exam
+							</Link>
+						</StyledBox>
+					)}
+				</StyledContainer>
+			)}
 		</>
 	);
 };

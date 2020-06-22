@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import media from "../styles/media";
 import Navbar from "../components/Navbar";
 import Button from "../styles/Button";
+import MiniLoader from "./MiniLoader";
 import { ReactComponent as User } from "../images/User.svg";
 import { CSSTransition } from "react-transition-group";
 import theme from "../styles/theme";
@@ -86,7 +87,7 @@ const StyledContainer = styled.div`
 		border-radius: 8px;
 		box-shadow: 0 0 10px lightgray;
 		padding: 0 0 2rem;
-		width: 55%;
+		min-width: 350px;
 		${media.desktop`width: auto;`}
 		${media.thone`box-shadow: none;`}
 	}
@@ -146,167 +147,143 @@ const StyledInput = styled.input`
 	margin-right: 10px;
 `;
 
-const UserIDRegex = RegExp(
-	/^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i
-);
+const Login = ({ user, setUser, auth, setDisplayName, setUid }) => {
+	const [username, setUsername] = useState(null);
+	const [password, setPassword] = useState(null);
+	const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-class Login extends Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			formValid: false,
-			errorCount: null,
-			isLoggedIn: false,
-			isError: false,
-			userName: "",
-			password: "",
-
-			errors: {
-				username: "",
-				password: "",
-			},
-		};
-	}
-
-	handleChange = (event) => {
-		event.preventDefault();
-		const { name, value } = event.target;
-		let errors = this.state.errors;
-
-		switch (name) {
-			case "username":
-				errors.username = UserIDRegex.test(value)
-					? ""
-					: value.length < 1
-					? "UserID cannot be empty"
-					: "Invalid UserID";
-				break;
-			case "password":
-				errors.password =
-					value.length < 1
-						? "Password field cannot be empty"
-						: value.length < 6
-						? "Short Password"
-						: "";
-				break;
-			default:
-				break;
-		}
-
-		this.setState({ errors, [name]: value });
+	const onChangeUsername = (event) => {
+		setUsername(event.target.value);
 	};
 
-	handleSubmit = (event) => {
-		event.preventDefault();
+	const onChangePassword = (event) => {
+		setPassword(event.target.value);
 	};
 
-	render() {
-		const { errors } = this.state;
-		return (
-			<StyledFlex>
-				<Navbar />
-				<StyledInFlex>
-					<CSSTransition in timeout={600} classNames="fade" appear>
-						<StyledBanner>
-							<p>Log in to your account.</p>
-							<p>Wipro</p>
-							<p>
-								<div>Independent</div>
-								<div>Assessment</div>
-								<div>Engine</div>
-							</p>
-							<p>
-								Don't have an account?
-								<Button
-									color="transparent"
-									hoverColor="white"
-									hoverText={colors.blue}
-									style={{
-										border: "1px solid white",
-										marginLeft: "1rem",
-										padding: "0.25rem 0.75rem",
-									}}>
-									<Link to="/register">Register</Link>
-								</Button>
-							</p>
-						</StyledBanner>
-					</CSSTransition>
+	const handleSubmit = () => {
+		setIsLoggingIn(true);
+		auth()
+			.signInWithEmailAndPassword(username, password)
+			.then((res) => {
+				setUser(res.user);
+				localStorage.setItem("Wipro_UID", auth().currentUser.uid);
+				localStorage.setItem("Wipro_Name", auth().currentUser.displayName);
+				setDisplayName(auth().currentUser.displayName);
+				setUid(auth().currentUser.uid);
+				console.log("logged in");
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
-					<CSSTransition in timeout={600} classNames="fade" appear>
-						<StyledContainer>
-							<div>
-								<StyledText>LOGIN</StyledText>
-								<StyledImage>
-									<User />
-								</StyledImage>
+	return (
+		<>
+			{user ? (
+				<Redirect to="/exams" />
+			) : (
+				<StyledFlex>
+					<Navbar user={user} auth={auth} />
+					<StyledInFlex>
+						<CSSTransition in timeout={600} classNames="fade" appear>
+							<StyledBanner>
+								<p>Log in to your account.</p>
+								<p>Wipro</p>
+								<p>
+									<div>Independent</div>
+									<div>Assessment</div>
+									<div>Engine</div>
+								</p>
+								<p>
+									Don't have an account?
+									<Button
+										color="transparent"
+										hoverColor="white"
+										hoverText={colors.blue}
+										style={{
+											border: "1px solid white",
+											marginLeft: "1rem",
+											padding: "0.25rem 0.75rem",
+										}}>
+										<Link to="/register">Register</Link>
+									</Button>
+								</p>
+							</StyledBanner>
+						</CSSTransition>
 
-								<StyledForm
-									autoComplete="off"
-									onSubmit={this.handleSubmit}
-									noValidate>
-									<StyledInputContainer>
-										<IconContext.Provider
-											value={{
-												size: "18px",
-												style: {
-													position: "relative",
-													left: "22px",
-													color: "#AAAAAA",
-												},
-											}}>
-											<MdMail />
-										</IconContext.Provider>
-										<StyledInput
-											type="username"
-											name="username"
-											placeholder="UserID"
-											onChange={this.handleChange}
-											noValidate
-										/>
-									</StyledInputContainer>
-									{errors.username.length > 0 && (
-										<span className="error">{errors.username}</span>
-									)}
-									<StyledInputContainer>
-										<IconContext.Provider
-											value={{
-												size: "18px",
-												style: {
-													position: "relative",
-													left: "22px",
-													color: "#AAAAAA",
-												},
-											}}>
-											<FaLock />
-										</IconContext.Provider>
-										<StyledInput
-											type="password"
-											name="password"
-											placeholder="Password"
-											onChange={this.handleChange}
-											noValidate
-										/>
-									</StyledInputContainer>
-									{errors.password.length > 0 && (
-										<span className="error">{errors.password}</span>
-									)}
-								</StyledForm>
+						<CSSTransition in timeout={600} classNames="fade" appear>
+							<StyledContainer>
+								{isLoggingIn ? (
+									<MiniLoader />
+								) : (
+									<div>
+										<StyledText>LOGIN</StyledText>
+										<StyledImage>
+											<User />
+										</StyledImage>
 
-								<Button
-									color={colors.buttonGreen}
-									hoverColor={colors.buttonGreenDark}
-									onClick={this.handleSubmit}
-									style={{ marginTop: "2rem", width: "10rem" }}>
-									LOGIN
-								</Button>
-							</div>
-						</StyledContainer>
-					</CSSTransition>
-				</StyledInFlex>
-			</StyledFlex>
-		);
-	}
-}
+										<StyledForm autoComplete="off" noValidate>
+											<StyledInputContainer>
+												<IconContext.Provider
+													value={{
+														size: "18px",
+														style: {
+															position: "relative",
+															left: "22px",
+															color: "#AAAAAA",
+														},
+													}}>
+													<MdMail />
+												</IconContext.Provider>
+												<StyledInput
+													autoComplete="off"
+													type="email"
+													name="email"
+													placeholder="Email ID"
+													value={username}
+													onChange={(event) => onChangeUsername(event)}
+												/>
+											</StyledInputContainer>
+
+											<StyledInputContainer>
+												<IconContext.Provider
+													value={{
+														size: "18px",
+														style: {
+															position: "relative",
+															left: "22px",
+															color: "#AAAAAA",
+														},
+													}}>
+													<FaLock />
+												</IconContext.Provider>
+												<StyledInput
+													type="password"
+													name="password"
+													placeholder="Password"
+													value={password}
+													onChange={(event) => onChangePassword(event)}
+													noValidate
+												/>
+											</StyledInputContainer>
+										</StyledForm>
+
+										<Button
+											color={colors.buttonGreen}
+											hoverColor={colors.buttonGreenDark}
+											onClick={() => handleSubmit()}
+											style={{ marginTop: "2rem", width: "10rem" }}>
+											LOGIN
+										</Button>
+									</div>
+								)}
+							</StyledContainer>
+						</CSSTransition>
+					</StyledInFlex>
+				</StyledFlex>
+			)}
+		</>
+	);
+};
 
 export default Login;
