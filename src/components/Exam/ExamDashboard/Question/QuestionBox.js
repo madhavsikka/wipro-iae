@@ -66,7 +66,7 @@ const StyledMarking = styled.div`
 	background: white;
 	color: ${colors.blueMunsell};
 	p {
-		width: 40px;
+		width: 80px;
 		padding: 2px 0;
 		margin: 0;
 		:first-child {
@@ -155,8 +155,8 @@ const QuestionBox = ({
 					<StyledQDetails>
 						<p>{`${currentQuestion.type.toUpperCase()} CORRECT`}</p>
 						<StyledMarking>
-							<p>{`+${marking[currentQuestion.type]["positive"]}`}</p>
-							<p>{`-${marking[currentQuestion.type]["negative"]}`}</p>
+							<p>{`+${questions[selectedSectionName]["marking"]["positive"]}`}</p>
+							<p>{`${questions[selectedSectionName]["marking"]["negative"]}`}</p>
 						</StyledMarking>
 					</StyledQDetails>
 				</StyledBar>

@@ -24,6 +24,7 @@ const App = (props) => {
 	const [user, setUser] = useState(null);
 	const [displayName, setDisplayName] = useState("");
 	const [uid, setUid] = useState("");
+	const [userResponseId, setUserResponseId] = useState(null);
 
 	const logOutHandler = () => {
 		localStorage.removeItem("Wipro_UID");
@@ -96,6 +97,8 @@ const App = (props) => {
 					<Route path="/exams/:examId/result" exact>
 						<Result
 							user={user}
+							uid={uid}
+							userResponseId={userResponseId}
 							displayName={displayName}
 							logOutHandler={() => logOutHandler()}
 						/>
@@ -104,6 +107,7 @@ const App = (props) => {
 						<ExamDashboard
 							user={user}
 							uid={uid}
+							setUserResponseId={setUserResponseId}
 							displayName={displayName}
 							logOutHandler={() => logOutHandler()}
 						/>

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Button from "../../../../styles/Button";
 import theme from "../../../../styles/theme";
-import axios from "axios";
+// import axios from "axios";
 import config from "../../../../config";
 import mixins from "../../../../styles/mixins";
 const { colors, fontSizes } = theme;
@@ -45,20 +45,10 @@ const BottomBar = ({
 		// }
 		if (type === "submit") {
 			setQuestionStateHandler(config.questionState.submit);
-			let postData = [
-				...selectedOptions[selectedSectionName][selectedQuestionIndex],
-			];
-			console.log(postData);
-			console.log("****");
-			axios
-				.post(`${config.jsonDb.db}`, { postData })
-				.then((res) => {
-					console.log(res);
-					console.log(res.data);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+			// let postData = [
+			// 	...selectedOptions[selectedSectionName][selectedQuestionIndex],
+			// ];
+			// console.log(postData);
 			// axios
 			// 	.post(
 			// 		`${config.firebase.databaseURL}/e1/responses/${selectedSectionName}/${selectedQuestionIndex}.json`,

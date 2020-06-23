@@ -31,6 +31,7 @@ const QuestionArea = ({
 	examData,
 	user,
 	uid,
+	setUserResponseId,
 	setIsSubmitting,
 	setIsSubmittedSuccessfully,
 }) => {
@@ -96,6 +97,7 @@ const QuestionArea = ({
 										uid={uid}
 										setIsSubmitting={setIsSubmitting}
 										setIsSubmittedSuccessfully={setIsSubmittedSuccessfully}
+										setUserResponseId={setUserResponseId}
 										isReviewed={isReviewed}
 										setIsReviewed={setIsReviewed}
 										questionState={questionState.current}

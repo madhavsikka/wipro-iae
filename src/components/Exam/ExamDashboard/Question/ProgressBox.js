@@ -151,6 +151,7 @@ const ProgressBox = ({
 	uid,
 	setIsSubmitting,
 	setIsSubmittedSuccessfully,
+	setUserResponseId,
 	isReviewed,
 	setIsReviewed,
 	questionState,
@@ -180,14 +181,18 @@ const ProgressBox = ({
 	};
 
 	const onExamSubmitHandler = () => {
-		let postData = {};
-		postData[uid] = { ...selectedOptions };
+		let postData = {
+			examId: examId,
+			userId: uid,
+			response: { ...selectedOptions },
+		};
 		axios
 			.post(`${config.firebase.databaseURL}/userResponses.json`, {
 				...postData,
 			})
 			.then((res) => {
 				console.log(res);
+				setUserResponseId(res.data.name);
 				setIsSubmittedSuccessfully(true);
 			})
 			.catch((err) => {

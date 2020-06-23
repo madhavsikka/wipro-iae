@@ -70,7 +70,7 @@ const ExamDetail = ({ user, displayName, logOutHandler }) => {
 							<Link
 								to={{
 									pathname: `${url}/exam-dashboard`,
-									data: { currentExam, examId },
+									data: { currentExam },
 								}}>
 								Start Exam
 							</Link>

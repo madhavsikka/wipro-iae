@@ -307,6 +307,7 @@ const ButtonBox = styled.div`
 const QuestionInput = ({
 	setStep,
 	examDetails,
+	marking,
 	sections,
 	questionAnswers,
 	setQuestionAnswers,
@@ -459,6 +460,7 @@ const QuestionInput = ({
 		};
 		postAnswerKey = {
 			name: examDetails.name,
+			marking: marking,
 			answerKey: correctAnswers,
 		};
 
@@ -466,26 +468,26 @@ const QuestionInput = ({
 			.post(`${config.firebase.databaseURL}/examList.json`, {
 				...postExamDetails,
 			})
-			.then((res) => {
-				console.log(res);
-			})
+			.then((res) => {})
 			.catch((err) => {
 				console.log(err);
 			});
-		axios
-			.post(`${config.firebase.databaseURL}/answerKeys.json`, {
-				...postAnswerKey,
-			})
-			.then((res) => {
-				console.log(res);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+
 		axios
 			.post(`${config.firebase.databaseURL}/exams.json`, { ...postData })
 			.then((res) => {
-				setRedirect(true);
+				let postAnswerKeyWithId = {};
+				postAnswerKeyWithId = { ...postAnswerKey, examId: res.data.name };
+				axios
+					.post(`${config.firebase.databaseURL}/answerKeys.json`, {
+						...postAnswerKeyWithId,
+					})
+					.then((res) => {
+						setRedirect(true);
+					})
+					.catch((err) => {
+						console.log(err);
+					});
 			})
 			.catch((err) => {
 				console.log(err);

@@ -5,15 +5,22 @@ import QuestionArea from "./Question/QuestionArea";
 import Examnav from "../Examnav";
 import Loader from "../../Loader";
 import { timeDifference } from "../../../utils";
-import { useLocation, Redirect } from "react-router-dom";
+import { useLocation, Redirect, useParams } from "react-router-dom";
 
 const StyledContainer = styled.div`
 	${mixins.fullFlexCenter};
 	align-items: stretch;
 `;
 
-const ExamDashboard = ({ user, displayName, logOutHandler, uid }) => {
+const ExamDashboard = ({
+	user,
+	displayName,
+	logOutHandler,
+	uid,
+	setUserResponseId,
+}) => {
 	const { data } = useLocation();
+	const { examId } = useParams();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [isSubmittedSuccessfully, setIsSubmittedSuccessfully] = useState(false);
 
@@ -59,14 +66,19 @@ const ExamDashboard = ({ user, displayName, logOutHandler, uid }) => {
 			) : (
 				<>
 					{isSubmittedSuccessfully ? (
-						<Redirect to={`/exams/${data.examId}/result`} />
+						<Redirect
+							to={{
+								pathname: `/exams/${examId}/result`,
+								data: data.currentExam.name,
+							}}
+						/>
 					) : (
 						<>
 							{isSubmitting ? (
 								<Loader />
 							) : (
 								<>
-									{examData ? (
+									{examData && examId ? (
 										<StyledContainer>
 											<Examnav
 												name={examData.name}
@@ -74,10 +86,11 @@ const ExamDashboard = ({ user, displayName, logOutHandler, uid }) => {
 												logOutHandler={logOutHandler}
 											/>
 											<QuestionArea
-												examId={data.examId}
+												examId={examId}
 												examData={examData}
 												user={user}
 												uid={uid}
+												setUserResponseId={setUserResponseId}
 												setIsSubmitting={setIsSubmitting}
 												setIsSubmittedSuccessfully={setIsSubmittedSuccessfully}
 											/>

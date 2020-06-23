@@ -63,6 +63,7 @@ const NewExam = ({ user, displayName, logOutHandler }) => {
 				<QuestionInput
 					setStep={setStep}
 					sections={sections}
+					marking={marking}
 					examDetails={examDetails}
 					questionAnswers={questionAnswers}
 					setQuestionAnswers={setQuestionAnswers}
