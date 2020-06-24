@@ -103,7 +103,7 @@ const Result = ({ uid, displayName, userResponseId }) => {
 	) {
 		let scoreObject = {};
 		Object.keys(answerKey).forEach((sec, secIndex) => {
-			scoreObject[sec] = { correct: 0, wrong: 0, unattempted: 0 };
+			scoreObject[sec] = { correct: 0, wrong: 0 };
 			answerKey[sec].forEach((_, ansArrIndex) => {
 				if (responses && responses[sec] && responses[sec][ansArrIndex]) {
 					if (
@@ -112,7 +112,6 @@ const Result = ({ uid, displayName, userResponseId }) => {
 					) {
 						scoreObject[sec]["correct"]++;
 					} else {
-						if()
 						scoreObject[sec]["wrong"]++;
 					}
 				}
@@ -164,13 +163,17 @@ const Result = ({ uid, displayName, userResponseId }) => {
 					) : (
 						<CSSTransition in timeout={300} classNames="page" appear>
 							<StyledContainer>
-								<Examnav name="Result" />
+								<Examnav name={`Results For `} />
 								<StyledGrid>
 									<StyledScore area="score">
 										<div>Score Card</div>
 										<div>
 											<span>Name:</span>
 											<span>{displayName}</span>
+										</div>
+										<div>
+											<span>Exam Name:</span>
+											{/* <span>{data.examName}</span> */}
 										</div>
 										<div>
 											<span>{`Marks Scored:`}</span>
