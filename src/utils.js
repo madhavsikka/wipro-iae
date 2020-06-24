@@ -5,6 +5,16 @@ export const timeFormat12 = (time) => {
 	return `${hour}:${minute} ${postfix}`;
 };
 
+export const getTodayDateString = () => {
+	var today = new Date();
+	var dd = String(today.getDate()).padStart(2, "0");
+	var mm = String(today.getMonth() + 1).padStart(2, "0");
+	var yyyy = today.getFullYear();
+
+	today = dd + "/" + mm + "/" + yyyy;
+	return today;
+};
+
 export const dateStringWithMonthName = (date) => {
 	const monthNum = +date.substr(3, 2);
 	var months = [

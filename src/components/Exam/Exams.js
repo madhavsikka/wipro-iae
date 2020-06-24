@@ -4,7 +4,11 @@ import Loader from "../Loader";
 import styled from "styled-components";
 import Examnav from "./Examnav";
 import { CSSTransition } from "react-transition-group";
-import { timeFormat12, dateStringWithMonthName } from "../../utils";
+import {
+	timeFormat12,
+	dateStringWithMonthName,
+	getTodayDateString,
+} from "../../utils";
 import axios from "axios";
 import mixins from "../../styles/mixins";
 import config from "../../config";
@@ -62,6 +66,11 @@ const StyledExamList = styled.div`
 	height: 100%;
 	overflow-y: auto;
 	padding: 0.1rem 0;
+`;
+
+const StyledLink = styled(Link)`
+	text-decoration: none;
+	pointer-events: ${(props) => (props.show ? "all" : "none")};
 `;
 
 const StyledCard = styled.div`
@@ -148,8 +157,8 @@ const Exams = ({ user, logOutHandler, displayName }) => {
 										<div>All Exams</div>
 										<StyledExamList>
 											{Object.keys(examData).map((examId) => (
-												<Link
-													style={{ textDecoration: "none" }}
+												<StyledLink
+													show={examData[examId].date === getTodayDateString()}
 													to={{
 														pathname: `${match.url}/${examId}`,
 														data: { examData },
@@ -163,7 +172,7 @@ const Exams = ({ user, logOutHandler, displayName }) => {
 															</p>
 														</div>
 													</StyledCard>
-												</Link>
+												</StyledLink>
 											))}
 										</StyledExamList>
 									</StyledHeadingContainer>
