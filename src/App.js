@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import PageVisibility from "react-page-visibility";
+import Backdrop from "./components/Backdrop";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -17,7 +19,6 @@ import config from "./config";
 
 import firebase from "firebase";
 firebase.initializeApp(config.firebase);
-// const provider = new firebase.auth.EmailAuthProvider();
 const auth = firebase.auth;
 
 const App = (props) => {
@@ -25,6 +26,7 @@ const App = (props) => {
 	const [displayName, setDisplayName] = useState("");
 	const [uid, setUid] = useState("");
 	const [userResponseId, setUserResponseId] = useState(null);
+	const [showBackdrop, setShowBackdrop] = useState(false);
 
 	const logOutHandler = () => {
 		localStorage.removeItem("Wipro_UID");
@@ -38,7 +40,6 @@ const App = (props) => {
 	useEffect(() => {
 		const unsubscribe = auth().onAuthStateChanged((user) => {
 			if (user) {
-				console.log("user", user);
 				setUser({ user });
 				if (displayName === "") {
 					setDisplayName(user.displayName);
@@ -51,91 +52,103 @@ const App = (props) => {
 		return () => unsubscribe();
 	}, [displayName, uid]);
 
+	const handleVisibilityChange = (isVisible) => {
+		if (!isVisible) {
+			setShowBackdrop(true);
+		}
+	};
+
 	return (
 		<Router>
 			<GlobalStyle />
-			<div className="App">
-				<Switch>
-					<Route path="/login" exact>
-						<Login
-							user={user}
-							setUser={setUser}
-							auth={auth}
-							setUid={setUid}
-							setDisplayName={setDisplayName}
-						/>
-					</Route>
-					<Route path="/register" exact>
-						<Register
-							user={user}
-							setUser={setUser}
-							auth={auth}
-							setUid={setUid}
-							setDisplayName={setDisplayName}
-						/>
-					</Route>
-					<Route path="/about" exact>
-						<About />
-					</Route>
-					<Route path="/user-dashboard" exact>
-						<UserDashboard />
-					</Route>
-					<Route path="/admin-dashboard/new-exam" exact>
-						<NewExam
-							user={user}
-							displayName={displayName}
-							logOutHandler={() => logOutHandler()}
-						/>
-					</Route>
-					<Route path="/admin-dashboard" exact>
-						<AdminDashboard
-							user={user}
-							displayName={displayName}
-							logOutHandler={() => logOutHandler()}
-						/>
-					</Route>
-					<Route path="/exams/:examId/result" exact>
-						<Result
-							user={user}
-							uid={uid}
-							userResponseId={userResponseId}
-							displayName={displayName}
-							logOutHandler={() => logOutHandler()}
-						/>
-					</Route>
-					<Route path="/exams/:examId/exam-dashboard" exact>
-						<ExamDashboard
-							user={user}
-							uid={uid}
-							setUserResponseId={setUserResponseId}
-							displayName={displayName}
-							logOutHandler={() => logOutHandler()}
-						/>
-					</Route>
-					<Route path="/exams/:examId" exact>
-						<ExamDetail
-							user={user}
-							displayName={displayName}
-							logOutHandler={() => logOutHandler()}
-						/>
-					</Route>
-					<Route path="/exams" exact>
-						<Exams
-							user={user}
-							displayName={displayName}
-							logOutHandler={() => logOutHandler()}
-						/>
-					</Route>
-					<Route path="/">
-						<Home
-							user={user}
-							auth={auth}
-							setUser={setUser}
-							logOutHandler={() => logOutHandler()}
-						/>
-					</Route>
-				</Switch>
-			</div>
+			<PageVisibility onChange={() => handleVisibilityChange()}>
+				<div className="App">
+					{showBackdrop ? (
+						<Backdrop setShowBackdrop={setShowBackdrop} />
+					) : (
+						<Switch>
+							<Route path="/login" exact>
+								<Login
+									user={user}
+									setUser={setUser}
+									auth={auth}
+									setUid={setUid}
+									setDisplayName={setDisplayName}
+								/>
+							</Route>
+							<Route path="/register" exact>
+								<Register
+									user={user}
+									setUser={setUser}
+									auth={auth}
+									setUid={setUid}
+									setDisplayName={setDisplayName}
+								/>
+							</Route>
+							<Route path="/about" exact>
+								<About />
+							</Route>
+							<Route path="/user-dashboard" exact>
+								<UserDashboard />
+							</Route>
+							<Route path="/admin-dashboard/new-exam" exact>
+								<NewExam
+									user={user}
+									displayName={displayName}
+									logOutHandler={() => logOutHandler()}
+								/>
+							</Route>
+							<Route path="/admin-dashboard" exact>
+								<AdminDashboard
+									user={user}
+									displayName={displayName}
+									logOutHandler={() => logOutHandler()}
+								/>
+							</Route>
+							<Route path="/exams/:examId/result" exact>
+								<Result
+									user={user}
+									uid={uid}
+									userResponseId={userResponseId}
+									displayName={displayName}
+									logOutHandler={() => logOutHandler()}
+								/>
+							</Route>
+							<Route path="/exams/:examId/exam-dashboard" exact>
+								<ExamDashboard
+									user={user}
+									uid={uid}
+									setUserResponseId={setUserResponseId}
+									displayName={displayName}
+									logOutHandler={() => logOutHandler()}
+								/>
+							</Route>
+							<Route path="/exams/:examId" exact>
+								<ExamDetail
+									user={user}
+									displayName={displayName}
+									logOutHandler={() => logOutHandler()}
+								/>
+							</Route>
+							<Route path="/exams" exact>
+								<Exams
+									user={user}
+									displayName={displayName}
+									logOutHandler={() => logOutHandler()}
+								/>
+							</Route>
+							<Route path="/">
+								<Home
+									user={user}
+									auth={auth}
+									setUser={setUser}
+									logOutHandler={() => logOutHandler()}
+								/>
+							</Route>
+						</Switch>
+					)}
+				</div>
+			</PageVisibility>
 		</Router>
 	);
 };

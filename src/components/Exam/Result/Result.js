@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLocation } from "react";
+import React, { useState, useEffect } from "react";
 import Examnav from "../Examnav";
 import mixins from "../../../styles/mixins";
 import styled from "styled-components";
@@ -8,6 +8,7 @@ import Pichart from "./Pichart";
 import Table from "./Table";
 import theme from "../../../styles/theme";
 import axios from "axios";
+import { CSSTransition } from "react-transition-group";
 import config from "../../../config";
 import Loader from "../../Loader";
 const { colors, fontSizes } = theme;
@@ -70,7 +71,6 @@ const StyledWrapper = styled.div`
 `;
 
 const Result = ({ uid, displayName, userResponseId }) => {
-	// const { data } = useLocation();
 	const { examId } = useParams();
 	const [answerKey, setAnswerKey] = useState({});
 	const [responses, setResponses] = useState({});
@@ -161,46 +161,48 @@ const Result = ({ uid, displayName, userResponseId }) => {
 						Object.keys(marking).length === 0) ? (
 						<Loader />
 					) : (
-						<StyledContainer>
-							<Examnav name={`Results For `} />
-							<StyledGrid>
-								<StyledScore area="score">
-									<div>Score Card</div>
-									<div>
-										<span>Name:</span>
-										<span>{displayName}</span>
+						<CSSTransition in timeout={300} classNames="page" appear>
+							<StyledContainer>
+								<Examnav name={`Results For `} />
+								<StyledGrid>
+									<StyledScore area="score">
+										<div>Score Card</div>
+										<div>
+											<span>Name:</span>
+											<span>{displayName}</span>
+										</div>
+										<div>
+											<span>Exam Name:</span>
+											{/* <span>{data.examName}</span> */}
+										</div>
+										<div>
+											<span>{`Marks Scored:`}</span>
+											<span>{totalMarks}</span>
+										</div>
+									</StyledScore>
+									<StyledWrapper style={{ gridArea: "bar" }}>
+										<Bargraph
+											area="bar"
+											height="275px"
+											score={score}
+											marking={marking}
+										/>
+									</StyledWrapper>
+									<StyledWrapper style={{ gridArea: "pie" }}>
+										<Pichart
+											area="pie"
+											width="320px"
+											height="320px"
+											score={score}
+											marking={marking}
+										/>
+									</StyledWrapper>
+									<div style={{ gridArea: "key" }}>
+										<Table answerKey={answerKey} responses={responses} />
 									</div>
-									<div>
-										<span>Exam Name:</span>
-										{/* <span>{data.examName}</span> */}
-									</div>
-									<div>
-										<span>{`Marks Scored:`}</span>
-										<span>{totalMarks}</span>
-									</div>
-								</StyledScore>
-								<StyledWrapper style={{ gridArea: "bar" }}>
-									<Bargraph
-										area="bar"
-										height="275px"
-										score={score}
-										marking={marking}
-									/>
-								</StyledWrapper>
-								<StyledWrapper style={{ gridArea: "pie" }}>
-									<Pichart
-										area="pie"
-										width="320px"
-										height="320px"
-										score={score}
-										marking={marking}
-									/>
-								</StyledWrapper>
-								<div style={{ gridArea: "key" }}>
-									<Table answerKey={answerKey} responses={responses} />
-								</div>
-							</StyledGrid>
-						</StyledContainer>
+								</StyledGrid>
+							</StyledContainer>
+						</CSSTransition>
 					)}
 				</>
 			)}

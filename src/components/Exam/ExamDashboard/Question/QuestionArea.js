@@ -35,6 +35,7 @@ const QuestionArea = ({
 	setIsSubmitting,
 	setIsSubmittedSuccessfully,
 }) => {
+	const [autoSubmit, setAutoSubmit] = useState(false);
 	const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(0);
 	const [selectedSectionIndex, setSelectedSectionIndex] = useState(0);
 	const [isMounted, setIsMounted] = useState(false);
@@ -110,10 +111,14 @@ const QuestionArea = ({
 										selectedQuestionIndex={selectedQuestionIndex}
 										setSelectedQuestionIndex={setSelectedQuestionIndex}
 										numOfQuestionsInSec={numOfQuestionsInSec.current}
+										autoSubmit={autoSubmit}
 									/>
 								</WrapperDiv>
 								<WrapperDiv area="Timer">
-									<Timer duration={examData.duration} />
+									<Timer
+										duration={examData.duration}
+										setAutoSubmit={setAutoSubmit}
+									/>
 								</WrapperDiv>
 								<WrapperDiv area="QuestionBox">
 									{console.log(examData)}

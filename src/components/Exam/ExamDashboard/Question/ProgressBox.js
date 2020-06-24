@@ -162,6 +162,7 @@ const ProgressBox = ({
 	selectedQuestionIndex,
 	setSelectedQuestionIndex,
 	numOfQuestionsInSec,
+	autoSubmit,
 }) => {
 	// const setQuestionStateHandler = (value) => {
 	// 	questionState[selectedSectionName][selectedQuestionIndex] = value;
@@ -201,6 +202,10 @@ const ProgressBox = ({
 		setIsSubmitting(true);
 	};
 
+	if (autoSubmit) {
+		document.getElementById("autoSubmit").click();
+	}
+	
 	return (
 		<StyledProgressBox>
 			<StyledContainer>
@@ -259,6 +264,7 @@ const ProgressBox = ({
 					</Button>
 				</div>
 				<Button
+					id="autoSubmit"
 					color={colors.buttonGreen}
 					textColor={colors.white}
 					fontSize={fontSizes.md}

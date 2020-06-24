@@ -23,7 +23,7 @@ const StyledTimer = styled.div`
 	}
 `;
 
-const Timer = ({ duration }) => {
+const Timer = ({ duration, setAutoSubmit }) => {
 	const [timeLeft, setTimeLeft] = useState(duration * 60);
 
 	useEffect(() => {
@@ -31,7 +31,7 @@ const Timer = ({ duration }) => {
 			if (timeLeft > 0) {
 				setTimeLeft((time) => time - 1);
 			} else {
-				console.log("Time Up");
+				setAutoSubmit(true);
 			}
 		}, 1000);
 		return () => clearInterval(interval);

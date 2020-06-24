@@ -6,6 +6,7 @@ import Examnav from "../Examnav";
 import Loader from "../../Loader";
 import { timeDifference } from "../../../utils";
 import { useLocation, Redirect, useParams } from "react-router-dom";
+import { CSSTransition } from "react-transition-group";
 
 const StyledContainer = styled.div`
 	${mixins.fullFlexCenter};
@@ -79,22 +80,26 @@ const ExamDashboard = ({
 							) : (
 								<>
 									{examData && examId ? (
-										<StyledContainer>
-											<Examnav
-												name={examData.name}
-												displayName={displayName}
-												logOutHandler={logOutHandler}
-											/>
-											<QuestionArea
-												examId={examId}
-												examData={examData}
-												user={user}
-												uid={uid}
-												setUserResponseId={setUserResponseId}
-												setIsSubmitting={setIsSubmitting}
-												setIsSubmittedSuccessfully={setIsSubmittedSuccessfully}
-											/>
-										</StyledContainer>
+										<CSSTransition in timeout={300} classNames="page" appear>
+											<StyledContainer>
+												<Examnav
+													name={examData.name}
+													displayName={displayName}
+													logOutHandler={logOutHandler}
+												/>
+												<QuestionArea
+													examId={examId}
+													examData={examData}
+													user={user}
+													uid={uid}
+													setUserResponseId={setUserResponseId}
+													setIsSubmitting={setIsSubmitting}
+													setIsSubmittedSuccessfully={
+														setIsSubmittedSuccessfully
+													}
+												/>
+											</StyledContainer>
+										</CSSTransition>
 									) : (
 										<Redirect to="/exams" />
 									)}
