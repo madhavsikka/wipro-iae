@@ -7,7 +7,6 @@ import { CSSTransition } from "react-transition-group";
 import {
 	timeFormat12,
 	dateStringWithMonthName,
-	getTodayDateString,
 } from "../../utils";
 import axios from "axios";
 import mixins from "../../styles/mixins";
@@ -158,7 +157,8 @@ const Exams = ({ user, logOutHandler, displayName }) => {
 										<StyledExamList>
 											{Object.keys(examData).map((examId) => (
 												<StyledLink
-													show={examData[examId].date === getTodayDateString()}
+													// show={examData[examId].date === getTodayDateString()}
+													show
 													to={{
 														pathname: `${match.url}/${examId}`,
 														data: { examData },
