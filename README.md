@@ -19,5 +19,5 @@ This is a Summer Project ( Practice School - 1) conducted under joint supervisio
 This repository contains the code for the **Front-End** of the project.
 
 **Tech Stack for the project:**
-| ReactJS | NodeJS | Express | MondoDB |
+| ReactJS | NodeJS | Express | Firebase |
 | ------- | ------ | ------- | ------- |
