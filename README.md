@@ -6,5 +6,9 @@
 - Website can be accessed via: [https://wipro-iae.netlify.app/](https://wipro-iae.netlify.app/)
 - Tech Stack for the Project: ReactJS, NodeJS, Express, Firebase
 
-<img src="./static/Wipro%20IAE%201.png" width="75%" />
-<img src="./static/Wipro%20IAE%203.png" width="75%" />
+<kbd>
+<img src="./static/Wipro%20IAE%201.png" width="90%" />
+</kbd>
+<kbd>
+<img src="./static/Wipro%20IAE%203.png" width="90%" />
+</kbd>
