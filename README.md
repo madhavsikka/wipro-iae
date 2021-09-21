@@ -7,8 +7,8 @@
 - Tech Stack for the Project: ReactJS, NodeJS, Express, Firebase
 
 <kbd>
-<img src="./static/Wipro%20IAE%201.png" width="90%" />
+<img src="./static/Wipro%20IAE%201.png" width="100%" />
 </kbd>
 <kbd>
-<img src="./static/Wipro%20IAE%203.png" width="90%" />
+<img src="./static/Wipro%20IAE%203.png" width="100%" />
 </kbd>
